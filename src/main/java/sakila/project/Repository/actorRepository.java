@@ -1,0 +1,11 @@
+package sakila.project.Repository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import sakila.project.entities.Actor;
+
+public interface actorRepository extends CrudRepository<Actor, Long> {
+
+    @Query(value = "SELECT * FROM actor WHERE first_name = ? AND last_name = ?", nativeQuery = true)
+    Actor findByFirstName(String first_name, String last_name);
+
+}
