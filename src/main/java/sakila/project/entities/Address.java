@@ -1,10 +1,19 @@
 package sakila.project.entities;
-
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 import java.time.LocalDateTime;
-
+import java.sql.Blob;
 import java.sql.Timestamp;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 @Table(name="address")
 public class Address {
@@ -19,30 +28,6 @@ public class Address {
     private String phone;
     private Timestamp last_update;
 
-    public Short getId() {
-        return address_id;
-    }
-    public String getAddress() {
-        return address;
-    }    
-    public String getAddress2() {
-        return address2;
-    }    
-    public String getDistrict() {
-        return district;
-    }
-    public Short getCityId() {
-        return city_id;
-    }
-    public String getPostalCode() {
-        return postal_code;
-    }
-    public String getPhone() {
-        return phone;
-    }
-    public Timestamp getLastUpdate() {
-        return last_update;
-    }  
     public void setLast_update() {
         this.last_update = Timestamp.valueOf(LocalDateTime.now());
     }

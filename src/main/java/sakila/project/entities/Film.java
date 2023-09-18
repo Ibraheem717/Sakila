@@ -9,8 +9,7 @@ import java.sql.Timestamp;
 import java.time.Year;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Collection;
 
 enum Age {
     G,
@@ -29,25 +28,24 @@ enum Age {
 @Table(name="film")
 public class Film {
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("films")
-    @JoinTable(name = "film_category",
-        joinColumns = {
-                @JoinColumn(name = "film_id")
-        },
-        inverseJoinColumns = {
-                @JoinColumn(name = "category_id")
-        }
-    )
-    private Set<Catagory> categories;
+    // @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // @JoinTable(name = "film_category",
+    //     joinColumns = {
+    //             @JoinColumn(name = "film_id", referencedColumnName = "film_id")
+    //     },
+    //     inverseJoinColumns = {
+    //             @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    //     }
+    // )
+    // private Collection<Catagory> categories;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "film_actor",
-        joinColumns = @JoinColumn(name = "actor_id"),
-        inverseJoinColumns = @JoinColumn(name = "film_id")
-    )
-    private Set<Film> films = new HashSet<>();
+    // @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // @JoinTable(
+    //     name = "film_actor",
+    //     joinColumns = @JoinColumn(name = "actor_id"),
+    //     inverseJoinColumns = @JoinColumn(name = "film_id")
+    // )
+    // private Set<Actor> actors = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

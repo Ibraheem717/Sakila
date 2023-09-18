@@ -17,8 +17,8 @@ import java.util.Set;
 @Entity
 @Table(name="catagory")
 public class Catagory {
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-    private Set<Film> films;
+    // @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    // private Set<Film> films;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
