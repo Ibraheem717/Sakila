@@ -8,8 +8,10 @@ import lombok.ToString;
 import java.sql.Timestamp;
 import java.time.Year;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.Collection;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 enum Age {
     G,
@@ -28,24 +30,26 @@ enum Age {
 @Table(name="film")
 public class Film {
 
-    // @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // @JoinTable(name = "film_category",
-    //     joinColumns = {
-    //             @JoinColumn(name = "film_id", referencedColumnName = "film_id")
-    //     },
-    //     inverseJoinColumns = {
-    //             @JoinColumn(name = "category_id", referencedColumnName = "category_id")
-    //     }
-    // )
-    // private Collection<Catagory> categories;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("films")
+    @JoinTable(name = "film_category",
+            joinColumns = {
+                    @JoinColumn(name = "film_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "category_id")
+            }
+    )
+    private List<Category> categories;
 
-    // @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // @JoinTable(
-    //     name = "film_actor",
-    //     joinColumns = @JoinColumn(name = "actor_id"),
-    //     inverseJoinColumns = @JoinColumn(name = "film_id")
-    // )
-    // private Set<Actor> actors = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("films")
+    @JoinTable(
+        name = "film_actor",
+        joinColumns = @JoinColumn(name = "film_id"),
+        inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private Set<Actor> actors = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

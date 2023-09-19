@@ -20,8 +20,8 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="actor")
 public class Actor {
-    // @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
-    // private Set<Film> films;
+    @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
+    private Set<Film> films;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

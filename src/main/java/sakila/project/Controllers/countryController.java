@@ -47,7 +47,7 @@ public class countryController {
         return CountryRepository.findAll();
     }
     @GetMapping(path="/get")
-    public @ResponseBody String getUsers(@RequestParam String givenCountry ) {
+    public @ResponseBody String getCountry(@RequestParam String givenCountry ) {
         Country country = CountryRepository.SearchCountry(givenCountry.toUpperCase()); 
         if (country!=null)
             return country.toString();

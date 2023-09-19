@@ -17,14 +17,14 @@ public class actorController {
     @Autowired
     private ObjectMapper objectMapper;
     @PostMapping(path="/add") 
-    public @ResponseBody String addNewUser (@RequestBody Actor infomation) {
+    public @ResponseBody HashMap<String, String> addNewUser (@RequestBody Actor infomation) {
         Actor n = infomation;
         n.setLast_update();
         if (actorRepository.findByFirstName(infomation.getFirst_name().toUpperCase(), infomation.getLast_name().toUpperCase()) != null) {
-            return "User already exist";
+            return new HashMap<>(){{put("output","User already exist");}};
         }
         actorRepository.save(n);
-        return "Saved";
+        return new HashMap<>(){{put("output","Saved");}};
     }
     @PutMapping(path = "/update")
     public @ResponseBody String updateUser(@RequestBody HashMap<String, Object> information) {

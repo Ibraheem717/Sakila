@@ -1,5 +1,9 @@
 export default function Form(props) {
-    const { values, handleInputChange } = props;
+
+    const handleInputChange = (setFunction, value) => {
+      console.log(setFunction);
+      setFunction(value);
+  };
 
     return (
         <div>

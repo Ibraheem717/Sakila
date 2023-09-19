@@ -1,5 +1,4 @@
 package sakila.project.entities;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import java.sql.Timestamp;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -15,14 +13,11 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name="catagory")
-public class Catagory {
-    // @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-    // private Set<Film> films;
-
+@Table(name="film_actor")
+public class filmActor {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Short category_id;
-    private String name;
+    private Short actor_id;
+    private Short film_id;
     private Timestamp last_update;
 }
