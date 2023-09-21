@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Form from "../Form";
-import "./css/MainAddress.css";
 
 export default function AddressMain() {
     const [url, setUrl] = useState("http://localhost:8080/address");

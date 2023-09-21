@@ -1,0 +1,45 @@
+/* Form.css */
+
+/* Form container */
+.main-container {
+  padding-top: 30px; /* Add padding to the top */
+
+}
+
+#FormContainer {
+  margin: 20px;
+  padding: 20px;
+  padding-top: 30px; /* Add padding to the top */
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+}
+
+/* Label styles */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Input styles */
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Submit button styles */
+#submit {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#submit:hover {
+  background-color: #0056b3;
+}

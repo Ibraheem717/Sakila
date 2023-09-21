@@ -1,0 +1,93 @@
+/* AddressMain.css */
+
+/* Container styles */
+#AddressMainContainer {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+  }
+  
+  /* Navigation styles */
+  nav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  li:hover {
+    text-decoration: underline;
+  }
+  
+  /* Form container styles */
+  #FormContainer {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+  }
+  .SearchAllContainer {
+    padding-top: 30px;
+  }
+  
+  /* Label styles */
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Input styles */
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Submit button styles */
+  #submit {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #submit:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Individual search outcome styles */
+  #SearchIndivisualOutcome {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  /* All address responses styles */
+  #AllAddressResponses {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #AllAddressResponses li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f7f7f7;
+  }
+  

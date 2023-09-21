@@ -1,3 +1,5 @@
+import "./Entities/css/Form.css";
+
 export default function Form(props) {
 
     const handleInputChange = (setFunction, value) => {
@@ -10,16 +12,28 @@ export default function Form(props) {
       props.func()
     }
 
+    const isRequired = (inputs) => {
+      if (props.required)
+        return (
+          <input id={`input${inputs.id}`} type="text" 
+          onChange={(e) => handleInputChange(inputs.changeValue, e.target.value)} required 
+          />
+        );
+      return (
+        <input id={`input${inputs.id}`} type="text" 
+        onChange={(e) => handleInputChange(inputs.changeValue, e.target.value)}  
+        />
+      );
+    }
+
     return (
-        <div>
+      <div className="main-container">
         <form id="Form" onSubmit={PropergateFunction}>
 
             {props.values.map((inputs) => (
                 <div key={inputs.id}>
                     <label id={`label${inputs.id}`}htmlFor={inputs.id}>{inputs.display}: </label>
-                    <input id={`input${inputs.id}`} type="text" 
-                    onChange={(e) => handleInputChange(inputs.changeValue, e.target.value)} required 
-                    />
+                    {isRequired(inputs)}
                 </div>
             ))}
           <button id="submit" type="submit">Submit</button>

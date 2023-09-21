@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sakila.project.Repository.actorRepository;
+import sakila.project.Repository.filmActorRepository;
 import sakila.project.entities.Actor;
 
 @RestController 
@@ -16,6 +17,8 @@ public class actorController {
     private actorRepository actorRepository;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private filmActorRepository filmActorRepo;
     @PostMapping(path="/add") 
     public @ResponseBody HashMap<String, String> addNewUser (@RequestBody Actor infomation) {
         System.out.println(infomation);
@@ -32,7 +35,6 @@ public class actorController {
         String forename = (String) information.get("forename");
         String surname = (String) information.get("surname");
         Actor existingActor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());
-    
         if (existingActor != null) {
             Actor newInformation = objectMapper.convertValue(information.get("actor"), Actor.class);
             if (actorRepository.findByFirstName(newInformation.getFirst_name(), newInformation.getLast_name()) != null)
@@ -46,11 +48,11 @@ public class actorController {
     
         return new HashMap<>(){{put("output","User doesn't exist");}};
     }
-    
     @DeleteMapping(path="/delete") 
-    public @ResponseBody HashMap<String, String> deleteUser (@RequestBody Actor actor) {
-        Actor delActor = actorRepository.findByFirstName(actor.getFirst_name().toUpperCase(),actor.getLast_name().toUpperCase());
+    public @ResponseBody HashMap<String, String> deleteUser (@RequestBody HashMap<String, String> actor) {
+        Actor delActor = actorRepository.findByFirstName(actor.get("first_name").toUpperCase(),actor.get("last_name").toUpperCase());
         if (delActor!=null) {
+            filmActorRepo.DeleteByActorID(delActor.getActor_id());
             actorRepository.delete(delActor);
             return new HashMap<>(){{put("output","Deleted");}};
         }

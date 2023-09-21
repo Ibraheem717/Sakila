@@ -1,23 +1,50 @@
 import { useState } from "react";
-import ActorMenu from "./Actor/MainActor";
+import ActorMenu from "./Entities/MainActor";
+import AddressMain from "./Entities/MainAddress";
+import CategoryMain from "./Entities/MainCategory";
+import "./App.css"; 
 
 export default function App() {
-    const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState("home");
 
-    const renderPage = () => {
-      switch (currentPage) {
-        case "Actor":
-            return <ActorMenu />
-      }
-    };
+  const renderPage = () => {
+    switch (currentPage) {
+      case "Actor":
+        return <ActorMenu />;
+      case "Address":
+        return <AddressMain />;
+      case "Category":
+        return <CategoryMain />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div>
-    <nav>
-      <ul>
-        <li id="ActorMenuSelect" onClick={() => setCurrentPage("Actor")}>Home</li>
-      </ul>
-    </nav>
-    {renderPage()}
-  </div>
+    <div className="container">
+      <nav>
+        <ul>
+          <li
+            id="ActorMenuSelect"
+            onClick={() => setCurrentPage("Actor")}
+          >
+            Actor
+          </li>
+          <li
+            id="AddressMenuSelect"
+            onClick={() => setCurrentPage("Address")}
+          >
+            Address
+          </li>
+          <li
+            id="CategoryMenuSelect"
+            onClick={() => setCurrentPage("Category")}
+          >
+            Category
+          </li>
+        </ul>
+      </nav>
+      {renderPage()}
+    </div>
   );
 }

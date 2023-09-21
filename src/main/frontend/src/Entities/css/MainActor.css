@@ -1,0 +1,70 @@
+/* ActorMenu.css */
+
+/* Container styles */
+#ActorMenuContainer {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+  }
+
+  .SearchAllContainer {
+    padding-top: 30px;
+  }
+  
+  /* Navigation styles */
+  nav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  li:hover {
+    text-decoration: underline;
+  }
+  
+  /* Form styles */
+  #SearchIndivisualOutcome {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  /* AllActorResponses styles */
+  #AllActorResponses {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #AllActorResponses li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f7f7f7;
+  }
+  
+  /* Button styles */
+  #SearchAllButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #SearchAllButton:hover {
+    background-color: #0056b3;
+  }
+  

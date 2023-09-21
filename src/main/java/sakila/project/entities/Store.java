@@ -18,7 +18,7 @@ public class Store {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Byte store_id;
-    private Byte manager_store_name;
+    private Byte manager_store_id;
     private Short address_id;
     private Timestamp last_update;
 }

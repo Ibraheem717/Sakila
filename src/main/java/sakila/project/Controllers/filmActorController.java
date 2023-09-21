@@ -24,12 +24,6 @@ public class filmActorController {
     public @ResponseBody Iterable<filmActor> getAllUsers() {
         return filmActorRepo.findAll();
     }
-    @GetMapping(path="/get/actor")
-    public @ResponseBody Iterable<filmActor> getUsers(@RequestParam String forename, @RequestParam String surname ) {
-        Short actorID = actorRepo.findByFirstName(forename, surname).getActor_id();
-        System.out.println(actorID);
-        return filmActorRepo.findByActorID(actorID);
-    }
     @GetMapping(path="/get/bruh")
     public @ResponseBody Iterable<Film> getfi() {
         return filmRepo.findAll();

@@ -1,13 +1,11 @@
 import { useState } from "react";
 import Form from "../Form";
-import "./css/MainActor.css"
+import "./css/MainCategory.css";
 
-export default function ActorMenu() {
-    const [url, setUrl] = useState("http://localhost:8080/actor");
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [newFirstName, setNewFirstName] = useState('');
-    const [newLastName, setNewLastName] = useState('');
+export default function CategoryMain() {
+    const [url, setUrl] = useState("http://localhost:8080/catagory");
+    const [name, setName] = useState('');
+    const [newName, setNewName] = useState('');
     const [searched, setSearched] = useState('Output will be here');    
     const [responses, setResponses] = useState();
     const [currentPage, setCurrentPage] = useState("home");
@@ -22,20 +20,12 @@ export default function ActorMenu() {
                         { 
                             [
                                 {
-                                    id:"firstName",
-                                    display:"Forename",
-                                    target:{firstName},
-                                    changeValue:setFirstName,
+                                    id:"catagory",
+                                    display:"Catagory",
+                                    target:{name},
+                                    changeValue:setName,
                                     required:true
-        
                                 },
-                                {
-                                    id:"lastName",
-                                    display:"Surname",
-                                    target:{lastName},
-                                    changeValue:setLastName,
-                                    required:true
-                                }
                             ] 
                         }
                     />
@@ -49,20 +39,13 @@ export default function ActorMenu() {
                         { 
                             [
                                 {
-                                    id:"firstName",
-                                    display:"Forename",
-                                    target:{firstName},
-                                    changeValue:setFirstName,
-                                    required:true
-        
-                                },
-                                {
-                                    id:"lastName",
-                                    display:"Surname",
-                                    target:{lastName},
-                                    changeValue:setLastName,
+                                    id:"catagory",
+                                    display:"Catagory",
+                                    target:{name},
+                                    changeValue:setName,
                                     required:true
                                 }
+
                             ] 
                         }
                     />
@@ -76,33 +59,18 @@ export default function ActorMenu() {
                         { 
                             [
                                 {
-                                    id:"firstName",
-                                    display:"Forename",
-                                    target:{firstName},
-                                    changeValue:setFirstName,
+                                    id:"catagory",
+                                    display:"Catagory",
+                                    target:{name},
+                                    changeValue:setName,
                                     required:true
         
                                 },
                                 {
-                                    id:"lastName",
-                                    display:"Surname",
-                                    target:{lastName},
-                                    changeValue:setLastName,
-                                    required:true
-                                },
-                                {
-                                    id:"newfirstName",
-                                    display:"New Forename",
-                                    target:{newFirstName},
-                                    changeValue:setNewFirstName,
-                                    required:true
-        
-                                },
-                                {
-                                    id:"newlastName",
-                                    display:"New Surname",
-                                    target:{newLastName},
-                                    changeValue:setNewLastName,
+                                    id:"catagory",
+                                    display:"Catagory",
+                                    target:{newName},
+                                    changeValue:setNewName,
                                     required:true
                                 }
                             ] 
@@ -118,20 +86,12 @@ export default function ActorMenu() {
                             { 
                                 [
                                     {
-                                        id:"firstName",
-                                        display:"Forename",
-                                        target:{firstName},
-                                        changeValue:setFirstName,
+                                        id:"catagory",
+                                        display:"Catagory",
+                                        target:{name},
+                                        changeValue:setName,
                                         required:true
-            
                                     },
-                                    {
-                                        id:"lastName",
-                                        display:"Surname",
-                                        target:{lastName},
-                                        changeValue:setLastName,
-                                        required:true
-                                    }
                                 ] 
                             }
                         />
@@ -169,12 +129,12 @@ export default function ActorMenu() {
     async function getIndividual() {
         try 
         {
-            const request = await fetch(`${url}/get?forename=${firstName}&surname=${lastName}`);
+            const request = await fetch(`${url}/get?givenCategory=${name}`);
             if (request.ok) {
             const response = await request.json();
             console.log(response['outcome']);
             if(response['outcome']===undefined){
-                setSearched(`${response['first_name']} ${response['last_name']} `);}
+                setSearched(`${response['name']}`);}
             else {
                 setSearched("Player not found");
             }
@@ -194,8 +154,7 @@ export default function ActorMenu() {
                 "Content-Type" : "application/json"
             },
             body: JSON.stringify({
-                "first_name" : firstName,
-                "last_name" : lastName
+                "name" : name,
             })
         });
         const response = await request.json();
@@ -210,11 +169,9 @@ export default function ActorMenu() {
                 "Content-Type" : "application/json"
             },
             body: JSON.stringify({
-                "forename" : firstName,
-                "surname" : lastName,
-                "actor" : {
-                    "first_name" : newFirstName,
-                    "last_name" : newLastName
+                "name" : name,
+                "newCategory" : {
+                    "name" : newName,
                 }
             })
         });
@@ -229,8 +186,7 @@ export default function ActorMenu() {
                 "Content-Type" : "application/json"
             },
             body: JSON.stringify({
-                "first_name" : firstName,
-                "last_name" : lastName,
+                "name" : name,
             })
         });
         const response = await request.json();
@@ -250,10 +206,9 @@ export default function ActorMenu() {
         if (responses !== undefined && responses.length > 0) {
             return (
             <ul id="AllActorResponses">
-                {responses.map((actor) => (
-                <li key={actor.id}>
-                    <div>First Name: {actor.first_name}</div>
-                    <div>Last Name: {actor.last_name}</div>
+                {responses.map((category) => (
+                <li key={category.id}>
+                    <div className="btn">{category.name}</div>
                 </li>
                 ))}
             </ul>
@@ -269,11 +224,11 @@ export default function ActorMenu() {
         <div>
             <nav>
                 <ul>
-                    <li id="ActorGetIndivisual" onClick={() => setCurrentPage("GetIndivisual")}>Search individual</li>
+                    <li id="ActorGetIndivisual" onClick={() => setCurrentPage("GetIndivisual")}>Search Category</li>
                     <li id="ActorSearchAll" onClick={() => setCurrentPage("SearchAll")}>Search All</li>
-                    <li id="ActorAdd" onClick={() => setCurrentPage("Add")}>Add Actor</li>
-                    <li id="ActorUpdate" onClick={() => setCurrentPage("Update")}>Update Actor</li>
-                    <li id="ActorDelete" onClick={() => setCurrentPage("Delete")}>Delete Actor</li>
+                    <li id="ActorAdd" onClick={() => setCurrentPage("Add")}>Add Category</li>
+                    <li id="ActorUpdate" onClick={() => setCurrentPage("Update")}>Update Category</li>
+                    <li id="ActorDelete" onClick={() => setCurrentPage("Delete")}>Delete Category</li>
                 </ul>
             </nav>
             {renderPage()}
