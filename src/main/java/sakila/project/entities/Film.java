@@ -12,14 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-enum Age {
-    G,
-    PG,
-    PG_13,
-    R,
-    NC_17;
-}
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Getter
 @Setter
@@ -31,7 +24,7 @@ enum Age {
 public class Film {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("films")
+    @JsonIgnoreProperties("categories")
     @JoinTable(name = "film_category",
             joinColumns = {
                     @JoinColumn(name = "film_id")
@@ -40,16 +33,18 @@ public class Film {
                     @JoinColumn(name = "category_id")
             }
     )
-    private List<Category> categories;
+    @JsonManagedReference
+    private Set<Category> categories;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("films")
+    @JsonIgnoreProperties("actors")     
     @JoinTable(
         name = "film_actor",
-        joinColumns = @JoinColumn(name = "film_id"),
-        inverseJoinColumns = @JoinColumn(name = "actor_id")
+        joinColumns = {  @JoinColumn(name = "film_id") } ,
+        inverseJoinColumns ={ @JoinColumn(name = "actor_id")}
     )
-    private Set<Actor> actors = new HashSet<>();
+    @JsonManagedReference
+    private Set<Actor> actors;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -62,10 +57,7 @@ public class Film {
     private Integer rental_rate;
     private Short length;
     private Short replacement_cost;
-    @Column(columnDefinition = "ENUM('G','PG','PG-13','R','NC-17')",
-            name="rating")
-    @Enumerated(EnumType.STRING)
-    private Age age;
-    private Set<String> special_features;
+    private String rating;
+    private String special_features;
     private Timestamp last_update;
 }

@@ -14,7 +14,7 @@ export default function App() {
     <div>
     <nav>
       <ul>
-        <li onClick={() => setCurrentPage("Actor")}>Home</li>
+        <li id="ActorMenuSelect" onClick={() => setCurrentPage("Actor")}>Home</li>
       </ul>
     </nav>
     {renderPage()}

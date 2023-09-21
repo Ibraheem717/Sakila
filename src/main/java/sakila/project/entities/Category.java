@@ -9,6 +9,9 @@ import lombok.ToString;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,6 +21,8 @@ import java.util.List;
 @Table(name="category")
 public class Category {
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    @Transient
+    @JsonBackReference
     private List<Film> films;
 
     @Id

@@ -18,6 +18,7 @@ public class actorController {
     private ObjectMapper objectMapper;
     @PostMapping(path="/add") 
     public @ResponseBody HashMap<String, String> addNewUser (@RequestBody Actor infomation) {
+        System.out.println(infomation);
         Actor n = infomation;
         n.setLast_update();
         if (actorRepository.findByFirstName(infomation.getFirst_name().toUpperCase(), infomation.getLast_name().toUpperCase()) != null) {
@@ -27,31 +28,33 @@ public class actorController {
         return new HashMap<>(){{put("output","Saved");}};
     }
     @PutMapping(path = "/update")
-    public @ResponseBody String updateUser(@RequestBody HashMap<String, Object> information) {
+    public @ResponseBody HashMap<String, String> updateUser(@RequestBody HashMap<String, Object> information) {
         String forename = (String) information.get("forename");
         String surname = (String) information.get("surname");
         Actor existingActor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());
     
         if (existingActor != null) {
             Actor newInformation = objectMapper.convertValue(information.get("actor"), Actor.class);
+            if (actorRepository.findByFirstName(newInformation.getFirst_name(), newInformation.getLast_name()) != null)
+                return new HashMap<>(){{put("output","Name taken");}};
             existingActor.setFirst_name(newInformation.getFirst_name());
             existingActor.setLast_name(newInformation.getLast_name());
             existingActor.setLast_update();            
             actorRepository.save(existingActor);
-            return "Changed";
+            return new HashMap<>(){{put("output","Saved");}};
         }
     
-        return "User doesn't exist";
+        return new HashMap<>(){{put("output","User doesn't exist");}};
     }
     
     @DeleteMapping(path="/delete") 
-    public @ResponseBody String deleteUser (@RequestBody Actor actor) {
+    public @ResponseBody HashMap<String, String> deleteUser (@RequestBody Actor actor) {
         Actor delActor = actorRepository.findByFirstName(actor.getFirst_name().toUpperCase(),actor.getLast_name().toUpperCase());
         if (delActor!=null) {
             actorRepository.delete(delActor);
-            return "Deleted";
+            return new HashMap<>(){{put("output","Deleted");}};
         }
-        return "User doesn't exist";
+        return new HashMap<>(){{put("output","User doesn't exist");}};
     }
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Actor> getAllUsers() {
@@ -60,6 +63,7 @@ public class actorController {
     @GetMapping(path="/get")
     public @ResponseBody HashMap<String, String> getUsers(@RequestParam String forename, @RequestParam String surname ) {
         Actor actor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase()); 
+        System.out.println(actor);
         if (actor!=null) {
             return new HashMap<String, String>() {{
                 put("first_name", actor.getFirst_name());
