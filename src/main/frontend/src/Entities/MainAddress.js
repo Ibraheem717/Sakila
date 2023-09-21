@@ -31,7 +31,7 @@ export default function AddressMain() {
                             [
                                 {
                                     id:"address",
-                                    display:"Address : ",
+                                    display:"Address",
                                     target:{address},
                                     changeValue:setAddress,
                                     required:true
@@ -39,20 +39,20 @@ export default function AddressMain() {
                                 },
                                 {
                                     id:"address2",
-                                    display:"Address 2 :",
+                                    display:"Address 2",
                                     target:{addressTwo},
                                     changeValue:setAddressTwo
                                 },
                                 {
                                     id:"district",
-                                    display:"District: ",
+                                    display:"District",
                                     target:{district},
                                     changeValue:setDistrict,
                                     required:true
                                 },
                                 {
                                     id:"city",
-                                    display:"City: ",
+                                    display:"City",
                                     target:{city},
                                     changeValue:setCity,
                                     required:true
@@ -60,13 +60,13 @@ export default function AddressMain() {
                                 },
                                 {
                                     id:"postcode",
-                                    display:"Post Code: ",
+                                    display:"Post Code",
                                     target:{postCode},
                                     changeValue:setPostCode
                                 },
                                 {
                                     id:"phone",
-                                    display:"Phone: ",
+                                    display:"Phone",
                                     target:{phone},
                                     changeValue:setPhone,
                                     required:true
@@ -85,7 +85,7 @@ export default function AddressMain() {
                             [
                                 {
                                     id:"address",
-                                    display:"Address : ",
+                                    display:"Address",
                                     target:{address},
                                     changeValue:setAddress,
                                     required:true
@@ -93,20 +93,20 @@ export default function AddressMain() {
                                 },
                                 {
                                     id:"address2",
-                                    display:"Address 2 :",
+                                    display:"Address 2",
                                     target:{addressTwo},
                                     changeValue:setAddressTwo
                                 },
                                 {
                                     id:"district",
-                                    display:"District: ",
+                                    display:"District",
                                     target:{district},
                                     changeValue:setDistrict,
                                     required:true
                                 },
                                 {
                                     id:"city",
-                                    display:"City: ",
+                                    display:"City",
                                     target:{city},
                                     changeValue:setCity,
                                     required:true
@@ -114,13 +114,13 @@ export default function AddressMain() {
                                 },
                                 {
                                     id:"postcode",
-                                    display:"Post Code: ",
+                                    display:"Post Code",
                                     target:{postCode},
                                     changeValue:setPostCode
                                 },
                                 {
                                     id:"phone",
-                                    display:"Phone: ",
+                                    display:"Phone",
                                     target:{phone},
                                     changeValue:setPhone,
                                     required:true
@@ -152,7 +152,7 @@ export default function AddressMain() {
                                     changeValue:setAddressTwo
                                 },
                                 {
-                                    id:"District",
+                                    id:"district",
                                     display:"District",
                                     target:{district},
                                     changeValue:setDistrict,
@@ -181,7 +181,7 @@ export default function AddressMain() {
                                 },
                                 {
                                     id:"newAddress",
-                                    display:"Address",
+                                    display:"New Address",
                                     target:{newaddress},
                                     changeValue:setNewAddress,
                                     required:true
@@ -189,20 +189,20 @@ export default function AddressMain() {
                                 },
                                 {
                                     id:"newAddress2",
-                                    display:"Address 2",
+                                    display:"New Address 2",
                                     target:{newaddressTwo},
                                     changeValue:setNewAddressTwo
                                 },
                                 {
                                     id:"newDistrict",
-                                    display:"District",
+                                    display:"New District",
                                     target:{newdistrict},
                                     changeValue:setNewDistrict,
                                     required:true
                                 },
                                 {
                                     id:"newCity",
-                                    display:"City",
+                                    display:"New City",
                                     target:{newcity},
                                     changeValue:setNewCity,
                                     required:true
@@ -210,13 +210,13 @@ export default function AddressMain() {
                                 },
                                 {
                                     id:"newPostcode",
-                                    display:"Post Code",
+                                    display:"New Post Code",
                                     target:{newpostCode},
                                     changeValue:setNewPostCode
                                 },
                                 {
                                     id:"newPhone",
-                                    display:"Phone",
+                                    display:"New Phone",
                                     target:{newphone},
                                     changeValue:setNewPhone,
                                     required:true
@@ -227,60 +227,6 @@ export default function AddressMain() {
                     {displayIndividual()}
                 </div>
             );
-            case "Delete":
-                return (  
-                    <div>
-                        <Form func={DeleteIndividual} values=
-                            { 
-                                [
-                                    {
-                                        id:"address",
-                                        display:"Address",
-                                        target:{address},
-                                        changeValue:setAddress,
-                                        required:true
-            
-                                    },
-                                    {
-                                        id:"address2",
-                                        display:"Address 2",
-                                        target:{addressTwo},
-                                        changeValue:setAddressTwo
-                                    },
-                                    {
-                                        id:"district",
-                                        display:"District",
-                                        target:{district},
-                                        changeValue:setDistrict,
-                                        required:true
-                                    },
-                                    {
-                                        id:"city",
-                                        display:"City",
-                                        target:{city},
-                                        changeValue:setCity,
-                                        required:true
-            
-                                    },
-                                    {
-                                        id:"postcode",
-                                        display:"Post Code",
-                                        target:{postCode},
-                                        changeValue:setPostCode
-                                    },
-                                    {
-                                        id:"phone",
-                                        display:"Phone",
-                                        target:{phone},
-                                        changeValue:setPhone,
-                                        required:true
-                                    }
-                                ] 
-                            }
-                        />
-                        {displayIndividual()}
-                    </div>
-                );
             default:
                 return (        
                     <div className="SearchAllContainer">
@@ -377,25 +323,6 @@ export default function AddressMain() {
         const response = await request.json();
         setSearched(response['output']);
 
-    }
-
-    async function DeleteIndividual() {
-        const request = await fetch(`${url}/delete`, {
-            method:"DELETE",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({
-                "address" : address,
-                "address2" : addressTwo,
-                "district" : district,
-                "postal_code" : postCode,
-                "phone" : phone,
-                "city" : city,
-            })
-        });
-        const response = await request.json();
-        setSearched(response['output']);
     }
 
   function displayIndividual() {

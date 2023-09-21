@@ -20,8 +20,8 @@ export default function CategoryMain() {
                         { 
                             [
                                 {
-                                    id:"catagory",
-                                    display:"Catagory",
+                                    id:"category",
+                                    display:"Category",
                                     target:{name},
                                     changeValue:setName,
                                     required:true
@@ -39,8 +39,8 @@ export default function CategoryMain() {
                         { 
                             [
                                 {
-                                    id:"catagory",
-                                    display:"Catagory",
+                                    id:"category",
+                                    display:"Category",
                                     target:{name},
                                     changeValue:setName,
                                     required:true
@@ -59,16 +59,16 @@ export default function CategoryMain() {
                         { 
                             [
                                 {
-                                    id:"catagory",
-                                    display:"Catagory",
+                                    id:"category",
+                                    display:"Category",
                                     target:{name},
                                     changeValue:setName,
                                     required:true
         
                                 },
                                 {
-                                    id:"catagory",
-                                    display:"Catagory",
+                                    id:"newcategory",
+                                    display:"New Category",
                                     target:{newName},
                                     changeValue:setNewName,
                                     required:true
@@ -86,8 +86,8 @@ export default function CategoryMain() {
                             { 
                                 [
                                     {
-                                        id:"catagory",
-                                        display:"Catagory",
+                                        id:"category",
+                                        display:"Category",
                                         target:{name},
                                         changeValue:setName,
                                         required:true
@@ -170,9 +170,8 @@ export default function CategoryMain() {
             },
             body: JSON.stringify({
                 "name" : name,
-                "newCategory" : {
-                    "name" : newName,
-                }
+                "newname" : newName,
+                
             })
         });
         const response = await request.json();
@@ -205,7 +204,7 @@ export default function CategoryMain() {
     function displayValues() {
         if (responses !== undefined && responses.length > 0) {
             return (
-            <ul id="AllActorResponses">
+            <ul id="AllCategoryResponses">
                 {responses.map((category) => (
                 <li key={category.id}>
                     <div className="btn">{category.name}</div>
@@ -215,7 +214,7 @@ export default function CategoryMain() {
             );
         } 
         else 
-            return <p id="AllActorResponses">No responses to display.</p>;
+            return <p id="AllCategoryResponses">No responses to display.</p>;
         
     }
 
@@ -224,11 +223,11 @@ export default function CategoryMain() {
         <div>
             <nav>
                 <ul>
-                    <li id="ActorGetIndivisual" onClick={() => setCurrentPage("GetIndivisual")}>Search Category</li>
-                    <li id="ActorSearchAll" onClick={() => setCurrentPage("SearchAll")}>Search All</li>
-                    <li id="ActorAdd" onClick={() => setCurrentPage("Add")}>Add Category</li>
-                    <li id="ActorUpdate" onClick={() => setCurrentPage("Update")}>Update Category</li>
-                    <li id="ActorDelete" onClick={() => setCurrentPage("Delete")}>Delete Category</li>
+                    <li id="CategoryGetIndivisual" onClick={() => setCurrentPage("GetIndivisual")}>Search Category</li>
+                    <li id="CategorySearchAll" onClick={() => setCurrentPage("SearchAll")}>Search All</li>
+                    <li id="CategoryAdd" onClick={() => setCurrentPage("Add")}>Add Category</li>
+                    <li id="CategoryUpdate" onClick={() => setCurrentPage("Update")}>Update Category</li>
+                    <li id="CategoryDelete" onClick={() => setCurrentPage("Delete")}>Delete Category</li>
                 </ul>
             </nav>
             {renderPage()}

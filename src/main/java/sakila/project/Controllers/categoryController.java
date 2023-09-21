@@ -16,23 +16,24 @@ public class categoryController {
     @Autowired 
     private filmCatagoryRepository filmCatagoryRepo;
     @PostMapping(path="/add") 
-    public @ResponseBody HashMap<String, String> addNewAddress (@RequestBody Category infomation) {
-        Category n = infomation;
+    public @ResponseBody HashMap<String, String> addNewCategory (@RequestBody HashMap<String, String> information) {
+        Category n = new Category();
+        n.setName(information.get("name"));
         n.setLast_update();
-        if (catagoryRepo.SearchCategory(infomation.getName().toUpperCase())!=null)
+        if (catagoryRepo.SearchCategory(n.getName().toUpperCase())!=null)
             return new HashMap<>(){{put("output","Category already exist");}};
         catagoryRepo.save(n);
         return new HashMap<>(){{put("output","Saved");}};
     }
     @PutMapping(path="/update") 
     public @ResponseBody HashMap<String, String> updateCategory (@RequestBody HashMap<String, String> information) {
-        Category SerchedCategory = catagoryRepo.SearchCategory(information.get("country"));
-        Category newCategory = catagoryRepo.SearchCategory(information.get("newCategory"));
-        if (SerchedCategory!=null && newCategory==null) {
-            SerchedCategory.setLast_update();
-            SerchedCategory.setName(information.get("newCategory"));
-            catagoryRepo.save(SerchedCategory);
-            return new HashMap<>(){{put("output","Saved");}};
+        Category SearchedCategory = catagoryRepo.SearchCategory(information.get("name"));
+        Category newCategory = catagoryRepo.SearchCategory(information.get("newname"));
+        if (SearchedCategory!=null && newCategory==null) {
+            SearchedCategory.setLast_update();
+            SearchedCategory.setName(information.get("newname"));
+            catagoryRepo.save(SearchedCategory);
+            return new HashMap<>(){{put("output","Changed");}};
         }
         return new HashMap<>(){{put("output","Category doesn't exist");}};
     }

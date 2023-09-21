@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.sql.Timestamp;
 
@@ -24,6 +25,7 @@ import java.sql.Timestamp;
 public class Actor {
     @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
     @JsonBackReference
+    @JsonIgnore
     @Transient
     private Set<Film> films = new HashSet<>();
 

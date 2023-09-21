@@ -176,7 +176,7 @@ export default function ActorMenu() {
             if(response['outcome']===undefined){
                 setSearched(`${response['first_name']} ${response['last_name']} `);}
             else {
-                setSearched("Player not found");
+                setSearched("User doesn't exist");
             }
             } else {
             console.error("Failed to fetch individual response");
@@ -191,7 +191,7 @@ export default function ActorMenu() {
         const request = await fetch(`${url}/add`, {
             method:"POST",
             headers: {
-                "Content-Type" : "application/json"
+                "Content-Type" : "application/json;charset=UTF-8"
             },
             body: JSON.stringify({
                 "first_name" : firstName,

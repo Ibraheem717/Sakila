@@ -1,6 +1,9 @@
 package sakila.project.Controllers;
 import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,13 +23,11 @@ public class actorController {
     @Autowired
     private filmActorRepository filmActorRepo;
     @PostMapping(path="/add") 
-    public @ResponseBody HashMap<String, String> addNewUser (@RequestBody Actor infomation) {
-        System.out.println("beginning");
-        System.out.println(infomation);
-        System.out.println("end");
-        Actor n = infomation;
-        n.setLast_update();
-        if (actorRepository.findByFirstName(infomation.getFirst_name().toUpperCase(), infomation.getLast_name().toUpperCase()) != null) {
+    public @ResponseBody HashMap<String, String> addNewUser (@RequestBody HashMap<String, String> information) {
+        System.out.println(information);
+        Actor n =  objectMapper.convertValue(information, Actor.class);;
+        System.out.println(n);
+        if (actorRepository.findByFirstName( n.getFirst_name().toUpperCase(),  n.getLast_name().toUpperCase()) != null) {
             return new HashMap<>(){{put("output","User already exist");}};
         }
         actorRepository.save(n);

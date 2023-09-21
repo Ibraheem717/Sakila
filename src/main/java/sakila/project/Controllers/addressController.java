@@ -1,10 +1,7 @@
 package sakila.project.Controllers;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sakila.project.Repository.addressRepository;
 import sakila.project.Repository.cityRepository;
-import sakila.project.Repository.customerRepository;
-import sakila.project.Repository.inventoryRepository;
-import sakila.project.Repository.paymentRepository;
-import sakila.project.Repository.rentalRepository;
-import sakila.project.Repository.staffRepository;
-import sakila.project.Repository.storeRepository;
 import sakila.project.entities.Address;
 import sakila.project.entities.City;
 
@@ -30,18 +21,6 @@ public class addressController {
     private addressRepository addressRepo;
     @Autowired 
     private cityRepository cityRepo;
-    @Autowired 
-    private storeRepository storeRepo;
-    @Autowired 
-    private staffRepository staffRepo;
-    @Autowired 
-    private customerRepository customerRepo;
-    @Autowired 
-    private paymentRepository paymentRepo;
-    @Autowired 
-    private rentalRepository rentalRepo;
-    @Autowired 
-    private inventoryRepository inventoryRepo;
     @Autowired
     private ObjectMapper objectMapper;
     @PostMapping(path="/add") 
@@ -92,48 +71,6 @@ public class addressController {
             return new HashMap<>(){{put("output", "Changed"); }};
         }
         return new HashMap<>(){{put("output", "Address already exist"); }};
-    }
-    @DeleteMapping(path="/delete") 
-    public @ResponseBody HashMap<String, String> deleteAddress (@RequestBody HashMap<String, Object> information) {
-        Address address = objectMapper.convertValue(information, Address.class);
-        address.setCity_id(this.checkIfCityExist((String) information.get("city")));
-        if (address.getCity_id() == null)
-            return new HashMap<>(){{put("output", "City doesn't exist"); }};
-        Address delAdress = this.getAddressAll(address.getAddress(), address.getAddress2(), address.getDistrict(), address.getCity_id(), address.getPostal_code(), address.getPhone());
-        if (delAdress!=null) {
-            Short addressID = delAdress.getAddress_id();
-            System.out.println(address);
-
-            for (Byte i : staffRepo.FindStaffIDByAddressID(addressID)) {
-                storeRepo.DeleteByStaffID(i);
-            }
-
-
-            for (Byte i : storeRepo.FindStoreIDByAddressID(addressID)) {
-                for (Short j : customerRepo.FindCustomerIDByStoreID(i)) {
-                    paymentRepo.DeleteByCustomerID(j);
-                }
-                customerRepo.DeleteByStoreID(i);
-                for (Byte j : staffRepo.FindStaffIDByStoreID(i)) {
-                    paymentRepo.DeleteByStaffID(j);
-                    rentalRepo.DeleteByStaffID(j);
-                }
-                for (Integer j : inventoryRepo.FindInventoryIDByStoreID(i)) {
-                    rentalRepo.DeleteByInventoryID(j);
-                }
-                inventoryRepo.DeleteByStoreID(i);
-                staffRepo.DeleteByStoreID(i);
-            }
-
-            
-            System.out.println(addressID);
-            staffRepo.DeleteByAddressID(addressID);
-            storeRepo.DeleteByAddressID(addressID);
-            customerRepo.DeleteByAddressID(addressID);
-            addressRepo.delete(delAdress);
-        return new HashMap<>(){{put("output", "Deleted"); }};
-        }
-        return new HashMap<>(){{put("output", "Address doesn't exist"); }};
     }
     @GetMapping(path="/all")
     public @ResponseBody List<HashMap<String, Object>> getAddress() {
