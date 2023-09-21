@@ -21,7 +21,9 @@ public class actorController {
     private filmActorRepository filmActorRepo;
     @PostMapping(path="/add") 
     public @ResponseBody HashMap<String, String> addNewUser (@RequestBody Actor infomation) {
+        System.out.println("beginning");
         System.out.println(infomation);
+        System.out.println("end");
         Actor n = infomation;
         n.setLast_update();
         if (actorRepository.findByFirstName(infomation.getFirst_name().toUpperCase(), infomation.getLast_name().toUpperCase()) != null) {
