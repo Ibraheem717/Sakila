@@ -33,7 +33,7 @@ import sakila.project.entities.Category;
 <span class="nc" id="L33">            SearchedCategory.setLast_update();</span>
 <span class="nc" id="L34">            SearchedCategory.setName(information.get(&quot;newname&quot;));</span>
 <span class="nc" id="L35">            catagoryRepo.save(SearchedCategory);</span>
-<span class="nc" id="L36">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Changed&quot;);}};</span>
+<span class="nc" id="L36">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Saved&quot;);}};</span>
         }
 <span class="nc" id="L38">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Category doesn't exist&quot;);}};</span>
     }

@@ -33,7 +33,7 @@ public class categoryController {
             SearchedCategory.setLast_update();
             SearchedCategory.setName(information.get("newname"));
             catagoryRepo.save(SearchedCategory);
-            return new HashMap<>(){{put("output","Changed");}};
+            return new HashMap<>(){{put("output","Saved");}};
         }
         return new HashMap<>(){{put("output","Category doesn't exist");}};
     }

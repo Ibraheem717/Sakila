@@ -39,7 +39,7 @@ public class addressController {
         return new HashMap<>(){{put("output", "Saved"); }};
     }
     @PutMapping(path="/update") 
-    public @ResponseBody HashMap<String, String> updateUser (@RequestBody HashMap<String, Object> infomation) {
+    public @ResponseBody HashMap<String, String> updateAddress (@RequestBody HashMap<String, Object> infomation) {
         String address = (String) infomation.get("address");
         String address2 = (String) infomation.get("address2");
         String district = (String) infomation.get("district");
@@ -62,7 +62,7 @@ public class addressController {
             SearchedAddress.setCity_id(city_id);
             SearchedAddress.setLast_update();
             addressRepo.save(SearchedAddress);
-            return new HashMap<>(){{put("output", "Changed"); }};
+            return new HashMap<>(){{put("output", "Saved"); }};
         }
         return new HashMap<>(){{put("output", "Address already exist"); }};
     }

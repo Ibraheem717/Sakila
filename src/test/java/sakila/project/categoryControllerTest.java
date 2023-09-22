@@ -38,11 +38,18 @@ class categoryControllerTest {
         when(categoryCon.addNewCategory(getOutput))
                 .thenReturn(output);
 
+        output.put("output", "Category already exist");
+        when(categoryCon.addNewCategory(getOutput))
+                .thenReturn(output);
+
         when(categoryCon.getCategory("Doctor"))
                 .thenReturn(getOutput);
 
         when(categoryCon.updateCategory(changeOutput))
                 .thenReturn(getOutput);
+
+        when(categoryCon.updateCategory(changeOutput))
+                .thenReturn(output);
 
         output.put("output", "Deleted");
         when(categoryCon.deleteCatagory(delOutput))
