@@ -8,11 +8,5 @@ import sakila.project.entities.Inventory;
 
 
 public interface inventoryRepository extends CrudRepository<Inventory, Long> {
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM inventory inv WHERE inv.store_id = :store_id", nativeQuery = true)
-    void DeleteByStoreID(Byte store_id);
 
-    @Query(value = "SELECT inventory_id FROM inventory WHERE store_id = ?", nativeQuery = true)
-    Iterable<Integer> FindInventoryIDByStoreID(Byte store_id);
 }

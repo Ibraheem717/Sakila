@@ -1,0 +1,47 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+project,sakila.project.Controllers,categoryController,134,0,10,0,27,0,11,0,6,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},62,0,0,0,9,0,1,0,1,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,addressController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,addressController,356,0,26,0,63,0,24,0,11,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,categoryController.new HashMap() {...},11,0,0,0,3,0,1,0,1,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,actorController,162,0,10,0,30,0,11,0,6,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,categoryController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,categoryController.new HashMap() {...},16,0,0,0,3,0,1,0,1,0
+project,sakila.project.Controllers,categoryController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},11,0,0,0,3,0,1,0,1,0
+project,sakila.project.Controllers,categoryController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},23,0,0,0,4,0,1,0,1,0
+project,sakila.project.Controllers,categoryController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,actorController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,categoryController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.Controllers,categoryController.new HashMap() {...},11,0,0,0,1,0,1,0,1,0
+project,sakila.project.entities,Address,109,0,0,0,14,0,20,0,20,0
+project,sakila.project.entities,filmText,44,0,0,0,7,0,9,0,9,0
+project,sakila.project.entities,Staff,140,0,0,0,15,0,25,0,25,0
+project,sakila.project.entities,Store,56,0,0,0,8,0,11,0,11,0
+project,sakila.project.entities,Payment,92,0,0,0,11,0,17,0,17,0
+project,sakila.project.entities,Language,44,0,0,0,7,0,9,0,9,0
+project,sakila.project.entities,City,61,0,0,0,10,0,12,0,12,0
+project,sakila.project.entities,Actor,46,37,0,0,3,9,5,9,5,9
+project,sakila.project.entities,filmCategory,44,0,0,0,7,0,9,0,9,0
+project,sakila.project.entities,Rental,80,0,0,0,10,0,15,0,15,0
+project,sakila.project.entities,Film,176,0,0,0,18,0,31,0,31,0
+project,sakila.project.entities,Inventory,56,0,0,0,8,0,11,0,11,0
+project,sakila.project.entities,Country,49,0,0,0,9,0,10,0,10,0
+project,sakila.project.entities,filmActor,44,0,0,0,7,0,9,0,9,0
+project,sakila.project.entities,Customer,116,0,0,0,13,0,21,0,21,0
+project,sakila.project.entities,Category,61,0,0,0,10,0,12,0,12,0
+project,sakila.project,ProjectApplication,5,3,0,0,2,1,1,1,1,1

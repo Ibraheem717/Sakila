@@ -40,8 +40,6 @@ public class addressController {
     }
     @PutMapping(path="/update") 
     public @ResponseBody HashMap<String, String> updateUser (@RequestBody HashMap<String, Object> infomation) {
-        System.out.println("start");
-
         String address = (String) infomation.get("address");
         String address2 = (String) infomation.get("address2");
         String district = (String) infomation.get("district");
@@ -50,17 +48,13 @@ public class addressController {
         Short city_id = this.checkIfCityExist((String)infomation.get("city"));
         if (city_id==null)
             return new HashMap<>(){{put("output", "City doesn't exist"); }};
-        System.out.println("john");
         Address newInformation = objectMapper.convertValue(infomation.get("newAddress"), Address.class);
         newInformation.setCity_id(this.checkIfCityExist((String)infomation.get("newCity")));
         if (newInformation.getCity_id()==null) {
             return new HashMap<>(){{put("output", "City doesn't exist"); }};
         }
-        System.out.println(newInformation);
         Address SearchedAddress = this.getAddressAll(address, address2, district, city_id, postal_code, phone);
         Address newAddress = this.getAddressAll(newInformation.getAddress(), newInformation.getAddress2(), newInformation.getDistrict(), newInformation.getCity_id(), newInformation.getPostal_code(), newInformation.getPhone());
-        System.out.println("bob");
-        System.out.println(SearchedAddress);
         if (SearchedAddress!=null && newAddress==null) {
             Short addressHolder = SearchedAddress.getAddress_id();
             SearchedAddress = newInformation;

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>actorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">project</a> &gt; <a href="index.source.html" class="el_package">sakila.project.Controllers</a> &gt; <span class="el_source">actorController.java</span></div><h1>actorController.java</h1><pre class="source lang-java linenums">package sakila.project.Controllers;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import sakila.project.Repository.actorRepository;
+import sakila.project.Repository.filmActorRepository;
+import sakila.project.entities.Actor;
+
+@RestController 
+@RequestMapping(path=&quot;/actor&quot;) 
+@CrossOrigin(origins = {&quot;http://localhost:8080&quot;, &quot;http://localhost:3000&quot;})
+<span class="nc" id="L18">public class actorController {</span>
+    @Autowired 
+    private actorRepository actorRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private filmActorRepository filmActorRepo;
+    @PostMapping(path=&quot;/add&quot;) 
+    public @ResponseBody HashMap&lt;String, String&gt; addNewUser (@RequestBody HashMap&lt;String, String&gt; information) {
+<span class="nc" id="L27">        Actor n =  objectMapper.convertValue(information, Actor.class);;</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (actorRepository.findByFirstName( n.getFirst_name().toUpperCase(),  n.getLast_name().toUpperCase()) != null) {</span>
+<span class="nc" id="L29">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;User already exist&quot;);}};</span>
+        }
+<span class="nc" id="L31">        actorRepository.save(n);</span>
+<span class="nc" id="L32">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Saved&quot;);}};</span>
+    }
+    @PutMapping(path = &quot;/update&quot;)
+    public @ResponseBody HashMap&lt;String, String&gt; updateUser(@RequestBody HashMap&lt;String, Object&gt; information) {
+<span class="nc" id="L36">        String forename = (String) information.get(&quot;forename&quot;);</span>
+<span class="nc" id="L37">        String surname = (String) information.get(&quot;surname&quot;);</span>
+<span class="nc" id="L38">        Actor existingActor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (existingActor != null) {</span>
+<span class="nc" id="L40">            Actor newInformation = objectMapper.convertValue(information.get(&quot;actor&quot;), Actor.class);</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (actorRepository.findByFirstName(newInformation.getFirst_name(), newInformation.getLast_name()) != null)</span>
+<span class="nc" id="L42">                return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Name taken&quot;);}};</span>
+<span class="nc" id="L43">            existingActor.setFirst_name(newInformation.getFirst_name());</span>
+<span class="nc" id="L44">            existingActor.setLast_name(newInformation.getLast_name());</span>
+<span class="nc" id="L45">            existingActor.setLast_update();            </span>
+<span class="nc" id="L46">            actorRepository.save(existingActor);</span>
+<span class="nc" id="L47">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Saved&quot;);}};</span>
+        }
+    
+<span class="nc" id="L50">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;User doesn't exist&quot;);}};</span>
+    }
+    @DeleteMapping(path=&quot;/delete&quot;) 
+    public @ResponseBody HashMap&lt;String, String&gt; deleteUser (@RequestBody HashMap&lt;String, String&gt; actor) {
+<span class="nc" id="L54">        Actor delActor = actorRepository.findByFirstName(actor.get(&quot;first_name&quot;).toUpperCase(),actor.get(&quot;last_name&quot;).toUpperCase());</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (delActor!=null) {</span>
+<span class="nc" id="L56">            filmActorRepo.DeleteByActorID(delActor.getActor_id());</span>
+<span class="nc" id="L57">            actorRepository.delete(delActor);</span>
+<span class="nc" id="L58">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Deleted&quot;);}};</span>
+        }
+<span class="nc" id="L60">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;User doesn't exist&quot;);}};</span>
+    }
+    @GetMapping(path=&quot;/all&quot;)
+    public @ResponseBody Iterable&lt;Actor&gt; getAllUsers() {
+<span class="nc" id="L64">        return actorRepository.findAll();</span>
+    }
+    @GetMapping(path=&quot;/get&quot;)
+    public @ResponseBody HashMap&lt;String, String&gt; getUsers(@RequestParam String forename, @RequestParam String surname ) {
+<span class="nc" id="L68">        Actor actor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase()); </span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (actor!=null) {</span>
+<span class="nc" id="L70">            return new HashMap&lt;String, String&gt;() {{</span>
+<span class="nc" id="L71">                put(&quot;first_name&quot;, actor.getFirst_name());</span>
+<span class="nc" id="L72">                put(&quot;last_name&quot; , actor.getLast_name());</span>
+<span class="nc" id="L73">            }};</span>
+        }
+<span class="nc" id="L75">        return new HashMap&lt;String, String&gt;() {{</span>
+<span class="nc" id="L76">            put(&quot;outcome&quot; , &quot;User doesn't exist&quot;);</span>
+<span class="nc" id="L77">        }};</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

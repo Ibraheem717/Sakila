@@ -14,7 +14,7 @@ import sakila.project.entities.Actor;
 
 @RestController 
 @RequestMapping(path="/actor") 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3000"})
 public class actorController {
     @Autowired 
     private actorRepository actorRepository;
@@ -24,9 +24,7 @@ public class actorController {
     private filmActorRepository filmActorRepo;
     @PostMapping(path="/add") 
     public @ResponseBody HashMap<String, String> addNewUser (@RequestBody HashMap<String, String> information) {
-        System.out.println(information);
         Actor n =  objectMapper.convertValue(information, Actor.class);;
-        System.out.println(n);
         if (actorRepository.findByFirstName( n.getFirst_name().toUpperCase(),  n.getLast_name().toUpperCase()) != null) {
             return new HashMap<>(){{put("output","User already exist");}};
         }
@@ -68,7 +66,6 @@ public class actorController {
     @GetMapping(path="/get")
     public @ResponseBody HashMap<String, String> getUsers(@RequestParam String forename, @RequestParam String surname ) {
         Actor actor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase()); 
-        System.out.println(actor);
         if (actor!=null) {
             return new HashMap<String, String>() {{
                 put("first_name", actor.getFirst_name());
