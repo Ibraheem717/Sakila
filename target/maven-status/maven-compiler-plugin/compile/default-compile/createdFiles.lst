@@ -16,6 +16,7 @@ sakila\project\Controllers\categoryController$1.class
 sakila\project\Repository\countryRepository.class
 sakila\project\entities\Rental.class
 sakila\project\Repository\actorRepository.class
+sakila\project\Controllers\addressController$10.class
 sakila\project\Controllers\addressController$2.class
 sakila\project\Repository\filmTextRepository.class
 sakila\project\Controllers\actorController$3.class
@@ -32,6 +33,7 @@ sakila\project\entities\Film.class
 sakila\project\Repository\inventoryRepository.class
 sakila\project\Repository\rentalRepository.class
 sakila\project\entities\Country.class
+sakila\project\Controllers\addressController$11.class
 sakila\project\Controllers\addressController$3.class
 sakila\project\Controllers\categoryController$3.class
 sakila\project\Repository\customerRepository.class

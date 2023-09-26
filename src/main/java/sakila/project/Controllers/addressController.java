@@ -24,47 +24,53 @@ public class addressController {
     @Autowired
     private ObjectMapper objectMapper;
     @PostMapping(path="/add") 
-    public @ResponseBody HashMap<String, String> addNewAddress (@RequestBody HashMap<String, String> infomation) {
-        String address = infomation.get("address");
-        String address2 = infomation.get("address2");
-        String district = infomation.get("district");
-        String postal_code = infomation.get("postal_code");
-        String phone = infomation.get("phone");
-        Short city_id = cityRepo.SearchCityName(infomation.get("city")).getCity_id();
-        if ( this.getAddressAll(address, address2, district, city_id, postal_code, phone) !=null ) 
+    public @ResponseBody HashMap<String, String> addNewAddress (@RequestBody HashMap<String, String> information) {
+        String address = information.get("address");
+        String address2 = information.get("address2");
+        String district = information.get("district");
+        String postal_code = information.get("postal_code");
+        String phone = information.get("phone");
+        Short city_id = this.checkIfCityExist(information.get("city"));
+        if (city_id==null)
+            return new HashMap<>(){{put("output", "City doesn't exist"); }};
+        if ( this.getAddressAll(address, address2, district, city_id, postal_code, phone) !=null )
             return new HashMap<>(){{put("output", "Address already exist"); }};
-        Address newAddress = new Address(null, address, address2, district, city_id, postal_code, phone, null);
+        Address newAddress = objectMapper.convertValue(information, Address.class);
         newAddress.setLast_update();
         addressRepo.save(newAddress);
         return new HashMap<>(){{put("output", "Saved"); }};
     }
     @PutMapping(path="/update") 
-    public @ResponseBody HashMap<String, String> updateAddress (@RequestBody HashMap<String, Object> infomation) {
-        String address = (String) infomation.get("address");
-        String address2 = (String) infomation.get("address2");
-        String district = (String) infomation.get("district");
-        String postal_code = (String) infomation.get("postal_code");
-        String phone = (String) infomation.get("phone");
-        Short city_id = this.checkIfCityExist((String)infomation.get("city"));
+    public @ResponseBody HashMap<String, String> updateAddress (@RequestBody HashMap<String, Object> information) {
+        String address = (String) information.get("address");
+        String address2 = (String) information.get("address2");
+        String district = (String) information.get("district");
+        String postal_code = (String) information.get("postal_code");
+        String phone = (String) information.get("phone");
+        Short city_id = this.checkIfCityExist((String)information.get("city"));
         if (city_id==null)
             return new HashMap<>(){{put("output", "City doesn't exist"); }};
-        Address newInformation = objectMapper.convertValue(infomation.get("newAddress"), Address.class);
-        newInformation.setCity_id(this.checkIfCityExist((String)infomation.get("newCity")));
+        Address newInformation = objectMapper.convertValue(information.get("newAddress"), Address.class);
+        newInformation.setCity_id(this.checkIfCityExist((String)information.get("newCity")));
         if (newInformation.getCity_id()==null) {
             return new HashMap<>(){{put("output", "City doesn't exist"); }};
         }
+
         Address SearchedAddress = this.getAddressAll(address, address2, district, city_id, postal_code, phone);
         Address newAddress = this.getAddressAll(newInformation.getAddress(), newInformation.getAddress2(), newInformation.getDistrict(), newInformation.getCity_id(), newInformation.getPostal_code(), newInformation.getPhone());
         if (SearchedAddress!=null && newAddress==null) {
             Short addressHolder = SearchedAddress.getAddress_id();
             SearchedAddress = newInformation;
             SearchedAddress.setAddress_id(addressHolder);
-            SearchedAddress.setCity_id(city_id);
+            SearchedAddress.setCity_id(newInformation.getCity_id());
             SearchedAddress.setLast_update();
             addressRepo.save(SearchedAddress);
             return new HashMap<>(){{put("output", "Saved"); }};
         }
-        return new HashMap<>(){{put("output", "Address already exist"); }};
+        if (newAddress!=null)
+            return new HashMap<>(){{put("output", "Address already exist"); }};
+        return new HashMap<>(){{put("output", "Address doesn't exist"); }};
+
     }
     @GetMapping(path="/all")
     public @ResponseBody List<HashMap<String, Object>> getAddress() {

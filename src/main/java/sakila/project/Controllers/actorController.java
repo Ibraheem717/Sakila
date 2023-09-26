@@ -24,10 +24,11 @@ public class actorController {
     private filmActorRepository filmActorRepo;
     @PostMapping(path="/add") 
     public @ResponseBody HashMap<String, String> addNewUser (@RequestBody HashMap<String, String> information) {
-        Actor n =  objectMapper.convertValue(information, Actor.class);;
+        Actor n =  objectMapper.convertValue(information, Actor.class);
         if (actorRepository.findByFirstName( n.getFirst_name().toUpperCase(),  n.getLast_name().toUpperCase()) != null) {
             return new HashMap<>(){{put("output","User already exist");}};
         }
+        n.setLast_update();
         actorRepository.save(n);
         return new HashMap<>(){{put("output","Saved");}};
     }
@@ -64,7 +65,7 @@ public class actorController {
         return actorRepository.findAll();
     }
     @GetMapping(path="/get")
-    public @ResponseBody HashMap<String, String> getUsers(@RequestParam String forename, @RequestParam String surname ) {
+        public @ResponseBody HashMap<String, String> getUsers(@RequestParam String forename, @RequestParam String surname ) {
         Actor actor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase()); 
         if (actor!=null) {
             return new HashMap<String, String>() {{

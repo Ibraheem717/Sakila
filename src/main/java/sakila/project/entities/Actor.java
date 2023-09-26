@@ -23,7 +23,7 @@ import java.sql.Timestamp;
 @Table(name="actor")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Actor {
-    @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
     @JsonIgnore
     @Transient

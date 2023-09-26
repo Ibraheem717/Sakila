@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 @Getter
 <span class="nc" id="L12">@Setter</span>
 <span class="nc" id="L13">@NoArgsConstructor</span>
-<span class="nc" id="L14">@AllArgsConstructor</span>
+<span class="fc" id="L14">@AllArgsConstructor</span>
 <span class="nc" id="L15">@ToString</span>
 @Entity
 @Table(name=&quot;city&quot;)
 public class City {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-<span class="nc" id="L21">    private Short city_id;</span>
+<span class="fc" id="L21">    private Short city_id;</span>
 <span class="nc" id="L22">    private String city;</span>
 <span class="nc" id="L23">    private Short country_id;</span>
 <span class="nc" id="L24">    private Timestamp last_update;</span>
