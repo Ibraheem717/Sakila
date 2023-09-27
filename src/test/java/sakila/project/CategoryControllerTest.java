@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 @WebMvcTest(CategoryController.class)
-class categoryControllerTest {
+class CategoryControllerTest {
 
     @MockBean
     private CatagoryRepository categoryRepo;
@@ -46,7 +46,7 @@ class categoryControllerTest {
 
     @Test
     @DisplayName("Add New Category -- Success")
-    public void testAddNewCategorySuccess() throws Exception {
+    void testAddNewCategorySuccess() throws Exception {
         when(categoryRepo.save(any(Category.class))).thenReturn(new Category());
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/catagory/add")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -59,7 +59,7 @@ class categoryControllerTest {
     }
     @Test
     @DisplayName("Add New Category -- Fail")
-    public void testAddNewCategoryFailure() throws Exception {
+    void testAddNewCategoryFailure() throws Exception {
         when(categoryRepo.SearchCategory(anyString())).thenReturn(new Category()); // Category already exists
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/catagory/add")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ class categoryControllerTest {
     }
     @Test
     @DisplayName("Update Category -- Success")
-    public void testUpdateCategorySuccess() throws Exception {
+    void testUpdateCategorySuccess() throws Exception {
         when(categoryRepo.SearchCategory(anyString())).thenReturn(new Category()); // Category exists but with different name
         when(categoryRepo.SearchCategory("Door")).thenReturn(null); // New name is available
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/catagory/update")
@@ -89,7 +89,7 @@ class categoryControllerTest {
 
     @Test
     @DisplayName("Update Category -- Fail (Name Taken)")
-    public void testUpdateCategoryNameTaken() throws Exception {
+    void testUpdateCategoryNameTaken() throws Exception {
         when(categoryRepo.SearchCategory(anyString())).thenReturn(new Category());
         when(categoryRepo.SearchCategory("Door")).thenReturn(new Category());
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/catagory/update")
@@ -105,7 +105,7 @@ class categoryControllerTest {
     }
     @Test
     @DisplayName("Update Category -- Fail (Category doesn't exist)")
-    public void testUpdateCategoryNotFound() throws Exception {
+    void testUpdateCategoryNotFound() throws Exception {
         when(categoryRepo.SearchCategory("Rick")).thenReturn(null);
         String failedNEWJSON = "{\"name\":\"Rick\",\"newname\":\"Ben\"}";
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/catagory/update")
@@ -119,7 +119,7 @@ class categoryControllerTest {
     }
     @Test
     @DisplayName("Get Category -- Success")
-    public void testGetCategorysSuccess() throws Exception {
+    void testGetCategorysSuccess() throws Exception {
         Category cate = new Category();
         cate.setName("Lizzy");
         when(categoryRepo.SearchCategory("LIZZY")).thenReturn(cate);
@@ -133,7 +133,7 @@ class categoryControllerTest {
     }
     @Test
     @DisplayName("Get Category -- Failed")
-    public void testGetCategoryCategoryNotFound() throws Exception {
+    void testGetCategoryCategoryNotFound() throws Exception {
         when(categoryRepo.SearchCategory("Muguire")).thenReturn(null);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/catagory/get")
                 .param("givenCategory", "Muguire"))
@@ -152,7 +152,7 @@ class categoryControllerTest {
     }
     @Test
     @DisplayName("Delete Category -- Success")
-    public void testDeleteCategorySuccess() throws Exception {
+    void testDeleteCategorySuccess() throws Exception {
         Category act = createCategoryWithID();
         when(categoryRepo.SearchCategory("JOKER")).thenReturn(act);
         doNothing().when(filmCategoryRepo).DeleteByActorID((byte) 1);
@@ -170,7 +170,7 @@ class categoryControllerTest {
     }
     @Test
     @DisplayName("Delete Category -- Failed")
-    public void testDeleteCategoryNotFound() throws Exception {
+    void testDeleteCategoryNotFound() throws Exception {
         when(categoryRepo.SearchCategory("Joker")).thenReturn(null);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/catagory/delete")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -188,7 +188,7 @@ class categoryControllerTest {
     }
     @Test
     @DisplayName("Get All Category's")
-    public void testGetAllCategory() throws Exception {
+    void testGetAllCategory() throws Exception {
         List<Category> categories = new ArrayList<>();
         categories.add(createCategory("The"));
         categories.add(createCategory("Can"));

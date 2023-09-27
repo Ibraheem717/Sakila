@@ -18,7 +18,7 @@ class InventoryTest {
     private InventoryRepository inventoryRepository;
 
     @Test
-    private void testSaveInventory() {
+    void testSaveInventory() {
         // Create an Inventory entity
         Inventory inventory = new Inventory();
         inventory.setInventory_id(1);

@@ -5,7 +5,7 @@ project,sakila.project.controllers,AddressController,4,417,1,29,1,82,1,27,0,13
 project,sakila.project.entities,Rental,35,45,0,0,2,8,2,13,2,13
 project,sakila.project.entities,Film,75,101,0,0,2,16,2,29,2,29
 project,sakila.project.entities,Address,49,60,0,0,2,12,3,17,3,17
-project,sakila.project.entities,Inventory,56,0,0,0,8,0,11,0,11,0
+project,sakila.project.entities,Inventory,25,31,0,0,2,6,2,9,2,9
 project,sakila.project.entities,Staff,60,80,0,0,2,13,2,23,2,23
 project,sakila.project.entities,Store,25,31,0,0,2,6,2,9,2,9
 project,sakila.project.entities,FilmText,20,24,0,0,2,5,2,7,2,7
