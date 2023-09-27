@@ -3,7 +3,7 @@ import org.springframework.data.repository.CrudRepository;
 import sakila.project.entities.Film;
 
 
-public interface filmRepository extends CrudRepository<Film, Long> {
+public interface FilmRepository extends CrudRepository<Film, Long> {
 
 
 }

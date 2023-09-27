@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import sakila.project.entities.Store;
 
 
-public interface storeRepository extends CrudRepository<Store, Long> {
+public interface StoreRepository extends CrudRepository<Store, Long> {
 
 }
 

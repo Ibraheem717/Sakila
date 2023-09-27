@@ -16,7 +16,7 @@ import static sakila.project.ProjectApplication.*;
 @RestController 
 @RequestMapping(path=&quot;/actor&quot;) 
 @CrossOrigin(origins = {&quot;http://localhost:8080&quot;, &quot;http://localhost:3000&quot;})
-<span class="fc" id="L19">public class ActorController {</span>
+<span class="nc" id="L19">public class ActorController {</span>
     @Autowired 
     private actorRepository actorRepository;
     @Autowired
@@ -24,61 +24,61 @@ import static sakila.project.ProjectApplication.*;
     @Autowired
     private FilmActorRepository filmActorRepo;
     private String returnString(String extra) {
-<span class="fc" id="L27">        return &quot;Actor &quot; + extra;</span>
+<span class="nc" id="L27">        return &quot;Actor &quot; + extra;</span>
     }
     @PostMapping(path=&quot;/add&quot;) 
     public @ResponseBody Map&lt;String, String&gt; addNewActor (@RequestBody Map&lt;String, String&gt; information) {
-<span class="fc" id="L31">        Actor n =  objectMapper.convertValue(information, Actor.class);</span>
-<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (actorRepository.findByFirstName( n.getFirst_name().toUpperCase(),  n.getLast_name().toUpperCase()) != null) {</span>
-<span class="fc" id="L33">            return returnValue(returnString(EXIST));</span>
+<span class="nc" id="L31">        Actor n =  objectMapper.convertValue(information, Actor.class);</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (actorRepository.findByFirstName( n.getFirst_name().toUpperCase(),  n.getLast_name().toUpperCase()) != null) {</span>
+<span class="nc" id="L33">            return returnValue(returnString(EXIST));</span>
         }
-<span class="fc" id="L35">        n.setLast_update();</span>
-<span class="fc" id="L36">        actorRepository.save(n);</span>
-<span class="fc" id="L37">        return returnValue(SAVED);</span>
+<span class="nc" id="L35">        n.setLast_update();</span>
+<span class="nc" id="L36">        actorRepository.save(n);</span>
+<span class="nc" id="L37">        return returnValue(SAVED);</span>
     }
     @PutMapping(path = &quot;/update&quot;)
     public @ResponseBody Map&lt;String, String&gt; updateActor(@RequestBody Map&lt;String, Object&gt; information) {
-<span class="fc" id="L41">        String forename = (String) information.get(&quot;forename&quot;);</span>
-<span class="fc" id="L42">        String surname = (String) information.get(&quot;surname&quot;);</span>
-<span class="fc" id="L43">        Actor existingActor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (existingActor != null) {</span>
-<span class="fc" id="L45">            Actor newInformation = objectMapper.convertValue(information.get(&quot;actor&quot;), Actor.class);</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">            if (actorRepository.findByFirstName(newInformation.getFirst_name(), newInformation.getLast_name()) != null)</span>
-<span class="fc" id="L47">                return returnValue(returnString(EXIST));</span>
-<span class="fc" id="L48">            existingActor.setFirst_name(newInformation.getFirst_name());</span>
-<span class="fc" id="L49">            existingActor.setLast_name(newInformation.getLast_name());</span>
-<span class="fc" id="L50">            existingActor.setLast_update();            </span>
-<span class="fc" id="L51">            actorRepository.save(existingActor);</span>
-<span class="fc" id="L52">            return returnValue(SAVED);</span>
+<span class="nc" id="L41">        String forename = (String) information.get(&quot;forename&quot;);</span>
+<span class="nc" id="L42">        String surname = (String) information.get(&quot;surname&quot;);</span>
+<span class="nc" id="L43">        Actor existingActor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (existingActor != null) {</span>
+<span class="nc" id="L45">            Actor newInformation = objectMapper.convertValue(information.get(&quot;actor&quot;), Actor.class);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if (actorRepository.findByFirstName(newInformation.getFirst_name(), newInformation.getLast_name()) != null)</span>
+<span class="nc" id="L47">                return returnValue(returnString(EXIST));</span>
+<span class="nc" id="L48">            existingActor.setFirst_name(newInformation.getFirst_name());</span>
+<span class="nc" id="L49">            existingActor.setLast_name(newInformation.getLast_name());</span>
+<span class="nc" id="L50">            existingActor.setLast_update();            </span>
+<span class="nc" id="L51">            actorRepository.save(existingActor);</span>
+<span class="nc" id="L52">            return returnValue(SAVED);</span>
         }
     
-<span class="fc" id="L55">        return returnValue(returnString(NONEXIST));</span>
+<span class="nc" id="L55">        return returnValue(returnString(NONEXIST));</span>
     }
     @DeleteMapping(path=&quot;/delete&quot;) 
     public @ResponseBody Map&lt;String, String&gt; deleteActor (@RequestBody Map&lt;String, String&gt; actor) {
-<span class="fc" id="L59">        Actor delActor = actorRepository.findByFirstName(actor.get(&quot;first_name&quot;).toUpperCase(),actor.get(&quot;last_name&quot;).toUpperCase());</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (delActor!=null) {</span>
-<span class="fc" id="L61">            filmActorRepo.DeleteByActorID(delActor.getActor_id());</span>
-<span class="fc" id="L62">            actorRepository.delete(delActor);</span>
-<span class="fc" id="L63">            return returnValue(DELETED);</span>
+<span class="nc" id="L59">        Actor delActor = actorRepository.findByFirstName(actor.get(&quot;first_name&quot;).toUpperCase(),actor.get(&quot;last_name&quot;).toUpperCase());</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (delActor!=null) {</span>
+<span class="nc" id="L61">            filmActorRepo.DeleteByActorID(delActor.getActor_id());</span>
+<span class="nc" id="L62">            actorRepository.delete(delActor);</span>
+<span class="nc" id="L63">            return returnValue(DELETED);</span>
         }
-<span class="fc" id="L65">        return returnValue(returnString(NONEXIST));</span>
+<span class="nc" id="L65">        return returnValue(returnString(NONEXIST));</span>
     }
     @GetMapping(path=&quot;/all&quot;)
     public @ResponseBody Iterable&lt;Actor&gt; getAllActors() {
-<span class="fc" id="L69">        return actorRepository.findAll();</span>
+<span class="nc" id="L69">        return actorRepository.findAll();</span>
     }
     @GetMapping(path=&quot;/get&quot;)
         public @ResponseBody Map&lt;String, String&gt; getActors(@RequestParam String forename, @RequestParam String surname ) {
-<span class="fc" id="L73">        Actor actor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());</span>
-<span class="fc" id="L74">        Map&lt;String, String&gt; act = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (actor!=null) {</span>
-<span class="fc" id="L76">            act.put(&quot;first_name&quot;, actor.getFirst_name());</span>
-<span class="fc" id="L77">            act.put(&quot;last_name&quot; , actor.getLast_name());</span>
+<span class="nc" id="L73">        Actor actor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());</span>
+<span class="nc" id="L74">        Map&lt;String, String&gt; act = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (actor!=null) {</span>
+<span class="nc" id="L76">            act.put(&quot;first_name&quot;, actor.getFirst_name());</span>
+<span class="nc" id="L77">            act.put(&quot;last_name&quot; , actor.getLast_name());</span>
         }
         else
-<span class="fc" id="L80">            act = returnValue(returnString(NONEXIST));</span>
-<span class="fc" id="L81">        return act;</span>
+<span class="nc" id="L80">            act = returnValue(returnString(NONEXIST));</span>
+<span class="nc" id="L81">        return act;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

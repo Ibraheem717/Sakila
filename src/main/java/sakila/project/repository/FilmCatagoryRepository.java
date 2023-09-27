@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import jakarta.transaction.Transactional;
 import sakila.project.entities.FilmActor;
 
-public interface filmCatagoryRepository extends CrudRepository<FilmActor, Short> {
+public interface FilmCatagoryRepository extends CrudRepository<FilmActor, Short> {
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM film_category fc WHERE fc.category_id = :category_id", nativeQuery = true)

@@ -3,6 +3,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import sakila.project.entities.Payment;
 
-public interface paymentRepository extends CrudRepository<Payment, Long> {
+public interface PaymentRepository extends CrudRepository<Payment, Long> {
 
 }

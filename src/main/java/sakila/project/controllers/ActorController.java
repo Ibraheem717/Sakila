@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import sakila.project.repository.actorRepository;
+import sakila.project.repository.ActorRepository;
 import sakila.project.repository.FilmActorRepository;
 import sakila.project.entities.Actor;
 
@@ -18,7 +18,7 @@ import static sakila.project.ProjectApplication.*;
 @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3000"})
 public class ActorController {
     @Autowired 
-    private actorRepository actorRepository;
+    private ActorRepository actorRepository;
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired

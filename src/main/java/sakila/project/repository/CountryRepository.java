@@ -3,7 +3,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import sakila.project.entities.Country;
 
-public interface countryRepository extends CrudRepository<Country, Long> {
+public interface CountryRepository extends CrudRepository<Country, Long> {
 
 
 }

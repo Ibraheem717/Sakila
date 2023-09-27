@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 project,sakila.project.controllers,CategoryController,0,145,0,12,0,32,0,13,0,7
-project,sakila.project.controllers,ActorController,0,174,0,10,0,35,0,12,0,7
-project,sakila.project.controllers,AddressController,4,399,1,29,1,76,1,27,0,13
+project,sakila.project.controllers,ActorController,174,0,10,0,35,0,12,0,7,0
+project,sakila.project.controllers,AddressController,421,0,30,0,83,0,28,0,13,0
 project,sakila.project.entities,Rental,35,45,0,0,2,8,2,13,2,13
 project,sakila.project.entities,Film,75,101,0,0,2,16,2,29,2,29
 project,sakila.project.entities,Address,49,60,0,0,2,12,3,17,3,17
@@ -14,7 +14,7 @@ project,sakila.project.entities,Payment,40,52,0,0,2,9,2,15,2,15
 project,sakila.project.entities,FilmActor,44,0,0,0,7,0,9,0,9,0
 project,sakila.project.entities,Language,20,24,0,0,2,5,2,7,2,7
 project,sakila.project.entities,Country,24,25,0,0,2,7,3,7,3,7
-project,sakila.project.entities,City,14,47,0,0,1,9,2,10,2,10
+project,sakila.project.entities,City,29,32,0,0,2,8,3,9,3,9
 project,sakila.project.entities,Actor,46,37,0,0,3,9,5,9,5,9
 project,sakila.project.entities,Customer,50,66,0,0,2,11,2,19,2,19
 project,sakila.project.entities,Category,36,25,0,0,3,7,5,7,5,7

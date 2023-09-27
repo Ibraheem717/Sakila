@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import sakila.project.controllers.AddressController;
-import sakila.project.repository.addressRepository;
-import sakila.project.repository.cityRepository;
+import sakila.project.repository.AddressRepository;
+import sakila.project.repository.CityRepository;
 import sakila.project.entities.Address;
 import sakila.project.entities.City;
 import java.util.*;
@@ -28,9 +28,9 @@ class addressControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private addressRepository addressRepo;
+    private AddressRepository addressRepo;
     @MockBean
-    private cityRepository cityRepo;
+    private CityRepository cityRepo;
     private final String JSON = "{" +
             "\"address\" : \"Graveyard\"," +
             "\"address2\" : \"BrokeTown\"," +
@@ -56,7 +56,7 @@ class addressControllerTest {
                 "\"city\" : \"Day City\"}}";
     @Test
     @DisplayName("Add New Address -- Success")
-    public void testAddNewAddressSuccess() throws Exception {
+    private void testAddNewAddressSuccess() throws Exception {
         when(cityRepo.SearchCityName(anyString())).thenReturn(new City((short) 1,
                 "Dead", (short) 1,null));
         when(addressRepo.SearchAddressAll(anyString(),anyString(),anyString(),anyShort(),
@@ -76,7 +76,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Add New Address -- Failed (Address already exist)")
-    public void testAddNewAddressFailOne() throws Exception {
+    private void testAddNewAddressFailOne() throws Exception {
         when(cityRepo.SearchCityName(anyString())).thenReturn(new City((short) 1,
                 "Dead", (short) 1,null));
         when(addressRepo.SearchAddressAll(anyString(),anyString(),anyString(),anyShort(),
@@ -94,7 +94,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Add New Address -- Failed (City doesn't exist)")
-    public void testAddNewAddressFailTwo() throws Exception {
+    private void testAddNewAddressFailTwo() throws Exception {
         when(cityRepo.SearchCityName(anyString())).thenReturn(null);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/address/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -117,7 +117,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Update Address -- Success")
-    public void testUpdateAddressSuccess() throws Exception {
+    private void testUpdateAddressSuccess() throws Exception {
         Address original = createAddress("Graveyard",
                 "BrokeTown",
                 "Giza",
@@ -161,7 +161,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Update Address -- Fail (No City/First)")
-    public void testUpdateAddressFailCityFirst() throws Exception {
+    private void testUpdateAddressFailCityFirst() throws Exception {
         when(cityRepo.SearchCityName("Night City")).thenReturn(null);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/address/update")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -174,7 +174,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Update Address -- Fail (No City/Second)")
-    public void testUpdateAddressFailCitySecond() throws Exception {
+    private void testUpdateAddressFailCitySecond() throws Exception {
         when(cityRepo.SearchCityName("Night City")).thenReturn(new City((short) 1,
                 "Night City", (short) 1,null));
         when(cityRepo.SearchCityName("Day City")).thenReturn(null);
@@ -189,7 +189,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Update Address -- Fail (Address Doesn't Exist)")
-    public void testUpdateAddressFailedAddressNotExist() throws Exception {
+    private void testUpdateAddressFailedAddressNotExist() throws Exception {
         Address original = createAddress("Graveyard",
                 "BrokeTown",
                 "Giza",
@@ -233,7 +233,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Update Address -- Fail (Address Already Exist)")
-    public void testUpdateAddressFailedAddressAlreadyExist() throws Exception {
+    private void testUpdateAddressFailedAddressAlreadyExist() throws Exception {
         Address original = createAddress("Graveyard",
                 "BrokeTown",
                 "Giza",
@@ -277,7 +277,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Get Address -- All Info")
-    public void testGetAddressAll() throws Exception {
+    private void testGetAddressAll() throws Exception {
         when(cityRepo.SearchCityName("Night City")).thenReturn(new City((short) 1,
                 "Night City", (short) 1,null));
         when(addressRepo.SearchAddressAll(
@@ -293,7 +293,7 @@ class addressControllerTest {
                 .param("address2", "Dick")
                 .param("district", "Harry")
                 .param("city", "Night City")
-                .param("postal_code", "Richard")
+                .param("postCode", "Richard")
                 .param("phone", "Bob"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -305,7 +305,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Get Address -- Address2 Info")
-    public void testGetAddressWithAddress2() throws Exception {
+    private void testGetAddressWithAddress2() throws Exception {
         when(cityRepo.SearchCityName("Night City")).thenReturn(new City((short) 1,
                 "Night City", (short) 1,null));
         when(addressRepo.SearchAddressWithAddress2(
@@ -320,7 +320,7 @@ class addressControllerTest {
                         .param("address2", "Dick")
                         .param("district", "Harry")
                         .param("city", "Night City")
-                        .param("postal_code", "")
+                        .param("postCode", "")
                         .param("phone", "Bob"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -332,7 +332,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Get Address -- Postcode Info")
-    public void testGetAddressPostcode() throws Exception {
+    private void testGetAddressPostcode() throws Exception {
         when(cityRepo.SearchCityName("Night City")).thenReturn(new City((short) 1,
                 "Night City", (short) 1,null));
         when(addressRepo.SearchAddressWithPostCode(
@@ -347,7 +347,7 @@ class addressControllerTest {
                         .param("address2", "")
                         .param("district", "Harry")
                         .param("city", "Night City")
-                        .param("postal_code", "Richard")
+                        .param("postCode", "Richard")
                         .param("phone", "Bob"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -359,7 +359,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Get Address -- Info")
-    public void testGetAddress() throws Exception {
+    private void testGetAddress() throws Exception {
         when(cityRepo.SearchCityName("Night City")).thenReturn(new City((short) 1,
                 "Night City", (short) 1,null));
         when(addressRepo.SearchAddress(
@@ -373,7 +373,7 @@ class addressControllerTest {
                         .param("address2", "")
                         .param("district", "Harry")
                         .param("city", "Night City")
-                        .param("postal_code", "")
+                        .param("postCode", "")
                         .param("phone", "Bob"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -385,7 +385,7 @@ class addressControllerTest {
     }
     @Test
     @DisplayName("Get Address -- All")
-    public void testGetAllAddress() throws Exception {
+    private void testGetAllAddress() throws Exception {
         when(cityRepo.findById((short) 1)).thenReturn(Optional.of(new City()));
         List<Address> addresses = new ArrayList<>();
         addresses.add(createAddress("TOM",

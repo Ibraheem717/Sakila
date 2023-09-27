@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import sakila.project.entities.Inventory;
 
 
-public interface inventoryRepository extends CrudRepository<Inventory, Long> {
+public interface InventoryRepository extends CrudRepository<Inventory, Long> {
 
 }

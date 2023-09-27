@@ -5,8 +5,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import sakila.project.repository.catagoryRepository;
-import sakila.project.repository.filmCatagoryRepository;
+import sakila.project.repository.CatagoryRepository;
+import sakila.project.repository.FilmCatagoryRepository;
 import sakila.project.entities.Category;
 
 import static sakila.project.ProjectApplication.*;
@@ -16,9 +16,9 @@ import static sakila.project.ProjectApplication.*;
 @CrossOrigin(origins = "http://localhost:3000")
 public class CategoryController {
     @Autowired 
-    private catagoryRepository catagoryRepo;
+    private CatagoryRepository catagoryRepo;
     @Autowired 
-    private filmCatagoryRepository filmCatagoryRepo;
+    private FilmCatagoryRepository filmCatagoryRepo;
     private String returnString(String extra) {
         return "Category " + extra;
     }
@@ -34,12 +34,12 @@ public class CategoryController {
     }
     @PutMapping(path="/update") 
     public @ResponseBody Map<String, String> updateCategory (@RequestBody Map<String, String> information) {
-        Category SearchedCategory = catagoryRepo.SearchCategory(information.get("name"));
+        Category searchedCategory = catagoryRepo.SearchCategory(information.get("name"));
         Category newCategory = catagoryRepo.SearchCategory(information.get("newname"));
-        if (SearchedCategory!=null && newCategory==null) {
-            SearchedCategory.setLast_update();
-            SearchedCategory.setName(information.get("newname"));
-            catagoryRepo.save(SearchedCategory);
+        if (searchedCategory!=null && newCategory==null) {
+            searchedCategory.setLast_update();
+            searchedCategory.setName(information.get("newname"));
+            catagoryRepo.save(searchedCategory);
             return returnValue(SAVED);
         }
         if (newCategory!=null)

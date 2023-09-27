@@ -34,12 +34,12 @@ import static sakila.project.ProjectApplication.*;
     }
     @PutMapping(path=&quot;/update&quot;) 
     public @ResponseBody Map&lt;String, String&gt; updateCategory (@RequestBody Map&lt;String, String&gt; information) {
-<span class="fc" id="L37">        Category SearchedCategory = catagoryRepo.SearchCategory(information.get(&quot;name&quot;));</span>
+<span class="fc" id="L37">        Category searchedCategory = catagoryRepo.SearchCategory(information.get(&quot;name&quot;));</span>
 <span class="fc" id="L38">        Category newCategory = catagoryRepo.SearchCategory(information.get(&quot;newname&quot;));</span>
-<span class="fc bfc" id="L39" title="All 4 branches covered.">        if (SearchedCategory!=null &amp;&amp; newCategory==null) {</span>
-<span class="fc" id="L40">            SearchedCategory.setLast_update();</span>
-<span class="fc" id="L41">            SearchedCategory.setName(information.get(&quot;newname&quot;));</span>
-<span class="fc" id="L42">            catagoryRepo.save(SearchedCategory);</span>
+<span class="fc bfc" id="L39" title="All 4 branches covered.">        if (searchedCategory!=null &amp;&amp; newCategory==null) {</span>
+<span class="fc" id="L40">            searchedCategory.setLast_update();</span>
+<span class="fc" id="L41">            searchedCategory.setName(information.get(&quot;newname&quot;));</span>
+<span class="fc" id="L42">            catagoryRepo.save(searchedCategory);</span>
 <span class="fc" id="L43">            return returnValue(SAVED);</span>
         }
 <span class="fc bfc" id="L45" title="All 2 branches covered.">        if (newCategory!=null)</span>

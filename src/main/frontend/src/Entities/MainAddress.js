@@ -257,7 +257,7 @@ export default function AddressMain(props) {
 
     async function getIndividual() {
         try {
-            const request = await fetch(`${url}/get?address=${address}&address2=${addressTwo}&district=${district}&city=${city}&postal_code=${postCode}&phone=${phone}`);
+            const request = await fetch(`${url}/get?address=${address}&address2=${addressTwo}&district=${district}&city=${city}&postCode=${postCode}&phone=${phone}`);
             if (request.ok) {
                 const response = await request.json();
                 console.log(response['outcome']);
