@@ -1,4 +1,4 @@
-package sakila.project.Repository;
+package sakila.project.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import sakila.project.entities.Address;

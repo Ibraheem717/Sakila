@@ -11,11 +11,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.bind.annotation.RequestParam;
-import sakila.project.Controllers.addressController;
-import sakila.project.Repository.addressRepository;
-import sakila.project.Repository.cityRepository;
-import sakila.project.entities.Actor;
+import sakila.project.controllers.AddressController;
+import sakila.project.repository.addressRepository;
+import sakila.project.repository.cityRepository;
 import sakila.project.entities.Address;
 import sakila.project.entities.City;
 
@@ -25,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@WebMvcTest(addressController.class)
-class addressControllerTest {
+@WebMvcTest(AddressController.class)
+class AddressControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired

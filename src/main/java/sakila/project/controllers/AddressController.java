@@ -1,4 +1,4 @@
-package sakila.project.Controllers;
+package sakila.project.controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import sakila.project.Repository.addressRepository;
-import sakila.project.Repository.cityRepository;
+import sakila.project.repository.addressRepository;
+import sakila.project.repository.cityRepository;
 import sakila.project.entities.Address;
 import sakila.project.entities.City;
 
@@ -19,7 +19,7 @@ import static sakila.project.ProjectApplication.*;
 @RestController 
 @RequestMapping(path="/address") 
 @CrossOrigin(origins = "http://localhost:3000")
-public class addressController {
+public class AddressController {
     @Autowired 
     private addressRepository addressRepo;
     @Autowired 

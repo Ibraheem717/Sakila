@@ -11,16 +11,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import sakila.project.Controllers.actorController;
-import sakila.project.Repository.actorRepository;
-import sakila.project.Repository.filmActorRepository;
+import sakila.project.controllers.ActorController;
+import sakila.project.repository.actorRepository;
+import sakila.project.repository.filmActorRepository;
 import sakila.project.entities.Actor;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-@WebMvcTest(controllers = actorController.class)
-public class actorControllerTest {
+@WebMvcTest(controllers = ActorController.class)
+public class ActorControllerTest {
     @MockBean
     private actorRepository actorRepository;
     @MockBean

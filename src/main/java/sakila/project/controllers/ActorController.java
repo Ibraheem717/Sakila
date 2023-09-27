@@ -1,15 +1,14 @@
-package sakila.project.Controllers;
+package sakila.project.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import sakila.project.Repository.actorRepository;
-import sakila.project.Repository.filmActorRepository;
+import sakila.project.repository.actorRepository;
+import sakila.project.repository.filmActorRepository;
 import sakila.project.entities.Actor;
 
 import static sakila.project.ProjectApplication.*;
@@ -17,7 +16,7 @@ import static sakila.project.ProjectApplication.*;
 @RestController 
 @RequestMapping(path="/actor") 
 @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3000"})
-public class actorController {
+public class ActorController {
     @Autowired 
     private actorRepository actorRepository;
     @Autowired
@@ -53,7 +52,7 @@ public class actorController {
             return returnValue(SAVED);
         }
     
-        return new HashMap<>(){{put("output","Actor doesn't exist");}};
+        return returnValue(returnString(NONEXIST));
     }
     @DeleteMapping(path="/delete") 
     public @ResponseBody Map<String, String> deleteActor (@RequestBody HashMap<String, String> actor) {

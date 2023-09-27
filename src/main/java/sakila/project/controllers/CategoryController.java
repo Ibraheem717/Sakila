@@ -1,12 +1,12 @@
-package sakila.project.Controllers;
+package sakila.project.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import sakila.project.Repository.catagoryRepository;
-import sakila.project.Repository.filmCatagoryRepository;
+import sakila.project.repository.catagoryRepository;
+import sakila.project.repository.filmCatagoryRepository;
 import sakila.project.entities.Category;
 
 import static sakila.project.ProjectApplication.*;
@@ -14,7 +14,7 @@ import static sakila.project.ProjectApplication.*;
 @RestController 
 @RequestMapping(path="/catagory") 
 @CrossOrigin(origins = "http://localhost:3000")
-public class categoryController {
+public class CategoryController {
     @Autowired 
     private catagoryRepository catagoryRepo;
     @Autowired 

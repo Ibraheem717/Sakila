@@ -11,9 +11,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import sakila.project.Controllers.categoryController;
-import sakila.project.Repository.catagoryRepository;
-import sakila.project.Repository.filmCatagoryRepository;
+import sakila.project.controllers.CategoryController;
+import sakila.project.repository.catagoryRepository;
+import sakila.project.repository.filmCatagoryRepository;
 import sakila.project.entities.Category;
 
 import java.util.ArrayList;
@@ -25,8 +25,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-@WebMvcTest(categoryController.class)
-class categoryControllerTest {
+@WebMvcTest(CategoryController.class)
+class CategoryControllerTest {
 
     @MockBean
     private catagoryRepository categoryRepo;
