@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @WebMvcTest(AddressController.class)
-class addressControllerTest {
+class AddressControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
