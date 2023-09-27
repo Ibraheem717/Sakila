@@ -15,8 +15,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Getter
-<span class="nc" id="L18">@Setter</span>
-<span class="nc" id="L19">@NoArgsConstructor</span>
+<span class="fc" id="L18">@Setter</span>
+<span class="fc" id="L19">@NoArgsConstructor</span>
 <span class="nc" id="L20">@AllArgsConstructor</span>
 <span class="nc" id="L21">@ToString</span>
 @Entity
@@ -34,7 +34,7 @@ public class Film {
             }
     )
     @JsonManagedReference
-<span class="nc" id="L37">    private Set&lt;Category&gt; categories;</span>
+<span class="fc" id="L37">    private Set&lt;Category&gt; categories;</span>
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties(&quot;actors&quot;)     
@@ -44,21 +44,21 @@ public class Film {
         inverseJoinColumns ={ @JoinColumn(name = &quot;actor_id&quot;)}
     )
     @JsonManagedReference
-<span class="nc" id="L47">    private Set&lt;Actor&gt; actors;</span>
+<span class="fc" id="L47">    private Set&lt;Actor&gt; actors;</span>
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-<span class="nc" id="L51">    private Short film_id;</span>
-<span class="nc" id="L52">    private String description;</span>
-<span class="nc" id="L53">    private Year release_year;</span>
-<span class="nc" id="L54">    private Byte language_id;</span>
-<span class="nc" id="L55">    private Byte original_language_id;</span>
-<span class="nc" id="L56">    private Byte rental_duration;</span>
-<span class="nc" id="L57">    private Integer rental_rate;</span>
-<span class="nc" id="L58">    private Short length;</span>
-<span class="nc" id="L59">    private Short replacement_cost;</span>
-<span class="nc" id="L60">    private String rating;</span>
-<span class="nc" id="L61">    private String special_features;</span>
-<span class="nc" id="L62">    private Timestamp last_update;</span>
+<span class="fc" id="L51">    private Short film_id;</span>
+<span class="fc" id="L52">    private String description;</span>
+<span class="fc" id="L53">    private Year release_year;</span>
+<span class="fc" id="L54">    private Byte language_id;</span>
+<span class="fc" id="L55">    private Byte original_language_id;</span>
+<span class="fc" id="L56">    private Byte rental_duration;</span>
+<span class="fc" id="L57">    private Integer rental_rate;</span>
+<span class="fc" id="L58">    private Short length;</span>
+<span class="fc" id="L59">    private Short replacement_cost;</span>
+<span class="fc" id="L60">    private String rating;</span>
+<span class="fc" id="L61">    private String special_features;</span>
+<span class="fc" id="L62">    private Timestamp last_update;</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
