@@ -20,7 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 @WebMvcTest(controllers = ActorController.class)
-class ActorControllerTest {
+class actorControllerTest {
     @MockBean
     private ActorRepository actorRepository;
     @MockBean
