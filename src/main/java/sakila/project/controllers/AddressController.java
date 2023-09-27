@@ -33,7 +33,7 @@ public class AddressController {
         return "City " + NONEXIST;
     }
     @PostMapping(path="/add") 
-    public @ResponseBody Map<String, String> addNewAddress (@RequestBody HashMap<String, String> information) {
+    public @ResponseBody Map<String, String> addNewAddress (@RequestBody Map<String, String> information) {
         String address = information.get("address");
         String address2 = information.get("address2");
         String district = information.get("district");
@@ -50,7 +50,7 @@ public class AddressController {
         return returnValue(SAVED);
     }
     @PutMapping(path="/update") 
-    public @ResponseBody Map<String, String> updateAddress (@RequestBody HashMap<String, Object> information) {
+    public @ResponseBody Map<String, String> updateAddress (@RequestBody Map<String, Object> information) {
         String address = (String) information.get("address");
         String address2 = (String) information.get("address2");
         String district = (String) information.get("district");

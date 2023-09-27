@@ -6,15 +6,17 @@ import "./App.css";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
+  const webURL = "http://sakiladatabase-env.eba-pmf6c2dy.us-east-1.elasticbeanstalk.com";
+  const localURL = "http://localhost:8080/"
 
   const renderPage = () => {
     switch (currentPage) {
       case "Actor":
-        return <ActorMenu />;
+        return <ActorMenu mainUrl={webURL} />;
       case "Address":
-        return <AddressMain />;
+        return <AddressMain mainUrl={webURL}/>;
       case "Category":
-        return <CategoryMain />;
+        return <CategoryMain mainUrl={webURL}/>;
       default:
         return null;
     }

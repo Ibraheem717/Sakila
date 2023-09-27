@@ -16,9 +16,7 @@ import sakila.project.repository.addressRepository;
 import sakila.project.repository.cityRepository;
 import sakila.project.entities.Address;
 import sakila.project.entities.City;
-
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

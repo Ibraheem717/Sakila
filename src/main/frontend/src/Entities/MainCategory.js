@@ -2,8 +2,8 @@ import { useState } from "react";
 import Form from "../Form";
 import "./css/MainCategory.css";
 
-export default function CategoryMain() {
-    const [url, setUrl] = useState("http://localhost:8080/catagory");
+export default function CategoryMain(props) {
+    const url = props.mainUrl+"/actor";
     const [name, setName] = useState('');
     const [newName, setNewName] = useState('');
     const [searched, setSearched] = useState('Output will be here');    

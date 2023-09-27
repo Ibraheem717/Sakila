@@ -2,8 +2,8 @@ import { useState } from "react";
 import Form from "../Form";
 import "./css/MainActor.css"
 
-export default function ActorMenu() {
-    const [url, setUrl] = useState("http://localhost:8080/actor");
+export default function ActorMenu(props) {
+    const url = props.mainUrl+"/actor";
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [newFirstName, setNewFirstName] = useState('');
