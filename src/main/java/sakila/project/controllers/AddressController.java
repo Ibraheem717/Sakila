@@ -39,10 +39,10 @@ public class AddressController {
         String district = information.get("district");
         String postal_code = information.get("postal_code");
         String phone = information.get("phone");
-        Short city_id = this.checkIfCityExist(information.get("city"));
-        if (city_id==null)
+        Short cityId = this.checkIfCityExist(information.get("city"));
+        if (cityId==null)
             return returnValue(returnStringCity());
-        if ( this.getAddressAll(address, address2, district, city_id, postal_code, phone) !=null )
+        if ( this.getAddressAll(address, address2, district, cityId, postal_code, phone) !=null )
             return returnValue(returnStringAddress(EXIST));
         Address newAddress = objectMapper.convertValue(information, Address.class);
         newAddress.setLast_update();
@@ -56,15 +56,15 @@ public class AddressController {
         String district = (String) information.get("district");
         String postal_code = (String) information.get("postal_code");
         String phone = (String) information.get("phone");
-        Short city_id = this.checkIfCityExist((String)information.get("city"));
-        if (city_id==null)
+        Short cityId = this.checkIfCityExist((String)information.get("city"));
+        if (cityId==null)
             return returnValue(returnStringCity());
         Address newInformation = objectMapper.convertValue(information.get("newAddress"), Address.class);
         newInformation.setCity_id(this.checkIfCityExist((String)information.get("newCity")));
         if (newInformation.getCity_id()==null) {
             return returnValue(returnStringCity());
         }
-        Address SearchedAddress = this.getAddressAll(address, address2, district, city_id, postal_code, phone);
+        Address SearchedAddress = this.getAddressAll(address, address2, district, cityId, postal_code, phone);
         Address newAddress = this.getAddressAll(newInformation.getAddress(), newInformation.getAddress2(), newInformation.getDistrict(), newInformation.getCity_id(), newInformation.getPostal_code(), newInformation.getPhone());
         if (SearchedAddress!=null && newAddress==null) {
             Short addressHolder = SearchedAddress.getAddress_id();
@@ -105,35 +105,35 @@ public class AddressController {
         return address;
     }
     private Short checkIfCityExist(String name) {
-        City city_id = cityRepo.SearchCityName(name);
-        if (city_id==null) 
+        City cityId = cityRepo.SearchCityName(name);
+        if (cityId==null) 
             return null;
-        return city_id.getCity_id();
+        return cityId.getCity_id();
     }
-    private @ResponseBody Address getAddress(@RequestParam String address, String district, Short city_id, String phone) {
-        return addressRepo.SearchAddress(address.toUpperCase(), district.toUpperCase(), city_id, phone) ;
+    private @ResponseBody Address getAddress(@RequestParam String address, String district, Short cityId, String phone) {
+        return addressRepo.SearchAddress(address.toUpperCase(), district.toUpperCase(), cityId, phone) ;
     }
-    private @ResponseBody Address getAddressWithAddress2(String address, String address2, String district, Short city_id, String phone) {
-        return addressRepo.SearchAddressWithAddress2(address.toUpperCase(), address2.toUpperCase(),district.toUpperCase(), city_id, phone) ;
+    private @ResponseBody Address getAddressWithAddress2(String address, String address2, String district, Short cityId, String phone) {
+        return addressRepo.SearchAddressWithAddress2(address.toUpperCase(), address2.toUpperCase(),district.toUpperCase(), cityId, phone) ;
     }
-    private @ResponseBody Address getAddressPostCode(String address, String district, Short city_id, String postal_code,String phone) {
-        return addressRepo.SearchAddressWithPostCode(address.toUpperCase(), district.toUpperCase() ,city_id, postal_code.toUpperCase(), phone) ;
+    private @ResponseBody Address getAddressPostCode(String address, String district, Short cityId, String postal_code,String phone) {
+        return addressRepo.SearchAddressWithPostCode(address.toUpperCase(), district.toUpperCase() ,cityId, postal_code.toUpperCase(), phone) ;
     }
-    private @ResponseBody Address getAddressAll(String address, String address2, String district, Short city_id, String postal_code, String phone) {
+    private @ResponseBody Address getAddressAll(String address, String address2, String district, Short cityId, String postal_code, String phone) {
         if (address2.isEmpty() && postal_code.isEmpty())
-            return this.getAddress(address, district, city_id, phone);
+            return this.getAddress(address, district, cityId, phone);
         else if (address2.isEmpty())
-            return this.getAddressPostCode(address, district, city_id, postal_code, phone);
+            return this.getAddressPostCode(address, district, cityId, postal_code, phone);
         else if (postal_code.isEmpty())
-            return this.getAddressWithAddress2(address, address2, district, city_id, phone);
+            return this.getAddressWithAddress2(address, address2, district, cityId, phone);
         else
-            return (addressRepo.SearchAddressAll(address.toUpperCase(), address2.toUpperCase(), district.toUpperCase(), city_id, postal_code.toUpperCase(), phone)) ;
+            return (addressRepo.SearchAddressAll(address.toUpperCase(), address2.toUpperCase(), district.toUpperCase(), cityId, postal_code.toUpperCase(), phone)) ;
     }
     @GetMapping(path="/get")
     public @ResponseBody Map<String, ?> getJSONAddressAll(@RequestParam String address, @RequestParam String address2, @RequestParam String district, @RequestParam String city, @RequestParam String postal_code, @RequestParam String phone) {
-        Short city_id = checkIfCityExist(city);
-        if (city_id!=null)
-            return returnAddress(getAddressAll(address, address2, district, city_id, postal_code, phone));
+        Short cityId = checkIfCityExist(city);
+        if (cityId!=null)
+            return returnAddress(getAddressAll(address, address2, district, cityId, postal_code, phone));
         return returnValue(returnStringCity());
     }
 }

@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import sakila.project.controllers.ActorController;
+import sakila.project.repository.FilmActorRepository;
 import sakila.project.repository.actorRepository;
-import sakila.project.repository.filmActorRepository;
 import sakila.project.entities.Actor;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class ActorControllerTest {
     @MockBean
     private actorRepository actorRepository;
     @MockBean
-    private filmActorRepository filmActorRepo;
+    private FilmActorRepository filmActorRepo;
     @Autowired
     private MockMvc mvc;
     @Autowired

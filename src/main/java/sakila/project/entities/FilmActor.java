@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.Reference;
 
 import java.sql.Timestamp;
 
@@ -16,7 +15,7 @@ import java.sql.Timestamp;
 @ToString
 @Entity
 @Table(name="film_actor")
-public class filmActor {
+public class FilmActor {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Short actor_id;

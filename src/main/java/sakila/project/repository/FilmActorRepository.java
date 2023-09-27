@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import jakarta.transaction.Transactional;
-import sakila.project.entities.filmActor;
+import sakila.project.entities.FilmActor;
 
-public interface filmActorRepository extends CrudRepository<filmActor, Short> {
+public interface FilmActorRepository extends CrudRepository<FilmActor, Short> {
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM film_actor fa WHERE fa.actor_id = :actor_id", nativeQuery = true)

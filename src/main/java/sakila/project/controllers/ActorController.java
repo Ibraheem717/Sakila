@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sakila.project.repository.actorRepository;
-import sakila.project.repository.filmActorRepository;
+import sakila.project.repository.FilmActorRepository;
 import sakila.project.entities.Actor;
 
 import static sakila.project.ProjectApplication.*;
@@ -22,12 +22,12 @@ public class ActorController {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private filmActorRepository filmActorRepo;
+    private FilmActorRepository filmActorRepo;
     private String returnString(String extra) {
         return "Actor " + extra;
     }
     @PostMapping(path="/add") 
-    public @ResponseBody Map<String, String> addNewActor (@RequestBody HashMap<String, String> information) {
+    public @ResponseBody Map<String, String> addNewActor (@RequestBody Map<String, String> information) {
         Actor n =  objectMapper.convertValue(information, Actor.class);
         if (actorRepository.findByFirstName( n.getFirst_name().toUpperCase(),  n.getLast_name().toUpperCase()) != null) {
             return returnValue(returnString(EXIST));
@@ -37,7 +37,7 @@ public class ActorController {
         return returnValue(SAVED);
     }
     @PutMapping(path = "/update")
-    public @ResponseBody Map<String, String> updateActor(@RequestBody HashMap<String, Object> information) {
+    public @ResponseBody Map<String, String> updateActor(@RequestBody Map<String, Object> information) {
         String forename = (String) information.get("forename");
         String surname = (String) information.get("surname");
         Actor existingActor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());
@@ -55,7 +55,7 @@ public class ActorController {
         return returnValue(returnString(NONEXIST));
     }
     @DeleteMapping(path="/delete") 
-    public @ResponseBody Map<String, String> deleteActor (@RequestBody HashMap<String, String> actor) {
+    public @ResponseBody Map<String, String> deleteActor (@RequestBody Map<String, String> actor) {
         Actor delActor = actorRepository.findByFirstName(actor.get("first_name").toUpperCase(),actor.get("last_name").toUpperCase());
         if (delActor!=null) {
             filmActorRepo.DeleteByActorID(delActor.getActor_id());

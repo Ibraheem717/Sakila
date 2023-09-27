@@ -23,7 +23,7 @@ public class CategoryController {
         return "Category " + extra;
     }
     @PostMapping(path="/add") 
-    public @ResponseBody Map<String, String> addNewCategory (@RequestBody HashMap<String, String> information) {
+    public @ResponseBody Map<String, String> addNewCategory (@RequestBody Map<String, String> information) {
         Category n = new Category();
         n.setName(information.get("name"));
         n.setLast_update();
@@ -33,7 +33,7 @@ public class CategoryController {
         return returnValue(SAVED);
     }
     @PutMapping(path="/update") 
-    public @ResponseBody Map<String, String> updateCategory (@RequestBody HashMap<String, String> information) {
+    public @ResponseBody Map<String, String> updateCategory (@RequestBody Map<String, String> information) {
         Category SearchedCategory = catagoryRepo.SearchCategory(information.get("name"));
         Category newCategory = catagoryRepo.SearchCategory(information.get("newname"));
         if (SearchedCategory!=null && newCategory==null) {
@@ -47,7 +47,7 @@ public class CategoryController {
         return returnValue(returnString(NONEXIST));
     }
     @DeleteMapping(path="/delete") 
-    public @ResponseBody Map<String, String> deleteCatagory (@RequestBody HashMap<String, String> givenCategory) {
+    public @ResponseBody Map<String, String> deleteCatagory (@RequestBody Map<String, String> givenCategory) {
         Category delCategory = catagoryRepo.SearchCategory(givenCategory.get("name").toUpperCase());
         if (delCategory!=null) {
             filmCatagoryRepo.DeleteByActorID(delCategory.getCategory_id());

@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @ToString
 @Entity
 @Table(name="film_text")
-public class filmText {
+public class FilmText {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Short film_id;
