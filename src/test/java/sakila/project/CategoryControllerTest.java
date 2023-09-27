@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 @WebMvcTest(CategoryController.class)
-class categoryControllerTest {
+class CategoryControllerTest {
 
     @MockBean
     private catagoryRepository categoryRepo;

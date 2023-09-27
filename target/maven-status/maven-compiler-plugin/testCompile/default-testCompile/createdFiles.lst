@@ -1,4 +1,5 @@
 sakila\project\entities\FilmTest.class
+sakila\project\categoryControllerTest.class
 sakila\project\entities\LanguageTest.class
 sakila\project\ActorControllerTest.class
 sakila\project\entities\CategoryTest.class
@@ -14,4 +15,3 @@ sakila\project\entities\CustomerTest.class
 sakila\project\entities\ActorTest.class
 sakila\project\entities\InventoryTest.class
 sakila\project\entities\RentalTest.class
-sakila\project\CategoryControllerTest.class
