@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>addressControllerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">sakila.project</a> &gt; <span class="el_source">addressControllerTest.java</span></div><h1>addressControllerTest.java</h1><pre class="source lang-java linenums">package sakila.project;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import sakila.project.controllers.AddressController;
+import sakila.project.repository.AddressRepository;
+import sakila.project.repository.CityRepository;
+import sakila.project.entities.Address;
+import sakila.project.entities.City;
+import java.util.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@WebMvcTest(AddressController.class)
+<span class="nc" id="L25">class addressControllerTest {</span>
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @MockBean
+    private AddressRepository addressRepo;
+    @MockBean
+    private CityRepository cityRepo;
+<span class="nc" id="L34">    private final String JSON = &quot;{&quot; +</span>
+            &quot;\&quot;address\&quot; : \&quot;Graveyard\&quot;,&quot; +
+            &quot;\&quot;address2\&quot; : \&quot;BrokeTown\&quot;,&quot; +
+            &quot;\&quot;district\&quot; : \&quot;Giza\&quot;,&quot; +
+            &quot;\&quot;postal_code\&quot; : \&quot;BA55 3AT \&quot;,&quot; +
+            &quot;\&quot;phone\&quot; : \&quot;999\&quot;,&quot; +
+            &quot;\&quot;city\&quot; : \&quot;Night City\&quot;&quot; +
+            &quot;}&quot;;
+<span class="nc" id="L42">    private final String UPDATEJSON = &quot;{&quot; +</span>
+            &quot;\&quot;address\&quot; : \&quot;Graveyard\&quot;,&quot; +
+            &quot;\&quot;address2\&quot; : \&quot;BrokeTown\&quot;,&quot; +
+            &quot;\&quot;district\&quot; : \&quot;Giza\&quot;,&quot; +
+            &quot;\&quot;postal_code\&quot; : \&quot;BA55 3AT\&quot;,&quot; +
+            &quot;\&quot;phone\&quot; : \&quot;999\&quot;,&quot; +
+            &quot;\&quot;city\&quot; : \&quot;Night City\&quot;,&quot; +
+            &quot;\&quot;newCity\&quot; : \&quot;Day City\&quot;,&quot; +
+            &quot;\&quot;newAddress\&quot; : {&quot; +
+                &quot;\&quot;address\&quot; : \&quot;Scrapyard\&quot;,&quot; +
+                &quot;\&quot;address2\&quot; : \&quot;RichTown\&quot;,&quot; +
+                &quot;\&quot;district\&quot; : \&quot;Pyramid\&quot;,&quot; +
+                &quot;\&quot;postal_code\&quot; : \&quot;BA55 3AT\&quot;,&quot; +
+                &quot;\&quot;phone\&quot; : \&quot;999\&quot;,&quot; +
+                &quot;\&quot;city\&quot; : \&quot;Day City\&quot;}}&quot;;
+    @Test
+    @DisplayName(&quot;Add New Address -- Success&quot;)
+    void testAddNewAddressSuccess() throws Exception {
+<span class="nc" id="L60">        when(cityRepo.SearchCityName(anyString())).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L61">                &quot;Dead&quot;, (short) 1,null));</span>
+<span class="nc" id="L62">        when(addressRepo.SearchAddressAll(anyString(),anyString(),anyString(),anyShort(),</span>
+<span class="nc" id="L63">                anyString(),anyString())).thenReturn(null);</span>
+<span class="nc" id="L64">        when(addressRepo.save(any(Address.class))).thenReturn(new Address());</span>
+<span class="nc" id="L65">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/address/add&quot;)</span>
+<span class="nc" id="L66">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L67">                .content(JSON))</span>
+<span class="nc" id="L68">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L69">                .andReturn();</span>
+<span class="nc" id="L70">       String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L71">        verify(cityRepo, times(1)).SearchCityName(anyString());</span>
+<span class="nc" id="L72">        verify(addressRepo, times(1)).SearchAddressAll(anyString(),</span>
+<span class="nc" id="L73">                anyString(),anyString(),anyShort(),anyString(),anyString());</span>
+<span class="nc" id="L74">        verify(addressRepo, times(1)).save(any(Address.class));</span>
+<span class="nc" id="L75">        assertTrue(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;Saved\&quot;&quot;));</span>
+<span class="nc" id="L76">    }</span>
+    @Test
+    @DisplayName(&quot;Add New Address -- Failed (Address already exist)&quot;)
+    void testAddNewAddressFailOne() throws Exception {
+<span class="nc" id="L80">        when(cityRepo.SearchCityName(anyString())).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L81">                &quot;Dead&quot;, (short) 1,null));</span>
+<span class="nc" id="L82">        when(addressRepo.SearchAddressAll(anyString(),anyString(),anyString(),anyShort(),</span>
+<span class="nc" id="L83">                anyString(),anyString())).thenReturn(new Address());</span>
+<span class="nc" id="L84">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/address/add&quot;)</span>
+<span class="nc" id="L85">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L86">                .content(JSON))</span>
+<span class="nc" id="L87">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L88">                .andReturn();</span>
+<span class="nc" id="L89">       String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L90">        verify(cityRepo, times(1)).SearchCityName(anyString());</span>
+<span class="nc" id="L91">        verify(addressRepo, times(1)).SearchAddressAll(anyString(),</span>
+<span class="nc" id="L92">                anyString(),anyString(),anyShort(),anyString(),anyString());</span>
+<span class="nc" id="L93">        assertTrue(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;Address already exist\&quot;&quot;));</span>
+<span class="nc" id="L94">    }</span>
+    @Test
+    @DisplayName(&quot;Add New Address -- Failed (City doesn't exist)&quot;)
+    void testAddNewAddressFailTwo() throws Exception {
+<span class="nc" id="L98">        when(cityRepo.SearchCityName(anyString())).thenReturn(null);</span>
+<span class="nc" id="L99">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/address/add&quot;)</span>
+<span class="nc" id="L100">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L101">                        .content(JSON))</span>
+<span class="nc" id="L102">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L103">                .andReturn();</span>
+<span class="nc" id="L104">       String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L105">        verify(cityRepo, times(1)).SearchCityName(anyString());</span>
+<span class="nc" id="L106">        assertTrue(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;City doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L107">    }</span>
+    private Address createAddress(String address,String address2,String district, Short cityId,String postalCode,String phone) {
+<span class="nc" id="L109">        Address newAddress = new Address();</span>
+<span class="nc" id="L110">        newAddress.setAddress(address);</span>
+<span class="nc" id="L111">        newAddress.setAddress2(address2);</span>
+<span class="nc" id="L112">        newAddress.setDistrict(district);</span>
+<span class="nc" id="L113">        newAddress.setCity_id(cityId);</span>
+<span class="nc" id="L114">        newAddress.setPostal_code(postalCode);</span>
+<span class="nc" id="L115">        newAddress.setPhone(phone);</span>
+<span class="nc" id="L116">        return newAddress;</span>
+    }
+    @Test
+    @DisplayName(&quot;Update Address -- Success&quot;)
+    void testUpdateAddressSuccess() throws Exception {
+<span class="nc" id="L121">        Address original = createAddress(&quot;Graveyard&quot;,</span>
+                &quot;BrokeTown&quot;,
+                &quot;Giza&quot;,
+<span class="nc" id="L124">                (short) 1,</span>
+                &quot;BA55 3AT&quot;,
+                &quot;999&quot;);
+<span class="nc" id="L127">        Address newAdd = createAddress(&quot;Scrapyard&quot;,</span>
+                &quot;RichTown&quot;,
+                &quot;Pyramid&quot;,
+<span class="nc" id="L130">                (short) 2,</span>
+                &quot;BA55 3AT&quot;,
+                &quot;999&quot;);
+<span class="nc" id="L133">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L134">                &quot;Night City&quot;, (short) 1,null));</span>
+<span class="nc" id="L135">        when(cityRepo.SearchCityName(&quot;Day City&quot;)).thenReturn(new City((short) 2,</span>
+<span class="nc" id="L136">                &quot;Day City&quot;, (short) 2,null));</span>
+<span class="nc" id="L137">        when(addressRepo.SearchAddressAll(</span>
+                &quot;GRAVEYARD&quot;,
+                &quot;BROKETOWN&quot;,
+                &quot;GIZA&quot;,
+<span class="nc" id="L141">                (short) 1,</span>
+                &quot;BA55 3AT&quot;,
+<span class="nc" id="L143">                &quot;999&quot;)).thenReturn(original);</span>
+<span class="nc" id="L144">        when(addressRepo.SearchAddressAll(</span>
+                &quot;SCRAPYARD&quot;,
+                &quot;RICHTOWN&quot;,
+                &quot;PYRAMID&quot;,
+<span class="nc" id="L148">                (short) 2,</span>
+                &quot;BA55 3AT&quot;,
+<span class="nc" id="L150">               &quot;999&quot;)).thenReturn(null);</span>
+<span class="nc" id="L151">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/address/update&quot;)</span>
+<span class="nc" id="L152">            .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L153">            .content(UPDATEJSON))</span>
+<span class="nc" id="L154">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L155">            .andReturn();</span>
+<span class="nc" id="L156">       String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L157">        verify(cityRepo, times(2)).SearchCityName(anyString());</span>
+<span class="nc" id="L158">        verify(addressRepo, times(2)).SearchAddressAll(anyString(),</span>
+<span class="nc" id="L159">                anyString(),anyString(),anyShort(),anyString(),anyString());</span>
+<span class="nc" id="L160">        assertTrue(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;Saved\&quot;&quot;));</span>
+<span class="nc" id="L161">    }</span>
+    @Test
+    @DisplayName(&quot;Update Address -- Fail (No City/First)&quot;)
+    void testUpdateAddressFailCityFirst() throws Exception {
+<span class="nc" id="L165">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(null);</span>
+<span class="nc" id="L166">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/address/update&quot;)</span>
+<span class="nc" id="L167">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L168">                        .content(UPDATEJSON))</span>
+<span class="nc" id="L169">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L170">                .andReturn();</span>
+<span class="nc" id="L171">       String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L172">        verify(cityRepo, times(1)).SearchCityName(anyString());</span>
+<span class="nc" id="L173">        assertTrue(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;City doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L174">    }</span>
+    @Test
+    @DisplayName(&quot;Update Address -- Fail (No City/Second)&quot;)
+    void testUpdateAddressFailCitySecond() throws Exception {
+<span class="nc" id="L178">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L179">                &quot;Night City&quot;, (short) 1,null));</span>
+<span class="nc" id="L180">        when(cityRepo.SearchCityName(&quot;Day City&quot;)).thenReturn(null);</span>
+<span class="nc" id="L181">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/address/update&quot;)</span>
+<span class="nc" id="L182">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L183">                .content(UPDATEJSON))</span>
+<span class="nc" id="L184">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L185">                .andReturn();</span>
+<span class="nc" id="L186">       String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L187">        verify(cityRepo, times(2)).SearchCityName(anyString());</span>
+<span class="nc" id="L188">        assertTrue(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;City doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L189">    }</span>
+    @Test
+    @DisplayName(&quot;Update Address -- Fail (Address Doesn't Exist)&quot;)
+    void testUpdateAddressFailedAddressNotExist() throws Exception {
+<span class="nc" id="L193">        Address original = createAddress(&quot;Graveyard&quot;,</span>
+                &quot;BrokeTown&quot;,
+                &quot;Giza&quot;,
+<span class="nc" id="L196">                (short) 1,</span>
+                &quot;BA55 3AT&quot;,
+                &quot;999&quot;);
+<span class="nc" id="L199">        Address newAdd = createAddress(&quot;Scrapyard&quot;,</span>
+                &quot;RichTown&quot;,
+                &quot;Pyramid&quot;,
+<span class="nc" id="L202">                (short) 2,</span>
+                &quot;BA55 3AT&quot;,
+                &quot;999&quot;);
+<span class="nc" id="L205">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L206">                &quot;Night City&quot;, (short) 1,null));</span>
+<span class="nc" id="L207">        when(cityRepo.SearchCityName(&quot;Day City&quot;)).thenReturn(new City((short) 2,</span>
+<span class="nc" id="L208">                &quot;Day City&quot;, (short) 2,null));</span>
+<span class="nc" id="L209">        when(addressRepo.SearchAddressAll(</span>
+                &quot;GRAVEYARD&quot;,
+                &quot;BROKETOWN&quot;,
+                &quot;GIZA&quot;,
+<span class="nc" id="L213">                (short) 1,</span>
+                &quot;BA55 3AT&quot;,
+<span class="nc" id="L215">                &quot;999&quot;)).thenReturn(null);</span>
+<span class="nc" id="L216">        when(addressRepo.SearchAddressAll(</span>
+                &quot;SCRAPYARD&quot;,
+                &quot;RICHTOWN&quot;,
+                &quot;PYRAMID&quot;,
+<span class="nc" id="L220">                (short) 2,</span>
+                &quot;BA55 3AT&quot;,
+<span class="nc" id="L222">                &quot;999&quot;)).thenReturn(null);</span>
+<span class="nc" id="L223">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/address/update&quot;)</span>
+<span class="nc" id="L224">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L225">                        .content(UPDATEJSON))</span>
+<span class="nc" id="L226">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L227">                .andReturn();</span>
+<span class="nc" id="L228">       String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L229">        verify(cityRepo, times(2)).SearchCityName(anyString());</span>
+<span class="nc" id="L230">        verify(addressRepo, times(2)).SearchAddressAll(anyString(),</span>
+<span class="nc" id="L231">                anyString(),anyString(),anyShort(),anyString(),anyString());</span>
+<span class="nc" id="L232">        assertTrue(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;Address doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L233">    }</span>
+    @Test
+    @DisplayName(&quot;Update Address -- Fail (Address Already Exist)&quot;)
+    void testUpdateAddressFailedAddressAlreadyExist() throws Exception {
+<span class="nc" id="L237">        Address original = createAddress(&quot;Graveyard&quot;,</span>
+                &quot;BrokeTown&quot;,
+                &quot;Giza&quot;,
+<span class="nc" id="L240">                (short) 1,</span>
+                &quot;BA55 3AT&quot;,
+                &quot;999&quot;);
+<span class="nc" id="L243">        Address newAdd = createAddress(&quot;Scrapyard&quot;,</span>
+                &quot;RichTown&quot;,
+                &quot;Pyramid&quot;,
+<span class="nc" id="L246">                (short) 2,</span>
+                &quot;BA55 3AT&quot;,
+                &quot;999&quot;);
+<span class="nc" id="L249">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L250">                &quot;Night City&quot;, (short) 1,null));</span>
+<span class="nc" id="L251">        when(cityRepo.SearchCityName(&quot;Day City&quot;)).thenReturn(new City((short) 2,</span>
+<span class="nc" id="L252">                &quot;Day City&quot;, (short) 2,null));</span>
+<span class="nc" id="L253">        when(addressRepo.SearchAddressAll(</span>
+                &quot;GRAVEYARD&quot;,
+                &quot;BROKETOWN&quot;,
+                &quot;GIZA&quot;,
+<span class="nc" id="L257">                (short) 1,</span>
+                &quot;BA55 3AT&quot;,
+<span class="nc" id="L259">                &quot;999&quot;)).thenReturn(original);</span>
+<span class="nc" id="L260">        when(addressRepo.SearchAddressAll(</span>
+                &quot;SCRAPYARD&quot;,
+                &quot;RICHTOWN&quot;,
+                &quot;PYRAMID&quot;,
+<span class="nc" id="L264">                (short) 2,</span>
+                &quot;BA55 3AT&quot;,
+<span class="nc" id="L266">                &quot;999&quot;)).thenReturn(newAdd);</span>
+<span class="nc" id="L267">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/address/update&quot;)</span>
+<span class="nc" id="L268">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L269">                        .content(UPDATEJSON))</span>
+<span class="nc" id="L270">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L271">                .andReturn();</span>
+<span class="nc" id="L272">       String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L273">        verify(cityRepo, times(2)).SearchCityName(anyString());</span>
+<span class="nc" id="L274">        verify(addressRepo, times(2)).SearchAddressAll(anyString(),</span>
+<span class="nc" id="L275">                anyString(),anyString(),anyShort(),anyString(),anyString());</span>
+<span class="nc" id="L276">        assertTrue(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;Address already exist\&quot;&quot;));</span>
+<span class="nc" id="L277">    }</span>
+    @Test
+    @DisplayName(&quot;Get Address -- All Info&quot;)
+    void testGetAddressAll() throws Exception {
+<span class="nc" id="L281">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L282">                &quot;Night City&quot;, (short) 1,null));</span>
+<span class="nc" id="L283">        when(addressRepo.SearchAddressAll(</span>
+                &quot;TOM&quot;,
+                &quot;DICK&quot;,
+                &quot;HARRY&quot;,
+<span class="nc" id="L287">                (short) 1,</span>
+                &quot;RICHARD&quot;,
+<span class="nc" id="L289">                &quot;BOB&quot;)).thenReturn(new Address());</span>
+<span class="nc" id="L290">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/address/get&quot;)</span>
+<span class="nc" id="L291">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L292">                .param(&quot;address&quot;, &quot;Tom&quot;)</span>
+<span class="nc" id="L293">                .param(&quot;address2&quot;, &quot;Dick&quot;)</span>
+<span class="nc" id="L294">                .param(&quot;district&quot;, &quot;Harry&quot;)</span>
+<span class="nc" id="L295">                .param(&quot;city&quot;, &quot;Night City&quot;)</span>
+<span class="nc" id="L296">                .param(&quot;postCode&quot;, &quot;Richard&quot;)</span>
+<span class="nc" id="L297">                .param(&quot;phone&quot;, &quot;Bob&quot;))</span>
+<span class="nc" id="L298">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L299">                .andReturn();</span>
+<span class="nc" id="L300">        String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L301">        verify(cityRepo, times(1)).SearchCityName(anyString());</span>
+<span class="nc" id="L302">        verify(addressRepo, times(1)).SearchAddressAll(anyString(),</span>
+<span class="nc" id="L303">                anyString(),anyString(),anyShort(),anyString(),anyString());</span>
+<span class="nc" id="L304">        assertFalse(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;City doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L305">    }</span>
+    @Test
+    @DisplayName(&quot;Get Address -- Address2 Info&quot;)
+    void testGetAddressWithAddress2() throws Exception {
+<span class="nc" id="L309">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L310">                &quot;Night City&quot;, (short) 1,null));</span>
+<span class="nc" id="L311">        when(addressRepo.SearchAddressWithAddress2(</span>
+                &quot;TOM&quot;,
+                &quot;DICK&quot;,
+                &quot;HARRY&quot;,
+<span class="nc" id="L315">                (short) 1,</span>
+<span class="nc" id="L316">                &quot;BOB&quot;)).thenReturn(new Address());</span>
+<span class="nc" id="L317">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/address/get&quot;)</span>
+<span class="nc" id="L318">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L319">                        .param(&quot;address&quot;, &quot;Tom&quot;)</span>
+<span class="nc" id="L320">                        .param(&quot;address2&quot;, &quot;Dick&quot;)</span>
+<span class="nc" id="L321">                        .param(&quot;district&quot;, &quot;Harry&quot;)</span>
+<span class="nc" id="L322">                        .param(&quot;city&quot;, &quot;Night City&quot;)</span>
+<span class="nc" id="L323">                        .param(&quot;postCode&quot;, &quot;&quot;)</span>
+<span class="nc" id="L324">                        .param(&quot;phone&quot;, &quot;Bob&quot;))</span>
+<span class="nc" id="L325">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L326">                .andReturn();</span>
+<span class="nc" id="L327">        String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L328">        verify(cityRepo, times(1)).SearchCityName(anyString());</span>
+<span class="nc" id="L329">        verify(addressRepo, times(1)).SearchAddressWithAddress2(anyString(),</span>
+<span class="nc" id="L330">                anyString(),anyString(),anyShort(),anyString());</span>
+<span class="nc" id="L331">        assertFalse(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;City doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L332">    }</span>
+    @Test
+    @DisplayName(&quot;Get Address -- Postcode Info&quot;)
+    void testGetAddressPostcode() throws Exception {
+<span class="nc" id="L336">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L337">                &quot;Night City&quot;, (short) 1,null));</span>
+<span class="nc" id="L338">        when(addressRepo.SearchAddressWithPostCode(</span>
+                &quot;TOM&quot;,
+                &quot;HARRY&quot;,
+<span class="nc" id="L341">                (short) 1,</span>
+                &quot;RICHARD&quot;,
+<span class="nc" id="L343">                &quot;BOB&quot;)).thenReturn(new Address());</span>
+<span class="nc" id="L344">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/address/get&quot;)</span>
+<span class="nc" id="L345">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L346">                        .param(&quot;address&quot;, &quot;Tom&quot;)</span>
+<span class="nc" id="L347">                        .param(&quot;address2&quot;, &quot;&quot;)</span>
+<span class="nc" id="L348">                        .param(&quot;district&quot;, &quot;Harry&quot;)</span>
+<span class="nc" id="L349">                        .param(&quot;city&quot;, &quot;Night City&quot;)</span>
+<span class="nc" id="L350">                        .param(&quot;postCode&quot;, &quot;Richard&quot;)</span>
+<span class="nc" id="L351">                        .param(&quot;phone&quot;, &quot;Bob&quot;))</span>
+<span class="nc" id="L352">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L353">                .andReturn();</span>
+<span class="nc" id="L354">        String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L355">        verify(cityRepo, times(1)).SearchCityName(anyString());</span>
+<span class="nc" id="L356">        verify(addressRepo, times(1)).SearchAddressWithPostCode(</span>
+<span class="nc" id="L357">                anyString(),anyString(),anyShort(),anyString(),anyString());</span>
+<span class="nc" id="L358">        assertFalse(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;City doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L359">    }</span>
+    @Test
+    @DisplayName(&quot;Get Address -- Info&quot;)
+    void testGetAddress() throws Exception {
+<span class="nc" id="L363">        when(cityRepo.SearchCityName(&quot;Night City&quot;)).thenReturn(new City((short) 1,</span>
+<span class="nc" id="L364">                &quot;Night City&quot;, (short) 1,null));</span>
+<span class="nc" id="L365">        when(addressRepo.SearchAddress(</span>
+                &quot;TOM&quot;,
+                &quot;HARRY&quot;,
+<span class="nc" id="L368">                (short) 1,</span>
+<span class="nc" id="L369">                &quot;BOB&quot;)).thenReturn(new Address());</span>
+<span class="nc" id="L370">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/address/get&quot;)</span>
+<span class="nc" id="L371">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L372">                        .param(&quot;address&quot;, &quot;Tom&quot;)</span>
+<span class="nc" id="L373">                        .param(&quot;address2&quot;, &quot;&quot;)</span>
+<span class="nc" id="L374">                        .param(&quot;district&quot;, &quot;Harry&quot;)</span>
+<span class="nc" id="L375">                        .param(&quot;city&quot;, &quot;Night City&quot;)</span>
+<span class="nc" id="L376">                        .param(&quot;postCode&quot;, &quot;&quot;)</span>
+<span class="nc" id="L377">                        .param(&quot;phone&quot;, &quot;Bob&quot;))</span>
+<span class="nc" id="L378">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L379">                .andReturn();</span>
+<span class="nc" id="L380">        String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L381">        verify(cityRepo, times(1)).SearchCityName(anyString());</span>
+<span class="nc" id="L382">        verify(addressRepo, times(1)).SearchAddress(</span>
+<span class="nc" id="L383">                anyString(), anyString(),anyShort(),anyString());</span>
+<span class="nc" id="L384">        assertFalse(responseJson.contains(&quot;\&quot;output\&quot;:\&quot;City doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L385">    }</span>
+    @Test
+    @DisplayName(&quot;Get Address -- All&quot;)
+    void testGetAllAddress() throws Exception {
+<span class="nc" id="L389">        when(cityRepo.findById((short) 1)).thenReturn(Optional.of(new City()));</span>
+<span class="nc" id="L390">        List&lt;Address&gt; addresses = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L391">        addresses.add(createAddress(&quot;TOM&quot;,</span>
+                &quot;DICK&quot;,
+                &quot;HARRY&quot;,
+<span class="nc" id="L394">                (short) 1,</span>
+                &quot;RICHARD&quot;,
+                &quot;BOB&quot;));
+<span class="nc" id="L397">        when(addressRepo.findAll()).thenReturn(addresses);</span>
+<span class="nc" id="L398">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/address/all&quot;)</span>
+<span class="nc" id="L399">                .contentType(MediaType.APPLICATION_JSON))</span>
+<span class="nc" id="L400">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L401">                .andReturn();</span>
+<span class="nc" id="L402">        String responseJson = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L403">        verify(cityRepo, times(1)).findById(anyShort());</span>
+<span class="nc" id="L404">        verify(addressRepo, times(1)).findAll();</span>
+<span class="nc" id="L405">        assertTrue(responseJson.contains(&quot;\&quot;address\&quot;:\&quot;TOM\&quot;,\&quot;address2\&quot;:\&quot;DICK\&quot;,\&quot;phone\&quot;:\&quot;BOB\&quot;,\&quot;district\&quot;:\&quot;HARRY\&quot;,\&quot;address_id\&quot;:null,\&quot;postal_code\&quot;:\&quot;RICHARD\&quot;,\&quot;city_id\&quot;:{\&quot;city_id\&quot;:null,\&quot;city\&quot;:null,\&quot;country_id\&quot;:null,\&quot;last_update\&quot;:null}&quot;));</span>
+<span class="nc" id="L406">    }</span>
+}
+
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

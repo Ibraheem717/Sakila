@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>categoryControllerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">sakila.project</a> &gt; <span class="el_source">categoryControllerTest.java</span></div><h1>categoryControllerTest.java</h1><pre class="source lang-java linenums">package sakila.project;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import sakila.project.controllers.CategoryController;
+import sakila.project.repository.CatagoryRepository;
+import sakila.project.repository.FilmCatagoryRepository;
+import sakila.project.entities.Category;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+
+@WebMvcTest(CategoryController.class)
+<span class="nc" id="L29">class categoryControllerTest {</span>
+
+    @MockBean
+    private CatagoryRepository categoryRepo;
+    @MockBean
+    private FilmCatagoryRepository filmCategoryRepo;
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private ObjectMapper objectMapper;
+<span class="nc" id="L39">    private final String JSON = &quot;{&quot; +</span>
+            &quot;\&quot;name\&quot;:\&quot;Bob\&quot;&quot; +
+            &quot;}&quot;;
+<span class="nc" id="L42">    private final String NEWJSON = &quot;{&quot; +</span>
+            &quot;\&quot;name\&quot;:\&quot;Bob\&quot;,&quot; +
+            &quot;\&quot;newname\&quot;:\&quot;Door\&quot;&quot; +
+            &quot;}&quot;;
+
+    @Test
+    @DisplayName(&quot;Add New Category -- Success&quot;)
+    public void testAddNewCategorySuccess() throws Exception {
+<span class="nc" id="L50">        when(categoryRepo.save(any(Category.class))).thenReturn(new Category());</span>
+<span class="nc" id="L51">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/catagory/add&quot;)</span>
+<span class="nc" id="L52">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L53">                .content(this.JSON))</span>
+<span class="nc" id="L54">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L55">                .andReturn();</span>
+<span class="nc" id="L56">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L57">        verify(categoryRepo, times(1)).save(any(Category.class));</span>
+<span class="nc" id="L58">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Saved\&quot;&quot;));</span>
+<span class="nc" id="L59">    }</span>
+    @Test
+    @DisplayName(&quot;Add New Category -- Fail&quot;)
+    public void testAddNewCategoryFailure() throws Exception {
+<span class="nc" id="L63">        when(categoryRepo.SearchCategory(anyString())).thenReturn(new Category()); // Category already exists</span>
+<span class="nc" id="L64">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/catagory/add&quot;)</span>
+<span class="nc" id="L65">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L66">                .content(this.JSON))</span>
+<span class="nc" id="L67">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L68">                .andReturn();</span>
+<span class="nc" id="L69">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L70">        System.out.println(&quot;Response JSON: &quot; + responseJSON);</span>
+<span class="nc" id="L71">        verify(categoryRepo, times(1)).SearchCategory(anyString());</span>
+<span class="nc" id="L72">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Category already exist\&quot;&quot;));</span>
+<span class="nc" id="L73">    }</span>
+    @Test
+    @DisplayName(&quot;Update Category -- Success&quot;)
+    public void testUpdateCategorySuccess() throws Exception {
+<span class="nc" id="L77">        when(categoryRepo.SearchCategory(anyString())).thenReturn(new Category()); // Category exists but with different name</span>
+<span class="nc" id="L78">        when(categoryRepo.SearchCategory(&quot;Door&quot;)).thenReturn(null); // New name is available</span>
+<span class="nc" id="L79">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/catagory/update&quot;)</span>
+<span class="nc" id="L80">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L81">                        .content(NEWJSON))</span>
+<span class="nc" id="L82">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L83">                .andReturn();</span>
+<span class="nc" id="L84">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L85">        verify(categoryRepo, times(2)).SearchCategory(anyString());</span>
+<span class="nc" id="L86">        verify(categoryRepo, times(1)).save(any(Category.class));</span>
+<span class="nc" id="L87">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Saved\&quot;&quot;));</span>
+<span class="nc" id="L88">    }</span>
+
+    @Test
+    @DisplayName(&quot;Update Category -- Fail (Name Taken)&quot;)
+    public void testUpdateCategoryNameTaken() throws Exception {
+<span class="nc" id="L93">        when(categoryRepo.SearchCategory(anyString())).thenReturn(new Category());</span>
+<span class="nc" id="L94">        when(categoryRepo.SearchCategory(&quot;Door&quot;)).thenReturn(new Category());</span>
+<span class="nc" id="L95">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/catagory/update&quot;)</span>
+<span class="nc" id="L96">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L97">                        .content(NEWJSON))</span>
+<span class="nc" id="L98">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L99">                .andReturn();</span>
+
+        // Get the response JSON and assert it
+<span class="nc" id="L102">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L103">        verify(categoryRepo, times(2)).SearchCategory(anyString());</span>
+<span class="nc" id="L104">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Category already exist\&quot;&quot;));</span>
+<span class="nc" id="L105">    }</span>
+    @Test
+    @DisplayName(&quot;Update Category -- Fail (Category doesn't exist)&quot;)
+    public void testUpdateCategoryNotFound() throws Exception {
+<span class="nc" id="L109">        when(categoryRepo.SearchCategory(&quot;Rick&quot;)).thenReturn(null);</span>
+<span class="nc" id="L110">        String failedNEWJSON = &quot;{\&quot;name\&quot;:\&quot;Rick\&quot;,\&quot;newname\&quot;:\&quot;Ben\&quot;}&quot;;</span>
+<span class="nc" id="L111">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/catagory/update&quot;)</span>
+<span class="nc" id="L112">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L113">                        .content(failedNEWJSON))</span>
+<span class="nc" id="L114">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L115">                .andReturn();</span>
+<span class="nc" id="L116">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L117">        verify(categoryRepo, times(2)).SearchCategory(anyString());</span>
+<span class="nc" id="L118">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Category doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L119">    }</span>
+    @Test
+    @DisplayName(&quot;Get Category -- Success&quot;)
+    public void testGetCategorysSuccess() throws Exception {
+<span class="nc" id="L123">        Category cate = new Category();</span>
+<span class="nc" id="L124">        cate.setName(&quot;Lizzy&quot;);</span>
+<span class="nc" id="L125">        when(categoryRepo.SearchCategory(&quot;LIZZY&quot;)).thenReturn(cate);</span>
+<span class="nc" id="L126">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/catagory/get&quot;)</span>
+<span class="nc" id="L127">                        .param(&quot;givenCategory&quot;, &quot;Lizzy&quot;))</span>
+<span class="nc" id="L128">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L129">                .andReturn();</span>
+<span class="nc" id="L130">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L131">        verify(categoryRepo, times(1)).SearchCategory(&quot;LIZZY&quot;);</span>
+<span class="nc" id="L132">        assertTrue(responseJSON.contains(&quot;\&quot;name\&quot;:\&quot;Lizzy\&quot;&quot;));</span>
+<span class="nc" id="L133">    }</span>
+    @Test
+    @DisplayName(&quot;Get Category -- Failed&quot;)
+    public void testGetCategoryCategoryNotFound() throws Exception {
+<span class="nc" id="L137">        when(categoryRepo.SearchCategory(&quot;Muguire&quot;)).thenReturn(null);</span>
+<span class="nc" id="L138">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/catagory/get&quot;)</span>
+<span class="nc" id="L139">                .param(&quot;givenCategory&quot;, &quot;Muguire&quot;))</span>
+<span class="nc" id="L140">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L141">                .andReturn();</span>
+<span class="nc" id="L142">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L143">        System.out.println(&quot;Response JSON: &quot; + responseJSON);</span>
+<span class="nc" id="L144">        verify(categoryRepo, times(1)).SearchCategory(&quot;MUGUIRE&quot;);</span>
+<span class="nc" id="L145">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Category doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L146">    }</span>
+    private Category createCategoryWithID() {
+<span class="nc" id="L148">        Category act = createCategory(&quot;Joker&quot;);</span>
+<span class="nc" id="L149">        act.setCategory_id((byte) 1);</span>
+<span class="nc" id="L150">        act.setLast_update();</span>
+<span class="nc" id="L151">        return act;</span>
+    }
+    @Test
+    @DisplayName(&quot;Delete Category -- Success&quot;)
+    public void testDeleteCategorySuccess() throws Exception {
+<span class="nc" id="L156">        Category act = createCategoryWithID();</span>
+<span class="nc" id="L157">        when(categoryRepo.SearchCategory(&quot;JOKER&quot;)).thenReturn(act);</span>
+<span class="nc" id="L158">        doNothing().when(filmCategoryRepo).DeleteByActorID((byte) 1);</span>
+<span class="nc" id="L159">        doNothing().when(categoryRepo).delete(any(Category.class));</span>
+<span class="nc" id="L160">        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete(&quot;/catagory/delete&quot;)</span>
+<span class="nc" id="L161">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L162">                .content(&quot;{\&quot;name\&quot;:\&quot;Joker\&quot;}&quot;))</span>
+<span class="nc" id="L163">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L164">                .andReturn();</span>
+<span class="nc" id="L165">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L166">        verify(categoryRepo, times(1)).SearchCategory(&quot;JOKER&quot;);</span>
+<span class="nc" id="L167">        verify(filmCategoryRepo, times(1)).DeleteByActorID((byte) 1);</span>
+<span class="nc" id="L168">        verify(categoryRepo, times(1)).delete(any(Category.class));</span>
+<span class="nc" id="L169">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Deleted\&quot;&quot;));</span>
+<span class="nc" id="L170">    }</span>
+    @Test
+    @DisplayName(&quot;Delete Category -- Failed&quot;)
+    public void testDeleteCategoryNotFound() throws Exception {
+<span class="nc" id="L174">        when(categoryRepo.SearchCategory(&quot;Joker&quot;)).thenReturn(null);</span>
+<span class="nc" id="L175">        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete(&quot;/catagory/delete&quot;)</span>
+<span class="nc" id="L176">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L177">                        .content(&quot;{\&quot;name\&quot;:\&quot;Joker\&quot;}&quot;))</span>
+<span class="nc" id="L178">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L179">                .andReturn();</span>
+<span class="nc" id="L180">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L181">        verify(categoryRepo, times(1)).SearchCategory(&quot;JOKER&quot;);</span>
+<span class="nc" id="L182">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Category doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L183">    }</span>
+    private Category createCategory(String name) {
+<span class="nc" id="L185">        Category Category = new Category();</span>
+<span class="nc" id="L186">        Category.setName(name);</span>
+<span class="nc" id="L187">        return Category;</span>
+    }
+    @Test
+    @DisplayName(&quot;Get All Category's&quot;)
+    public void testGetAllCategory() throws Exception {
+<span class="nc" id="L192">        List&lt;Category&gt; categories = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L193">        categories.add(createCategory(&quot;The&quot;));</span>
+<span class="nc" id="L194">        categories.add(createCategory(&quot;Can&quot;));</span>
+<span class="nc" id="L195">        categories.add(createCategory( &quot;Fix&quot;));</span>
+<span class="nc" id="L196">        categories.add(createCategory(&quot;No&quot;));</span>
+<span class="nc" id="L197">        when(categoryRepo.findAll()).thenReturn(categories);</span>
+<span class="nc" id="L198">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/catagory/all&quot;)</span>
+<span class="nc" id="L199">                        .contentType(MediaType.APPLICATION_JSON))</span>
+<span class="nc" id="L200">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L201">                .andReturn();</span>
+<span class="nc" id="L202">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L203">        verify(categoryRepo, times(1)).findAll();</span>
+<span class="nc" id="L204">        assertTrue(responseJSON.contains(&quot;\&quot;name\&quot;:\&quot;The\&quot;&quot;));</span>
+<span class="nc" id="L205">        assertTrue(responseJSON.contains(&quot;\&quot;name\&quot;:\&quot;Can\&quot;&quot;));</span>
+<span class="nc" id="L206">        assertTrue(responseJSON.contains(&quot;\&quot;name\&quot;:\&quot;Fix\&quot;&quot;));</span>
+<span class="nc" id="L207">        assertTrue(responseJSON.contains(&quot;\&quot;name\&quot;:\&quot;No\&quot;&quot;));</span>
+<span class="nc" id="L208">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -5,8 +5,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import sakila.project.repository.catagoryRepository;
-import sakila.project.repository.filmCatagoryRepository;
+import sakila.project.repository.CatagoryRepository;
+import sakila.project.repository.FilmCatagoryRepository;
 import sakila.project.entities.Category;
 
 import static sakila.project.ProjectApplication.*;
@@ -16,9 +16,9 @@ import static sakila.project.ProjectApplication.*;
 @CrossOrigin(origins = &quot;http://localhost:3000&quot;)
 <span class="fc" id="L17">public class CategoryController {</span>
     @Autowired 
-    private catagoryRepository catagoryRepo;
+    private CatagoryRepository catagoryRepo;
     @Autowired 
-    private filmCatagoryRepository filmCatagoryRepo;
+    private FilmCatagoryRepository filmCatagoryRepo;
     private String returnString(String extra) {
 <span class="fc" id="L23">        return &quot;Category &quot; + extra;</span>
     }

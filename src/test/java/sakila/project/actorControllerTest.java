@@ -38,7 +38,7 @@ class actorControllerTest {
 
     @Test
     @DisplayName("Add New Actor -- Success")
-    private void testAddNewActorSuccess() throws Exception {
+     void testAddNewActorSuccess() throws Exception {
         when(actorRepository.save(any(Actor.class))).thenReturn(new Actor()); // Simulate a successful save
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/actor/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -51,7 +51,7 @@ class actorControllerTest {
     }
     @Test
     @DisplayName("Add New Actor -- Fail")
-    private void testAddNewActorFailure() throws Exception {
+     void testAddNewActorFailure() throws Exception {
         when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // Actor already exists
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/actor/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -65,7 +65,7 @@ class actorControllerTest {
     }
     @Test
     @DisplayName("Update Actor -- Success")
-    private void testUpdateActorSuccess() throws Exception {
+     void testUpdateActorSuccess() throws Exception {
         when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // Actor exists but with different name
         when(actorRepository.findByFirstName("Ben", "Door")).thenReturn(null); // New name is available
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/actor/update")
@@ -81,7 +81,7 @@ class actorControllerTest {
 
     @Test
     @DisplayName("Update Actor -- Fail (Name Taken)")
-    private void testUpdateActorNameTaken() throws Exception {
+     void testUpdateActorNameTaken() throws Exception {
         when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor());
         when(actorRepository.findByFirstName("Ben", "Door")).thenReturn(new Actor());
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/actor/update")
@@ -97,7 +97,7 @@ class actorControllerTest {
     }
     @Test
     @DisplayName("Update Actor -- Fail (Actor doesn't exist)")
-    private void testUpdateActorNotFound() throws Exception {
+     void testUpdateActorNotFound() throws Exception {
         when(actorRepository.findByFirstName("Rick", "John")).thenReturn(null);
         String failedNEWJSON = "{\"forename\":\"Rick\",\"surname\":\"John\"," +
                 "\"actor\":{\"first_name\":\"Ben\",\"last_name\":\"Door\"}}";
@@ -112,7 +112,7 @@ class actorControllerTest {
     }
     @Test
     @DisplayName("Get Actor -- Success")
-    private void testGetActorsSuccess() throws Exception {
+     void testGetActorsSuccess() throws Exception {
         Actor user = new Actor();
         user.setFirst_name("Lizzy");
         user.setLast_name("Muguire");
@@ -129,7 +129,7 @@ class actorControllerTest {
     }
     @Test
     @DisplayName("Get Actor -- Failed")
-    private void testGetActorsActorNotFound() throws Exception {
+     void testGetActorsActorNotFound() throws Exception {
         when(actorRepository.findByFirstName("Lizzy", "Muguire")).thenReturn(null);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/actor/get")
             .param("forename", "Lizzy")
@@ -149,7 +149,7 @@ class actorControllerTest {
     }
     @Test
     @DisplayName("Delete Actor -- Success")
-    private void testDeleteActorSuccess() throws Exception {
+     void testDeleteActorSuccess() throws Exception {
         Actor act = createActorWithID();
         when(actorRepository.findByFirstName("THE", "JOKER")).thenReturn(act);
         doNothing().when(filmActorRepo).DeleteByActorID((short) 1);
@@ -167,7 +167,7 @@ class actorControllerTest {
     }
     @Test
     @DisplayName("Delete Actor -- Failed")
-    private void testDeleteActorNotFound() throws Exception {
+     void testDeleteActorNotFound() throws Exception {
         when(actorRepository.findByFirstName("The", "Joker")).thenReturn(null);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/actor/delete")
             .contentType(MediaType.APPLICATION_JSON)
@@ -186,7 +186,7 @@ class actorControllerTest {
     }
     @Test
     @DisplayName("Get All Actors")
-    private void testGetAllActors() throws Exception {
+     void testGetAllActors() throws Exception {
         List<Actor> users = new ArrayList<>();
         users.add(createActor("Bob", "The"));
         users.add(createActor("Builder", "Can"));

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RentalTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">sakila.project.entities</a> &gt; <span class="el_source">RentalTest.java</span></div><h1>RentalTest.java</h1><pre class="source lang-java linenums">package sakila.project.entities;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sakila.project.entities.Rental;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+<span class="nc" id="L14">class RentalTest {</span>
+
+    private Rental rental;
+
+    @BeforeEach
+    void setUp() {
+<span class="nc" id="L20">        rental = new Rental();</span>
+<span class="nc" id="L21">    }</span>
+
+    @Test
+    void testRentalId() {
+<span class="nc" id="L25">        rental.setRental_id(1);</span>
+<span class="nc" id="L26">        assertEquals(1, rental.getRental_id());</span>
+<span class="nc" id="L27">    }</span>
+
+    @Test
+    void testRentalDate() {
+<span class="nc" id="L31">        Date date = Date.valueOf(&quot;2023-09-24&quot;);</span>
+<span class="nc" id="L32">        rental.setRental_date(date);</span>
+<span class="nc" id="L33">        assertEquals(date, rental.getRental_date());</span>
+<span class="nc" id="L34">    }</span>
+
+    @Test
+    void testInventoryId() {
+<span class="nc" id="L38">        rental.setInventory_id(2);</span>
+<span class="nc" id="L39">        assertEquals(2, rental.getInventory_id());</span>
+<span class="nc" id="L40">    }</span>
+
+    @Test
+    void testCustomerId() {
+<span class="nc" id="L44">        rental.setCustomer_id((short) 3);</span>
+<span class="nc" id="L45">        assertEquals((short) 3, rental.getCustomer_id());</span>
+<span class="nc" id="L46">    }</span>
+
+    @Test
+    void testReturnDate() {
+<span class="nc" id="L50">        Date date = Date.valueOf(&quot;2023-09-25&quot;);</span>
+<span class="nc" id="L51">        rental.setReturn_date(date);</span>
+<span class="nc" id="L52">        assertEquals(date, rental.getReturn_date());</span>
+<span class="nc" id="L53">    }</span>
+
+    @Test
+    void testLastUpdate() {
+<span class="nc" id="L57">        LocalDateTime currentTime = LocalDateTime.now();</span>
+<span class="nc" id="L58">        rental.setLast_update(Timestamp.valueOf(currentTime));</span>
+<span class="nc" id="L59">        assertNotNull(rental.getLast_update());</span>
+<span class="nc" id="L60">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

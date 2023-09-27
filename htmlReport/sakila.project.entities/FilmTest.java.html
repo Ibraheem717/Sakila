@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilmTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">sakila.project.entities</a> &gt; <span class="el_source">FilmTest.java</span></div><h1>FilmTest.java</h1><pre class="source lang-java linenums">package sakila.project.entities;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import sakila.project.entities.Category;
+import sakila.project.entities.Film;
+import sakila.project.entities.Actor;
+
+import java.sql.Timestamp;
+import java.time.Year;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+<span class="nc" id="L18">public class FilmTest {</span>
+
+    private Film film;
+
+    @BeforeEach
+    void setUp() {
+<span class="nc" id="L24">        film = new Film();</span>
+<span class="nc" id="L25">    }</span>
+
+    @Test
+    void testFilmId() {
+<span class="nc" id="L29">        film.setFilm_id((short) 1);</span>
+<span class="nc" id="L30">        assertEquals((short) 1, film.getFilm_id());</span>
+<span class="nc" id="L31">    }</span>
+
+    @Test
+    void testDescription() {
+<span class="nc" id="L35">        film.setDescription(&quot;Sample film description&quot;);</span>
+<span class="nc" id="L36">        assertEquals(&quot;Sample film description&quot;, film.getDescription());</span>
+<span class="nc" id="L37">    }</span>
+
+    @Test
+    void testReleaseYear() {
+<span class="nc" id="L41">        film.setRelease_year(Year.of(2022));</span>
+<span class="nc" id="L42">        assertEquals(Year.of(2022), film.getRelease_year());</span>
+<span class="nc" id="L43">    }</span>
+
+    @Test
+    void testLanguageId() {
+<span class="nc" id="L47">        film.setLanguage_id((byte) 1);</span>
+<span class="nc" id="L48">        assertEquals((byte) 1, film.getLanguage_id());</span>
+<span class="nc" id="L49">    }</span>
+
+    @Test
+    void testOriginalLanguageId() {
+<span class="nc" id="L53">        film.setOriginal_language_id((byte) 2);</span>
+<span class="nc" id="L54">        assertEquals((byte) 2, film.getOriginal_language_id());</span>
+<span class="nc" id="L55">    }</span>
+
+    @Test
+    void testRentalDuration() {
+<span class="nc" id="L59">        film.setRental_duration((byte) 3);</span>
+<span class="nc" id="L60">        assertEquals((byte) 3, film.getRental_duration());</span>
+<span class="nc" id="L61">    }</span>
+
+    @Test
+    void testRentalRate() {
+<span class="nc" id="L65">        film.setRental_rate(4);</span>
+<span class="nc" id="L66">        assertEquals(4, film.getRental_rate());</span>
+<span class="nc" id="L67">    }</span>
+
+    @Test
+    void testLength() {
+<span class="nc" id="L71">        film.setLength((short) 120);</span>
+<span class="nc" id="L72">        assertEquals((short) 120, film.getLength());</span>
+<span class="nc" id="L73">    }</span>
+
+    @Test
+    void testReplacementCost() {
+<span class="nc" id="L77">        film.setReplacement_cost((short) 15);</span>
+<span class="nc" id="L78">        assertEquals((short) 15, film.getReplacement_cost());</span>
+<span class="nc" id="L79">    }</span>
+
+    @Test
+    void testRating() {
+<span class="nc" id="L83">        film.setRating(&quot;PG-13&quot;);</span>
+<span class="nc" id="L84">        assertEquals(&quot;PG-13&quot;, film.getRating());</span>
+<span class="nc" id="L85">    }</span>
+
+    @Test
+    void testSpecialFeatures() {
+<span class="nc" id="L89">        film.setSpecial_features(&quot;Trailers, Commentaries&quot;);</span>
+<span class="nc" id="L90">        assertEquals(&quot;Trailers, Commentaries&quot;, film.getSpecial_features());</span>
+<span class="nc" id="L91">    }</span>
+
+    @Test
+    void testLastUpdate() {
+<span class="nc" id="L95">        Timestamp lastUpdate = Timestamp.valueOf(&quot;2023-09-23 10:30:00&quot;);</span>
+<span class="nc" id="L96">        film.setLast_update(lastUpdate);</span>
+<span class="nc" id="L97">        assertEquals(lastUpdate, film.getLast_update());</span>
+<span class="nc" id="L98">    }</span>
+
+    @Test
+    void testCategories() {
+<span class="nc" id="L102">        Set&lt;Category&gt; categories = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L103">        Category category1 = new Category();</span>
+<span class="nc" id="L104">        category1.setCategory_id((byte) 1);</span>
+<span class="nc" id="L105">        category1.setName(&quot;Category 1&quot;);</span>
+
+<span class="nc" id="L107">        Category category2 = new Category();</span>
+<span class="nc" id="L108">        category2.setCategory_id((byte) 2);</span>
+<span class="nc" id="L109">        category2.setName(&quot;Category 2&quot;);</span>
+
+<span class="nc" id="L111">        categories.add(category1);</span>
+<span class="nc" id="L112">        categories.add(category2);</span>
+
+<span class="nc" id="L114">        film.setCategories(categories);</span>
+<span class="nc" id="L115">        assertEquals(2, film.getCategories().size());</span>
+<span class="nc" id="L116">    }</span>
+
+    @Test
+    void testActors() {
+<span class="nc" id="L120">        Set&lt;Actor&gt; actors = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L121">        Actor actor1 = new Actor();</span>
+<span class="nc" id="L122">        actor1.setActor_id((short) 1);</span>
+<span class="nc" id="L123">        actor1.setFirst_name(&quot;John&quot;);</span>
+<span class="nc" id="L124">        actor1.setLast_name(&quot;Doe&quot;);</span>
+
+<span class="nc" id="L126">        Actor actor2 = new Actor();</span>
+<span class="nc" id="L127">        actor2.setActor_id((short) 2);</span>
+<span class="nc" id="L128">        actor2.setFirst_name(&quot;Jane&quot;);</span>
+<span class="nc" id="L129">        actor2.setLast_name(&quot;Smith&quot;);</span>
+
+<span class="nc" id="L131">        actors.add(actor1);</span>
+<span class="nc" id="L132">        actors.add(actor2);</span>
+
+<span class="nc" id="L134">        film.setActors(actors);</span>
+<span class="nc" id="L135">        assertEquals(2, film.getActors().size());</span>
+<span class="nc" id="L136">    }</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InventoryTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">sakila.project.entities</a> &gt; <span class="el_source">InventoryTest.java</span></div><h1>InventoryTest.java</h1><pre class="source lang-java linenums">package sakila.project.entities;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import sakila.project.repository.InventoryRepository;
+
+import java.sql.Timestamp;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
+
+@WebMvcTest(Inventory.class)
+<span class="nc" id="L16">class InventoryTest {</span>
+    @MockBean
+    private InventoryRepository inventoryRepository;
+
+    @Test
+    private void testSaveInventory() {
+        // Create an Inventory entity
+<span class="nc" id="L23">        Inventory inventory = new Inventory();</span>
+<span class="nc" id="L24">        inventory.setInventory_id(1);</span>
+<span class="nc" id="L25">        inventory.setFilm_id((short) 1);</span>
+<span class="nc" id="L26">        inventory.setStore_id((byte) 1);</span>
+<span class="nc" id="L27">        inventory.setLast_update(new Timestamp(System.currentTimeMillis()));</span>
+
+        // Save the Inventory to the in-memory database
+<span class="nc" id="L30">        when(inventoryRepository.findById(anyLong())).thenReturn(Optional.of(inventory));</span>
+
+        // Retrieve the Inventory from the database
+<span class="nc" id="L33">        Inventory savedInventory = inventoryRepository.findById(Long.valueOf(inventory.getInventory_id())).orElse(null);</span>
+
+        // Check if the retrieved Inventory matches the saved one
+<span class="nc" id="L36">        assertThat(savedInventory).isNotNull();</span>
+<span class="nc" id="L37">        assertThat(savedInventory.getFilm_id()).isEqualTo(inventory.getFilm_id());</span>
+<span class="nc" id="L38">        assertThat(savedInventory.getStore_id()).isEqualTo(inventory.getStore_id());</span>
+<span class="nc" id="L39">        assertThat(savedInventory.getLast_update()).isEqualTo(inventory.getLast_update());</span>
+<span class="nc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
