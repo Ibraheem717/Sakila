@@ -2,6 +2,7 @@ package sakila.project.Controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import sakila.project.Repository.cityRepository;
 import sakila.project.entities.Address;
 import sakila.project.entities.City;
 
+import static sakila.project.ProjectApplication.*;
+
 @RestController 
 @RequestMapping(path="/address") 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -23,8 +26,14 @@ public class addressController {
     private cityRepository cityRepo;
     @Autowired
     private ObjectMapper objectMapper;
+    private String returnStringAddress(String extra) {
+        return "Address " + extra;
+    }
+    private String returnStringCity() {
+        return "City " + NONEXIST;
+    }
     @PostMapping(path="/add") 
-    public @ResponseBody HashMap<String, String> addNewAddress (@RequestBody HashMap<String, String> information) {
+    public @ResponseBody Map<String, String> addNewAddress (@RequestBody HashMap<String, String> information) {
         String address = information.get("address");
         String address2 = information.get("address2");
         String district = information.get("district");
@@ -32,16 +41,16 @@ public class addressController {
         String phone = information.get("phone");
         Short city_id = this.checkIfCityExist(information.get("city"));
         if (city_id==null)
-            return new HashMap<>(){{put("output", "City doesn't exist"); }};
+            return returnValue(returnStringCity());
         if ( this.getAddressAll(address, address2, district, city_id, postal_code, phone) !=null )
-            return new HashMap<>(){{put("output", "Address already exist"); }};
+            return returnValue(returnStringAddress(EXIST));
         Address newAddress = objectMapper.convertValue(information, Address.class);
         newAddress.setLast_update();
         addressRepo.save(newAddress);
-        return new HashMap<>(){{put("output", "Saved"); }};
+        return returnValue(SAVED);
     }
     @PutMapping(path="/update") 
-    public @ResponseBody HashMap<String, String> updateAddress (@RequestBody HashMap<String, Object> information) {
+    public @ResponseBody Map<String, String> updateAddress (@RequestBody HashMap<String, Object> information) {
         String address = (String) information.get("address");
         String address2 = (String) information.get("address2");
         String district = (String) information.get("district");
@@ -49,13 +58,12 @@ public class addressController {
         String phone = (String) information.get("phone");
         Short city_id = this.checkIfCityExist((String)information.get("city"));
         if (city_id==null)
-            return new HashMap<>(){{put("output", "City doesn't exist"); }};
+            return returnValue(returnStringCity());
         Address newInformation = objectMapper.convertValue(information.get("newAddress"), Address.class);
         newInformation.setCity_id(this.checkIfCityExist((String)information.get("newCity")));
         if (newInformation.getCity_id()==null) {
-            return new HashMap<>(){{put("output", "City doesn't exist"); }};
+            return returnValue(returnStringCity());
         }
-
         Address SearchedAddress = this.getAddressAll(address, address2, district, city_id, postal_code, phone);
         Address newAddress = this.getAddressAll(newInformation.getAddress(), newInformation.getAddress2(), newInformation.getDistrict(), newInformation.getCity_id(), newInformation.getPostal_code(), newInformation.getPhone());
         if (SearchedAddress!=null && newAddress==null) {
@@ -65,11 +73,11 @@ public class addressController {
             SearchedAddress.setCity_id(newInformation.getCity_id());
             SearchedAddress.setLast_update();
             addressRepo.save(SearchedAddress);
-            return new HashMap<>(){{put("output", "Saved"); }};
+            return returnValue(SAVED);
         }
         if (newAddress!=null)
-            return new HashMap<>(){{put("output", "Address already exist"); }};
-        return new HashMap<>(){{put("output", "Address doesn't exist"); }};
+            return returnValue(returnStringAddress(EXIST));
+        return returnValue(returnStringAddress(NONEXIST));
 
     }
     @GetMapping(path="/all")
@@ -82,17 +90,19 @@ public class addressController {
         return allAddresses;
     }
     private HashMap<String, Object> returnAddress(Address searchedAddress) {
-        if (searchedAddress!=null)
-            return new HashMap<>(){{
-                put("address_id", searchedAddress.getAddress_id());
-                put("address", searchedAddress.getAddress());
-                put("address2", searchedAddress.getAddress2());
-                put("district", searchedAddress.getDistrict());
-                put("city_id", (cityRepo.findById(searchedAddress.getCity_id())) );
-                put("postal_code", searchedAddress.getPostal_code());
-                put("phone", searchedAddress.getPhone());
-            }};
-        return new HashMap<>(){{put("output", "Address doesn't exist"); }};
+        HashMap<String, Object> address = new HashMap<>();
+        if (searchedAddress!=null) {
+            address.put("address_id", searchedAddress.getAddress_id());
+            address.put("address", searchedAddress.getAddress());
+            address.put("address2", searchedAddress.getAddress2());
+            address.put("district", searchedAddress.getDistrict());
+            address.put("city_id", (cityRepo.findById(searchedAddress.getCity_id())));
+            address.put("postal_code", searchedAddress.getPostal_code());
+            address.put("phone", searchedAddress.getPhone());
+        }
+        else
+            address.put("output", "Address doesn't exist");
+        return address;
     }
     private Short checkIfCityExist(String name) {
         City city_id = cityRepo.SearchCityName(name);
@@ -110,20 +120,20 @@ public class addressController {
         return addressRepo.SearchAddressWithPostCode(address.toUpperCase(), district.toUpperCase() ,city_id, postal_code.toUpperCase(), phone) ;
     }
     private @ResponseBody Address getAddressAll(String address, String address2, String district, Short city_id, String postal_code, String phone) {
-        if (address2.equals("") && postal_code.equals("")) 
+        if (address2.isEmpty() && postal_code.isEmpty())
             return this.getAddress(address, district, city_id, phone);
-        else if (address2.equals(""))
+        else if (address2.isEmpty())
             return this.getAddressPostCode(address, district, city_id, postal_code, phone);
-        else if (postal_code.equals(""))
+        else if (postal_code.isEmpty())
             return this.getAddressWithAddress2(address, address2, district, city_id, phone);
         else
             return (addressRepo.SearchAddressAll(address.toUpperCase(), address2.toUpperCase(), district.toUpperCase(), city_id, postal_code.toUpperCase(), phone)) ;
     }
     @GetMapping(path="/get")
-    public @ResponseBody HashMap<String, Object> getJSONAddressAll(@RequestParam String address, @RequestParam String address2, @RequestParam String district, @RequestParam String city, @RequestParam String postal_code, @RequestParam String phone) {
+    public @ResponseBody Map<String, ?> getJSONAddressAll(@RequestParam String address, @RequestParam String address2, @RequestParam String district, @RequestParam String city, @RequestParam String postal_code, @RequestParam String phone) {
         Short city_id = checkIfCityExist(city);
         if (city_id!=null)
             return returnAddress(getAddressAll(address, address2, district, city_id, postal_code, phone));
-        return new HashMap<>(){{put("output", "City doesn't exist"); }};
+        return returnValue(returnStringCity());
     }
 }

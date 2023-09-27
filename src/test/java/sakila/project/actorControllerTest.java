@@ -37,8 +37,8 @@ public class actorControllerTest {
             "\"actor\":{\"first_name\":\"Ben\",\"last_name\":\"Door\"}}";
 
     @Test
-    @DisplayName("Add New User -- Success")
-    public void testAddNewUserSuccess() throws Exception {
+    @DisplayName("Add New Actor -- Success")
+    public void testAddNewActorSuccess() throws Exception {
         when(actorRepository.save(any(Actor.class))).thenReturn(new Actor()); // Simulate a successful save
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/actor/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -50,9 +50,9 @@ public class actorControllerTest {
         assertTrue(responseJSON.contains("\"output\":\"Saved\""));
     }
     @Test
-    @DisplayName("Add New User -- Fail")
-    public void testAddNewUserFailure() throws Exception {
-        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // User already exists
+    @DisplayName("Add New Actor -- Fail")
+    public void testAddNewActorFailure() throws Exception {
+        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // Actor already exists
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/actor/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.JSON))
@@ -61,12 +61,12 @@ public class actorControllerTest {
         String responseJSON = result.getResponse().getContentAsString();
         System.out.println("Response JSON: " + responseJSON);
         verify(actorRepository, times(1)).findByFirstName(anyString(), anyString());
-        assertTrue(responseJSON.contains("\"output\":\"User already exist\""));
+        assertTrue(responseJSON.contains("\"output\":\"Actor already exist\""));
     }
     @Test
-    @DisplayName("Update User -- Success")
-    public void testUpdateUserSuccess() throws Exception {
-        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // User exists but with different name
+    @DisplayName("Update Actor -- Success")
+    public void testUpdateActorSuccess() throws Exception {
+        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // Actor exists but with different name
         when(actorRepository.findByFirstName("Ben", "Door")).thenReturn(null); // New name is available
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/actor/update")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,8 +80,8 @@ public class actorControllerTest {
     }
 
     @Test
-    @DisplayName("Update User -- Fail (Name Taken)")
-    public void testUpdateUserNameTaken() throws Exception {
+    @DisplayName("Update Actor -- Fail (Name Taken)")
+    public void testUpdateActorNameTaken() throws Exception {
         when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor());
         when(actorRepository.findByFirstName("Ben", "Door")).thenReturn(new Actor());
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/actor/update")
@@ -93,11 +93,11 @@ public class actorControllerTest {
         // Get the response JSON and assert it
         String responseJSON = result.getResponse().getContentAsString();
         verify(actorRepository, times(2)).findByFirstName(anyString(), anyString());
-        assertTrue(responseJSON.contains("\"output\":\"Name taken\""));
+        assertTrue(responseJSON.contains("\"output\":\"Actor already exist\""));
     }
     @Test
-    @DisplayName("Update User -- Fail (User doesn't exist)")
-    public void testUpdateUserNotFound() throws Exception {
+    @DisplayName("Update Actor -- Fail (Actor doesn't exist)")
+    public void testUpdateActorNotFound() throws Exception {
         when(actorRepository.findByFirstName("Rick", "John")).thenReturn(null);
         String failedNEWJSON = "{\"forename\":\"Rick\",\"surname\":\"John\"," +
                 "\"actor\":{\"first_name\":\"Ben\",\"last_name\":\"Door\"}}";
@@ -108,11 +108,11 @@ public class actorControllerTest {
                 .andReturn();
         String responseJSON = result.getResponse().getContentAsString();
         verify(actorRepository, times(1)).findByFirstName(anyString(), anyString());
-        assertTrue(responseJSON.contains("\"output\":\"User doesn't exist\""));
+        assertTrue(responseJSON.contains("\"output\":\"Actor doesn't exist\""));
     }
     @Test
-    @DisplayName("Get User -- Success")
-    public void testGetUsersSuccess() throws Exception {
+    @DisplayName("Get Actor -- Success")
+    public void testGetActorsSuccess() throws Exception {
         Actor user = new Actor();
         user.setFirst_name("Lizzy");
         user.setLast_name("Muguire");
@@ -128,8 +128,8 @@ public class actorControllerTest {
         assertTrue(responseJSON.contains("\"last_name\":\"Muguire\""));
     }
     @Test
-    @DisplayName("Get User -- Failed")
-    public void testGetUsersUserNotFound() throws Exception {
+    @DisplayName("Get Actor -- Failed")
+    public void testGetActorsActorNotFound() throws Exception {
         when(actorRepository.findByFirstName("Lizzy", "Muguire")).thenReturn(null);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/actor/get")
             .param("forename", "Lizzy")
@@ -139,18 +139,18 @@ public class actorControllerTest {
         String responseJSON = result.getResponse().getContentAsString();
         System.out.println("Response JSON: " + responseJSON);
         verify(actorRepository, times(1)).findByFirstName("LIZZY", "MUGUIRE");
-        assertTrue(responseJSON.contains("\"outcome\":\"User doesn't exist\""));
+        assertTrue(responseJSON.contains("\"output\":\"Actor doesn't exist\""));
     }
-    private Actor createUserWithID(String firstname, String lastName) {
-        Actor act = createUser(firstname, lastName);
+    private Actor createActorWithID() {
+        Actor act = createActor("The", "Joker");
         act.setActor_id((short) 1);
         act.setLast_update();
         return act;
     }
     @Test
-    @DisplayName("Delete User -- Success")
-    public void testDeleteUserSuccess() throws Exception {
-        Actor act = createUserWithID("The", "Joker");
+    @DisplayName("Delete Actor -- Success")
+    public void testDeleteActorSuccess() throws Exception {
+        Actor act = createActorWithID();
         when(actorRepository.findByFirstName("THE", "JOKER")).thenReturn(act);
         doNothing().when(filmActorRepo).DeleteByActorID((short) 1);
         doNothing().when(actorRepository).delete(any(Actor.class));
@@ -166,8 +166,8 @@ public class actorControllerTest {
         assertTrue(responseJSON.contains("\"output\":\"Deleted\""));
     }
     @Test
-    @DisplayName("Delete User -- Failed")
-    public void testDeleteUserNotFound() throws Exception {
+    @DisplayName("Delete Actor -- Failed")
+    public void testDeleteActorNotFound() throws Exception {
         when(actorRepository.findByFirstName("The", "Joker")).thenReturn(null);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/actor/delete")
             .contentType(MediaType.APPLICATION_JSON)
@@ -176,22 +176,22 @@ public class actorControllerTest {
             .andReturn();
         String responseJSON = result.getResponse().getContentAsString();
         verify(actorRepository, times(1)).findByFirstName("THE", "JOKER");
-        assertTrue(responseJSON.contains("\"output\":\"User doesn't exist\""));
+        assertTrue(responseJSON.contains("\"output\":\"Actor doesn't exist\""));
     }
-    private Actor createUser(String firstName, String lastName) {
+    private Actor createActor(String firstName, String lastName) {
         Actor user = new Actor();
         user.setFirst_name(firstName);
         user.setLast_name(lastName);
         return user;
     }
     @Test
-    @DisplayName("Get All Users")
-    public void testGetAllUsers() throws Exception {
+    @DisplayName("Get All Actors")
+    public void testGetAllActors() throws Exception {
         List<Actor> users = new ArrayList<>();
-        users.add(createUser("Bob", "The"));
-        users.add(createUser("Builder", "Can"));
-        users.add(createUser("We", "Fix"));
-        users.add(createUser("It", "No"));
+        users.add(createActor("Bob", "The"));
+        users.add(createActor("Builder", "Can"));
+        users.add(createActor("We", "Fix"));
+        users.add(createActor("It", "No"));
         when(actorRepository.findAll()).thenReturn(users);
         MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/actor/all")
             .contentType(MediaType.APPLICATION_JSON))

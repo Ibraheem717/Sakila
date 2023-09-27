@@ -13,8 +13,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Getter
-<span class="nc" id="L16">@Setter</span>
-<span class="nc" id="L17">@NoArgsConstructor</span>
+<span class="pc" id="L16">@Setter</span>
+<span class="fc" id="L17">@NoArgsConstructor</span>
 <span class="nc" id="L18">@AllArgsConstructor</span>
 <span class="nc" id="L19">@ToString</span>
 @Entity
@@ -27,12 +27,12 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-<span class="nc" id="L30">    private byte category_id;</span>
-<span class="nc" id="L31">    private String name;</span>
-<span class="nc" id="L32">    private Timestamp last_update;</span>
+<span class="fc" id="L30">    private byte category_id;</span>
+<span class="fc" id="L31">    private String name;</span>
+<span class="fc" id="L32">    private Timestamp last_update;</span>
 
         public void setLast_update() {
-<span class="nc" id="L35">        this.last_update = Timestamp.valueOf(LocalDateTime.now());</span>
-<span class="nc" id="L36">    }</span>
+<span class="fc" id="L35">        this.last_update = Timestamp.valueOf(LocalDateTime.now());</span>
+<span class="fc" id="L36">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

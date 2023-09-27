@@ -48,17 +48,17 @@ import sakila.project.entities.City;
 <span class="fc" id="L48">        String postal_code = (String) information.get(&quot;postal_code&quot;);</span>
 <span class="fc" id="L49">        String phone = (String) information.get(&quot;phone&quot;);</span>
 <span class="fc" id="L50">        Short city_id = this.checkIfCityExist((String)information.get(&quot;city&quot;));</span>
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (city_id==null)</span>
-<span class="nc" id="L52">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;City doesn't exist&quot;); }};</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (city_id==null)</span>
+<span class="fc" id="L52">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;City doesn't exist&quot;); }};</span>
 <span class="fc" id="L53">        Address newInformation = objectMapper.convertValue(information.get(&quot;newAddress&quot;), Address.class);</span>
 <span class="fc" id="L54">        newInformation.setCity_id(this.checkIfCityExist((String)information.get(&quot;newCity&quot;)));</span>
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (newInformation.getCity_id()==null) {</span>
-<span class="nc" id="L56">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;City doesn't exist&quot;); }};</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (newInformation.getCity_id()==null) {</span>
+<span class="fc" id="L56">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;City doesn't exist&quot;); }};</span>
         }
 
 <span class="fc" id="L59">        Address SearchedAddress = this.getAddressAll(address, address2, district, city_id, postal_code, phone);</span>
 <span class="fc" id="L60">        Address newAddress = this.getAddressAll(newInformation.getAddress(), newInformation.getAddress2(), newInformation.getDistrict(), newInformation.getCity_id(), newInformation.getPostal_code(), newInformation.getPhone());</span>
-<span class="pc bpc" id="L61" title="2 of 4 branches missed.">        if (SearchedAddress!=null &amp;&amp; newAddress==null) {</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">        if (SearchedAddress!=null &amp;&amp; newAddress==null) {</span>
 <span class="fc" id="L62">            Short addressHolder = SearchedAddress.getAddress_id();</span>
 <span class="fc" id="L63">            SearchedAddress = newInformation;</span>
 <span class="fc" id="L64">            SearchedAddress.setAddress_id(addressHolder);</span>
@@ -67,32 +67,32 @@ import sakila.project.entities.City;
 <span class="fc" id="L67">            addressRepo.save(SearchedAddress);</span>
 <span class="fc" id="L68">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;Saved&quot;); }};</span>
         }
-<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (newAddress!=null)</span>
-<span class="nc" id="L71">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;Address already exist&quot;); }};</span>
-<span class="nc" id="L72">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;Address doesn't exist&quot;); }};</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (newAddress!=null)</span>
+<span class="fc" id="L71">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;Address already exist&quot;); }};</span>
+<span class="fc" id="L72">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;Address doesn't exist&quot;); }};</span>
 
     }
     @GetMapping(path=&quot;/all&quot;)
     public @ResponseBody List&lt;HashMap&lt;String, Object&gt;&gt; getAddress() {
-<span class="nc" id="L77">        List&lt;HashMap&lt;String, Object&gt;&gt; allAddresses = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        for (Address address : addressRepo.findAll()) {</span>
-<span class="nc" id="L79">            HashMap&lt;String, Object&gt; information = returnAddress(address);            </span>
-<span class="nc" id="L80">            allAddresses.add(information);     </span>
-<span class="nc" id="L81">        }</span>
-<span class="nc" id="L82">        return allAddresses;</span>
+<span class="fc" id="L77">        List&lt;HashMap&lt;String, Object&gt;&gt; allAddresses = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (Address address : addressRepo.findAll()) {</span>
+<span class="fc" id="L79">            HashMap&lt;String, Object&gt; information = returnAddress(address);            </span>
+<span class="fc" id="L80">            allAddresses.add(information);     </span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">        return allAddresses;</span>
     }
     private HashMap&lt;String, Object&gt; returnAddress(Address searchedAddress) {
-<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (searchedAddress!=null)</span>
-<span class="nc" id="L86">            return new HashMap&lt;&gt;(){{</span>
-<span class="nc" id="L87">                put(&quot;address_id&quot;, searchedAddress.getAddress_id());</span>
-<span class="nc" id="L88">                put(&quot;address&quot;, searchedAddress.getAddress());</span>
-<span class="nc" id="L89">                put(&quot;address2&quot;, searchedAddress.getAddress2());</span>
-<span class="nc" id="L90">                put(&quot;district&quot;, searchedAddress.getDistrict());</span>
-<span class="nc" id="L91">                put(&quot;city_id&quot;, (cityRepo.findById(searchedAddress.getCity_id())) );</span>
-<span class="nc" id="L92">                put(&quot;postal_code&quot;, searchedAddress.getPostal_code());</span>
-<span class="nc" id="L93">                put(&quot;phone&quot;, searchedAddress.getPhone());</span>
-<span class="nc" id="L94">            }};</span>
-<span class="nc" id="L95">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;Address doesn't exist&quot;); }};</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (searchedAddress!=null)</span>
+<span class="fc" id="L86">            return new HashMap&lt;&gt;(){{</span>
+<span class="fc" id="L87">                put(&quot;address_id&quot;, searchedAddress.getAddress_id());</span>
+<span class="fc" id="L88">                put(&quot;address&quot;, searchedAddress.getAddress());</span>
+<span class="fc" id="L89">                put(&quot;address2&quot;, searchedAddress.getAddress2());</span>
+<span class="fc" id="L90">                put(&quot;district&quot;, searchedAddress.getDistrict());</span>
+<span class="fc" id="L91">                put(&quot;city_id&quot;, (cityRepo.findById(searchedAddress.getCity_id())) );</span>
+<span class="fc" id="L92">                put(&quot;postal_code&quot;, searchedAddress.getPostal_code());</span>
+<span class="fc" id="L93">                put(&quot;phone&quot;, searchedAddress.getPhone());</span>
+<span class="fc" id="L94">            }};</span>
+<span class="fc" id="L95">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;Address doesn't exist&quot;); }};</span>
     }
     private Short checkIfCityExist(String name) {
 <span class="fc" id="L98">        City city_id = cityRepo.SearchCityName(name);</span>
@@ -101,29 +101,29 @@ import sakila.project.entities.City;
 <span class="fc" id="L101">        return city_id.getCity_id();</span>
     }
     private @ResponseBody Address getAddress(@RequestParam String address, String district, Short city_id, String phone) {
-<span class="nc" id="L104">        return addressRepo.SearchAddress(address.toUpperCase(), district.toUpperCase(), city_id, phone) ;</span>
+<span class="fc" id="L104">        return addressRepo.SearchAddress(address.toUpperCase(), district.toUpperCase(), city_id, phone) ;</span>
     }
     private @ResponseBody Address getAddressWithAddress2(String address, String address2, String district, Short city_id, String phone) {
-<span class="nc" id="L107">        return addressRepo.SearchAddressWithAddress2(address.toUpperCase(), address2.toUpperCase(),district.toUpperCase(), city_id, phone) ;</span>
+<span class="fc" id="L107">        return addressRepo.SearchAddressWithAddress2(address.toUpperCase(), address2.toUpperCase(),district.toUpperCase(), city_id, phone) ;</span>
     }
     private @ResponseBody Address getAddressPostCode(String address, String district, Short city_id, String postal_code,String phone) {
-<span class="nc" id="L110">        return addressRepo.SearchAddressWithPostCode(address.toUpperCase(), district.toUpperCase() ,city_id, postal_code.toUpperCase(), phone) ;</span>
+<span class="fc" id="L110">        return addressRepo.SearchAddressWithPostCode(address.toUpperCase(), district.toUpperCase() ,city_id, postal_code.toUpperCase(), phone) ;</span>
     }
     private @ResponseBody Address getAddressAll(String address, String address2, String district, Short city_id, String postal_code, String phone) {
-<span class="pc bpc" id="L113" title="3 of 4 branches missed.">        if (address2.equals(&quot;&quot;) &amp;&amp; postal_code.equals(&quot;&quot;)) </span>
-<span class="nc" id="L114">            return this.getAddress(address, district, city_id, phone);</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        else if (address2.equals(&quot;&quot;))</span>
-<span class="nc" id="L116">            return this.getAddressPostCode(address, district, city_id, postal_code, phone);</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        else if (postal_code.equals(&quot;&quot;))</span>
-<span class="nc" id="L118">            return this.getAddressWithAddress2(address, address2, district, city_id, phone);</span>
+<span class="fc bfc" id="L113" title="All 4 branches covered.">        if (address2.equals(&quot;&quot;) &amp;&amp; postal_code.equals(&quot;&quot;)) </span>
+<span class="fc" id="L114">            return this.getAddress(address, district, city_id, phone);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        else if (address2.equals(&quot;&quot;))</span>
+<span class="fc" id="L116">            return this.getAddressPostCode(address, district, city_id, postal_code, phone);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        else if (postal_code.equals(&quot;&quot;))</span>
+<span class="fc" id="L118">            return this.getAddressWithAddress2(address, address2, district, city_id, phone);</span>
         else
 <span class="fc" id="L120">            return (addressRepo.SearchAddressAll(address.toUpperCase(), address2.toUpperCase(), district.toUpperCase(), city_id, postal_code.toUpperCase(), phone)) ;</span>
     }
     @GetMapping(path=&quot;/get&quot;)
     public @ResponseBody HashMap&lt;String, Object&gt; getJSONAddressAll(@RequestParam String address, @RequestParam String address2, @RequestParam String district, @RequestParam String city, @RequestParam String postal_code, @RequestParam String phone) {
-<span class="nc" id="L124">        Short city_id = checkIfCityExist(city);</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (city_id!=null)</span>
-<span class="nc" id="L126">            return returnAddress(getAddressAll(address, address2, district, city_id, postal_code, phone));</span>
+<span class="fc" id="L124">        Short city_id = checkIfCityExist(city);</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (city_id!=null)</span>
+<span class="fc" id="L126">            return returnAddress(getAddressAll(address, address2, district, city_id, postal_code, phone));</span>
 <span class="nc" id="L127">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;, &quot;City doesn't exist&quot;); }};</span>
     }
 }

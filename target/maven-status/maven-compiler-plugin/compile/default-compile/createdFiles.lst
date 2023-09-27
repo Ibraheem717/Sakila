@@ -20,6 +20,7 @@ sakila\project\Controllers\addressController$10.class
 sakila\project\Controllers\addressController$2.class
 sakila\project\Repository\filmTextRepository.class
 sakila\project\Controllers\actorController$3.class
+sakila\project\Controllers\categoryController$9.class
 sakila\project\entities\Address.class
 sakila\project\entities\Inventory.class
 sakila\project\Controllers\addressController$4.class

@@ -10,57 +10,59 @@ import sakila.project.entities.Category;
 @RestController 
 @RequestMapping(path=&quot;/catagory&quot;) 
 @CrossOrigin(origins = &quot;http://localhost:3000&quot;)
-<span class="nc" id="L13">public class categoryController {</span>
+<span class="fc" id="L13">public class categoryController {</span>
     @Autowired 
     private catagoryRepository catagoryRepo;
     @Autowired 
     private filmCatagoryRepository filmCatagoryRepo;
     @PostMapping(path=&quot;/add&quot;) 
     public @ResponseBody HashMap&lt;String, String&gt; addNewCategory (@RequestBody HashMap&lt;String, String&gt; information) {
-<span class="nc" id="L20">        Category n = new Category();</span>
-<span class="nc" id="L21">        n.setName(information.get(&quot;name&quot;));</span>
-<span class="nc" id="L22">        n.setLast_update();</span>
-<span class="nc bnc" id="L23" title="All 2 branches missed.">        if (catagoryRepo.SearchCategory(n.getName().toUpperCase())!=null)</span>
-<span class="nc" id="L24">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Category already exist&quot;);}};</span>
-<span class="nc" id="L25">        catagoryRepo.save(n);</span>
-<span class="nc" id="L26">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Saved&quot;);}};</span>
+<span class="fc" id="L20">        Category n = new Category();</span>
+<span class="fc" id="L21">        n.setName(information.get(&quot;name&quot;));</span>
+<span class="fc" id="L22">        n.setLast_update();</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        if (catagoryRepo.SearchCategory(n.getName().toUpperCase())!=null)</span>
+<span class="fc" id="L24">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Category already exist&quot;);}};</span>
+<span class="fc" id="L25">        catagoryRepo.save(n);</span>
+<span class="fc" id="L26">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Saved&quot;);}};</span>
     }
     @PutMapping(path=&quot;/update&quot;) 
     public @ResponseBody HashMap&lt;String, String&gt; updateCategory (@RequestBody HashMap&lt;String, String&gt; information) {
-<span class="nc" id="L30">        Category SearchedCategory = catagoryRepo.SearchCategory(information.get(&quot;name&quot;));</span>
-<span class="nc" id="L31">        Category newCategory = catagoryRepo.SearchCategory(information.get(&quot;newname&quot;));</span>
-<span class="nc bnc" id="L32" title="All 4 branches missed.">        if (SearchedCategory!=null &amp;&amp; newCategory==null) {</span>
-<span class="nc" id="L33">            SearchedCategory.setLast_update();</span>
-<span class="nc" id="L34">            SearchedCategory.setName(information.get(&quot;newname&quot;));</span>
-<span class="nc" id="L35">            catagoryRepo.save(SearchedCategory);</span>
-<span class="nc" id="L36">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Saved&quot;);}};</span>
+<span class="fc" id="L30">        Category SearchedCategory = catagoryRepo.SearchCategory(information.get(&quot;name&quot;));</span>
+<span class="fc" id="L31">        Category newCategory = catagoryRepo.SearchCategory(information.get(&quot;newname&quot;));</span>
+<span class="fc bfc" id="L32" title="All 4 branches covered.">        if (SearchedCategory!=null &amp;&amp; newCategory==null) {</span>
+<span class="fc" id="L33">            SearchedCategory.setLast_update();</span>
+<span class="fc" id="L34">            SearchedCategory.setName(information.get(&quot;newname&quot;));</span>
+<span class="fc" id="L35">            catagoryRepo.save(SearchedCategory);</span>
+<span class="fc" id="L36">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Saved&quot;);}};</span>
         }
-<span class="nc" id="L38">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Category doesn't exist&quot;);}};</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (newCategory!=null)</span>
+<span class="fc" id="L39">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Category already exist&quot;);}};</span>
+<span class="fc" id="L40">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Category doesn't exist&quot;);}};</span>
     }
     @DeleteMapping(path=&quot;/delete&quot;) 
     public @ResponseBody HashMap&lt;String, String&gt; deleteCatagory (@RequestBody HashMap&lt;String, String&gt; givenCategory) {
-<span class="nc" id="L42">        Category delCategory = catagoryRepo.SearchCategory(givenCategory.get(&quot;name&quot;).toUpperCase());</span>
-<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (delCategory!=null) {</span>
-<span class="nc" id="L44">            filmCatagoryRepo.DeleteByActorID(delCategory.getCategory_id());</span>
-<span class="nc" id="L45">            catagoryRepo.delete(delCategory);</span>
-<span class="nc" id="L46">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Deleted&quot;);}};</span>
+<span class="fc" id="L44">        Category delCategory = catagoryRepo.SearchCategory(givenCategory.get(&quot;name&quot;).toUpperCase());</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (delCategory!=null) {</span>
+<span class="fc" id="L46">            filmCatagoryRepo.DeleteByActorID(delCategory.getCategory_id());</span>
+<span class="fc" id="L47">            catagoryRepo.delete(delCategory);</span>
+<span class="fc" id="L48">            return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Deleted&quot;);}};</span>
         }
-<span class="nc" id="L48">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Category doesn't exist&quot;);}};</span>
+<span class="fc" id="L50">        return new HashMap&lt;&gt;(){{put(&quot;output&quot;,&quot;Category doesn't exist&quot;);}};</span>
     }
     @GetMapping(path=&quot;/all&quot;)
     public @ResponseBody Iterable&lt;Category&gt; getAllCategorys() {
-<span class="nc" id="L52">        return catagoryRepo.findAll();</span>
+<span class="fc" id="L54">        return catagoryRepo.findAll();</span>
     }
     @GetMapping(path=&quot;/get&quot;)
     public @ResponseBody HashMap&lt;String, String&gt; getCategory(@RequestParam String givenCategory ) {
-<span class="nc" id="L56">        Category category = catagoryRepo.SearchCategory(givenCategory.toUpperCase()); </span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (category!=null)</span>
-<span class="nc" id="L58">            return new HashMap&lt;String, String&gt;() {{</span>
-<span class="nc" id="L59">                put(&quot;name&quot;, category.getName());</span>
-<span class="nc" id="L60">            }};</span>
-<span class="nc" id="L61">        return new HashMap&lt;String, String&gt;() {{</span>
-<span class="nc" id="L62">            put(&quot;outcome&quot; , &quot;Category doesn't exist&quot;);</span>
-<span class="nc" id="L63">        }};</span>
+<span class="fc" id="L58">        Category category = catagoryRepo.SearchCategory(givenCategory.toUpperCase()); </span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (category!=null)</span>
+<span class="fc" id="L60">            return new HashMap&lt;String, String&gt;() {{</span>
+<span class="fc" id="L61">                put(&quot;name&quot;, category.getName());</span>
+<span class="fc" id="L62">            }};</span>
+<span class="fc" id="L63">        return new HashMap&lt;String, String&gt;() {{</span>
+<span class="fc" id="L64">            put(&quot;outcome&quot; , &quot;Category doesn't exist&quot;);</span>
+<span class="fc" id="L65">        }};</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

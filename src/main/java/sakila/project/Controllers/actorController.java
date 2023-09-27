@@ -12,6 +12,8 @@ import sakila.project.Repository.actorRepository;
 import sakila.project.Repository.filmActorRepository;
 import sakila.project.entities.Actor;
 
+import static sakila.project.ProjectApplication.*;
+
 @RestController 
 @RequestMapping(path="/actor") 
 @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3000"})
@@ -22,59 +24,61 @@ public class actorController {
     private ObjectMapper objectMapper;
     @Autowired
     private filmActorRepository filmActorRepo;
+    private String returnString(String extra) {
+        return "Actor " + extra;
+    }
     @PostMapping(path="/add") 
-    public @ResponseBody HashMap<String, String> addNewUser (@RequestBody HashMap<String, String> information) {
+    public @ResponseBody Map<String, String> addNewActor (@RequestBody HashMap<String, String> information) {
         Actor n =  objectMapper.convertValue(information, Actor.class);
         if (actorRepository.findByFirstName( n.getFirst_name().toUpperCase(),  n.getLast_name().toUpperCase()) != null) {
-            return new HashMap<>(){{put("output","User already exist");}};
+            return returnValue(returnString(EXIST));
         }
         n.setLast_update();
         actorRepository.save(n);
-        return new HashMap<>(){{put("output","Saved");}};
+        return returnValue(SAVED);
     }
     @PutMapping(path = "/update")
-    public @ResponseBody HashMap<String, String> updateUser(@RequestBody HashMap<String, Object> information) {
+    public @ResponseBody Map<String, String> updateActor(@RequestBody HashMap<String, Object> information) {
         String forename = (String) information.get("forename");
         String surname = (String) information.get("surname");
         Actor existingActor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());
         if (existingActor != null) {
             Actor newInformation = objectMapper.convertValue(information.get("actor"), Actor.class);
             if (actorRepository.findByFirstName(newInformation.getFirst_name(), newInformation.getLast_name()) != null)
-                return new HashMap<>(){{put("output","Name taken");}};
+                return returnValue(returnString(EXIST));
             existingActor.setFirst_name(newInformation.getFirst_name());
             existingActor.setLast_name(newInformation.getLast_name());
             existingActor.setLast_update();            
             actorRepository.save(existingActor);
-            return new HashMap<>(){{put("output","Saved");}};
+            return returnValue(SAVED);
         }
     
-        return new HashMap<>(){{put("output","User doesn't exist");}};
+        return new HashMap<>(){{put("output","Actor doesn't exist");}};
     }
     @DeleteMapping(path="/delete") 
-    public @ResponseBody HashMap<String, String> deleteUser (@RequestBody HashMap<String, String> actor) {
+    public @ResponseBody Map<String, String> deleteActor (@RequestBody HashMap<String, String> actor) {
         Actor delActor = actorRepository.findByFirstName(actor.get("first_name").toUpperCase(),actor.get("last_name").toUpperCase());
         if (delActor!=null) {
             filmActorRepo.DeleteByActorID(delActor.getActor_id());
             actorRepository.delete(delActor);
-            return new HashMap<>(){{put("output","Deleted");}};
+            return returnValue(DELETED);
         }
-        return new HashMap<>(){{put("output","User doesn't exist");}};
+        return returnValue(returnString(NONEXIST));
     }
     @GetMapping(path="/all")
-    public @ResponseBody Iterable<Actor> getAllUsers() {
+    public @ResponseBody Iterable<Actor> getAllActors() {
         return actorRepository.findAll();
     }
     @GetMapping(path="/get")
-        public @ResponseBody HashMap<String, String> getUsers(@RequestParam String forename, @RequestParam String surname ) {
-        Actor actor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase()); 
+        public @ResponseBody Map<String, String> getActors(@RequestParam String forename, @RequestParam String surname ) {
+        Actor actor = actorRepository.findByFirstName(forename.toUpperCase(), surname.toUpperCase());
+        Map<String, String> act = new HashMap<>();
         if (actor!=null) {
-            return new HashMap<String, String>() {{
-                put("first_name", actor.getFirst_name());
-                put("last_name" , actor.getLast_name());
-            }};
+            act.put("first_name", actor.getFirst_name());
+            act.put("last_name" , actor.getLast_name());
         }
-        return new HashMap<String, String>() {{
-            put("outcome" , "User doesn't exist");
-        }};
+        else
+            act = returnValue(returnString(NONEXIST));
+        return act;
     }
 }
