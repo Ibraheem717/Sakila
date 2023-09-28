@@ -6,7 +6,7 @@ import "./App.css";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
-  const webURL = "http://sakiladatabase-env.eba-pmf6c2dy.us-east-1.elasticbeanstalk.com";
+  const webURL = "https://sakiladatabase-env.eba-pmf6c2dy.us-east-1.elasticbeanstalk.com";
   const localURL = "http://localhost:8080/"
 
   const renderPage = () => {
