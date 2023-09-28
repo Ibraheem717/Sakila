@@ -1,6 +1,5 @@
 package sakila.project;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,6 @@ import static org.mockito.Mockito.*;
 class addressControllerTest {
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    private ObjectMapper objectMapper;
     @MockBean
     private AddressRepository addressRepo;
     @MockBean
@@ -124,12 +121,6 @@ class addressControllerTest {
                 (short) 1,
                 "BA55 3AT",
                 "999");
-        Address newAdd = createAddress("Scrapyard",
-                "RichTown",
-                "Pyramid",
-                (short) 2,
-                "BA55 3AT",
-                "999");
         when(cityRepo.SearchCityName("Night City")).thenReturn(new City((short) 1,
                 "Night City", (short) 1,null));
         when(cityRepo.SearchCityName("Day City")).thenReturn(new City((short) 2,
@@ -190,18 +181,6 @@ class addressControllerTest {
     @Test
     @DisplayName("Update Address -- Fail (Address Doesn't Exist)")
     void testUpdateAddressFailedAddressNotExist() throws Exception {
-        Address original = createAddress("Graveyard",
-                "BrokeTown",
-                "Giza",
-                (short) 1,
-                "BA55 3AT",
-                "999");
-        Address newAdd = createAddress("Scrapyard",
-                "RichTown",
-                "Pyramid",
-                (short) 2,
-                "BA55 3AT",
-                "999");
         when(cityRepo.SearchCityName("Night City")).thenReturn(new City((short) 1,
                 "Night City", (short) 1,null));
         when(cityRepo.SearchCityName("Day City")).thenReturn(new City((short) 2,

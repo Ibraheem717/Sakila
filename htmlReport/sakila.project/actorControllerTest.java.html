@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActorControllerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">sakila.project</a> &gt; <span class="el_source">ActorControllerTest.java</span></div><h1>ActorControllerTest.java</h1><pre class="source lang-java linenums">package sakila.project;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>actorControllerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">sakila.project</a> &gt; <span class="el_source">actorControllerTest.java</span></div><h1>actorControllerTest.java</h1><pre class="source lang-java linenums">package sakila.project;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -20,193 +20,191 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 @WebMvcTest(controllers = ActorController.class)
-<span class="nc" id="L23">class ActorControllerTest {</span>
+<span class="nc" id="L23">class actorControllerTest {</span>
     @MockBean
     private ActorRepository actorRepository;
     @MockBean
     private FilmActorRepository filmActorRepo;
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-<span class="nc" id="L32">    private final String JSON = &quot;{&quot; +</span>
+<span class="nc" id="L30">    private final String JSON = &quot;{&quot; +</span>
             &quot;\&quot;first_name\&quot;:\&quot;Bob\&quot;,&quot; +
             &quot;\&quot;last_name\&quot;:\&quot;Builder\&quot;&quot; +
             &quot;}&quot;;
-<span class="nc" id="L36">    private final String NEWJSON = &quot;{\&quot;forename\&quot;:\&quot;Bob\&quot;,\&quot;surname\&quot;:\&quot;Builder\&quot;,&quot; +</span>
+<span class="nc" id="L34">    private final String NEWJSON = &quot;{\&quot;forename\&quot;:\&quot;Bob\&quot;,\&quot;surname\&quot;:\&quot;Builder\&quot;,&quot; +</span>
             &quot;\&quot;actor\&quot;:{\&quot;first_name\&quot;:\&quot;Ben\&quot;,\&quot;last_name\&quot;:\&quot;Door\&quot;}}&quot;;
 
     @Test
     @DisplayName(&quot;Add New Actor -- Success&quot;)
      void testAddNewActorSuccess() throws Exception {
-<span class="nc" id="L42">        when(actorRepository.save(any(Actor.class))).thenReturn(new Actor()); // Simulate a successful save</span>
-<span class="nc" id="L43">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/actor/add&quot;)</span>
-<span class="nc" id="L44">                        .contentType(MediaType.APPLICATION_JSON)</span>
-<span class="nc" id="L45">                        .content(this.JSON))</span>
-<span class="nc" id="L46">                        .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L47">                        .andReturn();</span>
-<span class="nc" id="L48">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L49">        verify(actorRepository, times(1)).save(any(Actor.class));</span>
-<span class="nc" id="L50">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Saved\&quot;&quot;));</span>
-<span class="nc" id="L51">    }</span>
+<span class="nc" id="L40">        when(actorRepository.save(any(Actor.class))).thenReturn(new Actor()); // Simulate a successful save</span>
+<span class="nc" id="L41">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/actor/add&quot;)</span>
+<span class="nc" id="L42">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L43">                        .content(this.JSON))</span>
+<span class="nc" id="L44">                        .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L45">                        .andReturn();</span>
+<span class="nc" id="L46">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L47">        verify(actorRepository, times(1)).save(any(Actor.class));</span>
+<span class="nc" id="L48">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Saved\&quot;&quot;));</span>
+<span class="nc" id="L49">    }</span>
     @Test
     @DisplayName(&quot;Add New Actor -- Fail&quot;)
      void testAddNewActorFailure() throws Exception {
-<span class="nc" id="L55">        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // Actor already exists</span>
-<span class="nc" id="L56">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/actor/add&quot;)</span>
-<span class="nc" id="L57">                        .contentType(MediaType.APPLICATION_JSON)</span>
-<span class="nc" id="L58">                        .content(this.JSON))</span>
-<span class="nc" id="L59">                        .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L60">                        .andReturn();</span>
-<span class="nc" id="L61">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L62">        System.out.println(&quot;Response JSON: &quot; + responseJSON);</span>
-<span class="nc" id="L63">        verify(actorRepository, times(1)).findByFirstName(anyString(), anyString());</span>
-<span class="nc" id="L64">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor already exist\&quot;&quot;));</span>
-<span class="nc" id="L65">    }</span>
+<span class="nc" id="L53">        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // Actor already exists</span>
+<span class="nc" id="L54">        MvcResult result = mvc.perform(MockMvcRequestBuilders.post(&quot;/actor/add&quot;)</span>
+<span class="nc" id="L55">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L56">                        .content(this.JSON))</span>
+<span class="nc" id="L57">                        .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L58">                        .andReturn();</span>
+<span class="nc" id="L59">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L60">        System.out.println(&quot;Response JSON: &quot; + responseJSON);</span>
+<span class="nc" id="L61">        verify(actorRepository, times(1)).findByFirstName(anyString(), anyString());</span>
+<span class="nc" id="L62">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor already exist\&quot;&quot;));</span>
+<span class="nc" id="L63">    }</span>
     @Test
     @DisplayName(&quot;Update Actor -- Success&quot;)
      void testUpdateActorSuccess() throws Exception {
-<span class="nc" id="L69">        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // Actor exists but with different name</span>
-<span class="nc" id="L70">        when(actorRepository.findByFirstName(&quot;Ben&quot;, &quot;Door&quot;)).thenReturn(null); // New name is available</span>
-<span class="nc" id="L71">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/actor/update&quot;)</span>
-<span class="nc" id="L72">                        .contentType(MediaType.APPLICATION_JSON)</span>
-<span class="nc" id="L73">                        .content(NEWJSON))</span>
-<span class="nc" id="L74">                        .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L75">                        .andReturn();</span>
-<span class="nc" id="L76">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L77">        verify(actorRepository, times(2)).findByFirstName(anyString(), anyString());</span>
-<span class="nc" id="L78">        verify(actorRepository, times(1)).save(any(Actor.class));</span>
-<span class="nc" id="L79">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Saved\&quot;&quot;));</span>
-<span class="nc" id="L80">    }</span>
+<span class="nc" id="L67">        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor()); // Actor exists but with different name</span>
+<span class="nc" id="L68">        when(actorRepository.findByFirstName(&quot;Ben&quot;, &quot;Door&quot;)).thenReturn(null); // New name is available</span>
+<span class="nc" id="L69">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/actor/update&quot;)</span>
+<span class="nc" id="L70">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L71">                        .content(NEWJSON))</span>
+<span class="nc" id="L72">                        .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L73">                        .andReturn();</span>
+<span class="nc" id="L74">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L75">        verify(actorRepository, times(2)).findByFirstName(anyString(), anyString());</span>
+<span class="nc" id="L76">        verify(actorRepository, times(1)).save(any(Actor.class));</span>
+<span class="nc" id="L77">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Saved\&quot;&quot;));</span>
+<span class="nc" id="L78">    }</span>
 
     @Test
     @DisplayName(&quot;Update Actor -- Fail (Name Taken)&quot;)
      void testUpdateActorNameTaken() throws Exception {
-<span class="nc" id="L85">        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor());</span>
-<span class="nc" id="L86">        when(actorRepository.findByFirstName(&quot;Ben&quot;, &quot;Door&quot;)).thenReturn(new Actor());</span>
-<span class="nc" id="L87">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/actor/update&quot;)</span>
-<span class="nc" id="L88">                        .contentType(MediaType.APPLICATION_JSON)</span>
-<span class="nc" id="L89">                        .content(NEWJSON))</span>
-<span class="nc" id="L90">                        .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L91">                        .andReturn();</span>
+<span class="nc" id="L83">        when(actorRepository.findByFirstName(anyString(), anyString())).thenReturn(new Actor());</span>
+<span class="nc" id="L84">        when(actorRepository.findByFirstName(&quot;Ben&quot;, &quot;Door&quot;)).thenReturn(new Actor());</span>
+<span class="nc" id="L85">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/actor/update&quot;)</span>
+<span class="nc" id="L86">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L87">                        .content(NEWJSON))</span>
+<span class="nc" id="L88">                        .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L89">                        .andReturn();</span>
 
         // Get the response JSON and assert it
-<span class="nc" id="L94">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L95">        verify(actorRepository, times(2)).findByFirstName(anyString(), anyString());</span>
-<span class="nc" id="L96">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor already exist\&quot;&quot;));</span>
-<span class="nc" id="L97">    }</span>
+<span class="nc" id="L92">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L93">        verify(actorRepository, times(2)).findByFirstName(anyString(), anyString());</span>
+<span class="nc" id="L94">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor already exist\&quot;&quot;));</span>
+<span class="nc" id="L95">    }</span>
     @Test
     @DisplayName(&quot;Update Actor -- Fail (Actor doesn't exist)&quot;)
      void testUpdateActorNotFound() throws Exception {
-<span class="nc" id="L101">        when(actorRepository.findByFirstName(&quot;Rick&quot;, &quot;John&quot;)).thenReturn(null);</span>
-<span class="nc" id="L102">        String failedNEWJSON = &quot;{\&quot;forename\&quot;:\&quot;Rick\&quot;,\&quot;surname\&quot;:\&quot;John\&quot;,&quot; +</span>
+<span class="nc" id="L99">        when(actorRepository.findByFirstName(&quot;Rick&quot;, &quot;John&quot;)).thenReturn(null);</span>
+<span class="nc" id="L100">        String failedNEWJSON = &quot;{\&quot;forename\&quot;:\&quot;Rick\&quot;,\&quot;surname\&quot;:\&quot;John\&quot;,&quot; +</span>
                 &quot;\&quot;actor\&quot;:{\&quot;first_name\&quot;:\&quot;Ben\&quot;,\&quot;last_name\&quot;:\&quot;Door\&quot;}}&quot;;
-<span class="nc" id="L104">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/actor/update&quot;)</span>
-<span class="nc" id="L105">                        .contentType(MediaType.APPLICATION_JSON)</span>
-<span class="nc" id="L106">                        .content(failedNEWJSON))</span>
-<span class="nc" id="L107">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L108">                .andReturn();</span>
-<span class="nc" id="L109">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L110">        verify(actorRepository, times(1)).findByFirstName(anyString(), anyString());</span>
-<span class="nc" id="L111">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor doesn't exist\&quot;&quot;));</span>
-<span class="nc" id="L112">    }</span>
+<span class="nc" id="L102">        MvcResult result = mvc.perform(MockMvcRequestBuilders.put(&quot;/actor/update&quot;)</span>
+<span class="nc" id="L103">                        .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L104">                        .content(failedNEWJSON))</span>
+<span class="nc" id="L105">                .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L106">                .andReturn();</span>
+<span class="nc" id="L107">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L108">        verify(actorRepository, times(1)).findByFirstName(anyString(), anyString());</span>
+<span class="nc" id="L109">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L110">    }</span>
     @Test
     @DisplayName(&quot;Get Actor -- Success&quot;)
      void testGetActorsSuccess() throws Exception {
-<span class="nc" id="L116">        Actor user = new Actor();</span>
-<span class="nc" id="L117">        user.setFirst_name(&quot;Lizzy&quot;);</span>
-<span class="nc" id="L118">        user.setLast_name(&quot;Muguire&quot;);</span>
-<span class="nc" id="L119">        when(actorRepository.findByFirstName(&quot;LIZZY&quot;, &quot;MUGUIRE&quot;)).thenReturn(user);</span>
-<span class="nc" id="L120">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/actor/get&quot;)</span>
-<span class="nc" id="L121">            .param(&quot;forename&quot;, &quot;Lizzy&quot;)</span>
-<span class="nc" id="L122">            .param(&quot;surname&quot;, &quot;Muguire&quot;))</span>
-<span class="nc" id="L123">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L124">            .andReturn();</span>
-<span class="nc" id="L125">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L126">        verify(actorRepository, times(1)).findByFirstName(&quot;LIZZY&quot;, &quot;MUGUIRE&quot;);</span>
-<span class="nc" id="L127">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;Lizzy\&quot;&quot;));</span>
-<span class="nc" id="L128">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;Muguire\&quot;&quot;));</span>
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L114">        Actor user = new Actor();</span>
+<span class="nc" id="L115">        user.setFirst_name(&quot;Lizzy&quot;);</span>
+<span class="nc" id="L116">        user.setLast_name(&quot;Muguire&quot;);</span>
+<span class="nc" id="L117">        when(actorRepository.findByFirstName(&quot;LIZZY&quot;, &quot;MUGUIRE&quot;)).thenReturn(user);</span>
+<span class="nc" id="L118">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/actor/get&quot;)</span>
+<span class="nc" id="L119">            .param(&quot;forename&quot;, &quot;Lizzy&quot;)</span>
+<span class="nc" id="L120">            .param(&quot;surname&quot;, &quot;Muguire&quot;))</span>
+<span class="nc" id="L121">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L122">            .andReturn();</span>
+<span class="nc" id="L123">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L124">        verify(actorRepository, times(1)).findByFirstName(&quot;LIZZY&quot;, &quot;MUGUIRE&quot;);</span>
+<span class="nc" id="L125">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;Lizzy\&quot;&quot;));</span>
+<span class="nc" id="L126">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;Muguire\&quot;&quot;));</span>
+<span class="nc" id="L127">    }</span>
     @Test
     @DisplayName(&quot;Get Actor -- Failed&quot;)
      void testGetActorsActorNotFound() throws Exception {
-<span class="nc" id="L133">        when(actorRepository.findByFirstName(&quot;Lizzy&quot;, &quot;Muguire&quot;)).thenReturn(null);</span>
-<span class="nc" id="L134">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/actor/get&quot;)</span>
-<span class="nc" id="L135">            .param(&quot;forename&quot;, &quot;Lizzy&quot;)</span>
-<span class="nc" id="L136">            .param(&quot;surname&quot;, &quot;Muguire&quot;))</span>
-<span class="nc" id="L137">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L138">            .andReturn();</span>
-<span class="nc" id="L139">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L140">        System.out.println(&quot;Response JSON: &quot; + responseJSON);</span>
-<span class="nc" id="L141">        verify(actorRepository, times(1)).findByFirstName(&quot;LIZZY&quot;, &quot;MUGUIRE&quot;);</span>
-<span class="nc" id="L142">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor doesn't exist\&quot;&quot;));</span>
-<span class="nc" id="L143">    }</span>
+<span class="nc" id="L131">        when(actorRepository.findByFirstName(&quot;Lizzy&quot;, &quot;Muguire&quot;)).thenReturn(null);</span>
+<span class="nc" id="L132">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/actor/get&quot;)</span>
+<span class="nc" id="L133">            .param(&quot;forename&quot;, &quot;Lizzy&quot;)</span>
+<span class="nc" id="L134">            .param(&quot;surname&quot;, &quot;Muguire&quot;))</span>
+<span class="nc" id="L135">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L136">            .andReturn();</span>
+<span class="nc" id="L137">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L138">        System.out.println(&quot;Response JSON: &quot; + responseJSON);</span>
+<span class="nc" id="L139">        verify(actorRepository, times(1)).findByFirstName(&quot;LIZZY&quot;, &quot;MUGUIRE&quot;);</span>
+<span class="nc" id="L140">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L141">    }</span>
     private Actor createActorWithID() {
-<span class="nc" id="L145">        Actor act = createActor(&quot;The&quot;, &quot;Joker&quot;);</span>
-<span class="nc" id="L146">        act.setActor_id((short) 1);</span>
-<span class="nc" id="L147">        act.setLast_update();</span>
-<span class="nc" id="L148">        return act;</span>
+<span class="nc" id="L143">        Actor act = createActor(&quot;The&quot;, &quot;Joker&quot;);</span>
+<span class="nc" id="L144">        act.setActor_id((short) 1);</span>
+<span class="nc" id="L145">        act.setLast_update();</span>
+<span class="nc" id="L146">        return act;</span>
     }
     @Test
     @DisplayName(&quot;Delete Actor -- Success&quot;)
      void testDeleteActorSuccess() throws Exception {
-<span class="nc" id="L153">        Actor act = createActorWithID();</span>
-<span class="nc" id="L154">        when(actorRepository.findByFirstName(&quot;THE&quot;, &quot;JOKER&quot;)).thenReturn(act);</span>
-<span class="nc" id="L155">        doNothing().when(filmActorRepo).DeleteByActorID((short) 1);</span>
-<span class="nc" id="L156">        doNothing().when(actorRepository).delete(any(Actor.class));</span>
-<span class="nc" id="L157">        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete(&quot;/actor/delete&quot;)</span>
-<span class="nc" id="L158">            .contentType(MediaType.APPLICATION_JSON)</span>
-<span class="nc" id="L159">            .content(&quot;{\&quot;first_name\&quot;:\&quot;The\&quot;,\&quot;last_name\&quot;:\&quot;Joker\&quot;}&quot;))</span>
-<span class="nc" id="L160">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L161">            .andReturn();</span>
-<span class="nc" id="L162">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L163">        verify(actorRepository, times(1)).findByFirstName(&quot;THE&quot;, &quot;JOKER&quot;);</span>
-<span class="nc" id="L164">        verify(filmActorRepo, times(1)).DeleteByActorID((short) 1);</span>
-<span class="nc" id="L165">        verify(actorRepository, times(1)).delete(any(Actor.class));</span>
-<span class="nc" id="L166">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Deleted\&quot;&quot;));</span>
-<span class="nc" id="L167">    }</span>
+<span class="nc" id="L151">        Actor act = createActorWithID();</span>
+<span class="nc" id="L152">        when(actorRepository.findByFirstName(&quot;THE&quot;, &quot;JOKER&quot;)).thenReturn(act);</span>
+<span class="nc" id="L153">        doNothing().when(filmActorRepo).DeleteByActorID((short) 1);</span>
+<span class="nc" id="L154">        doNothing().when(actorRepository).delete(any(Actor.class));</span>
+<span class="nc" id="L155">        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete(&quot;/actor/delete&quot;)</span>
+<span class="nc" id="L156">            .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L157">            .content(&quot;{\&quot;first_name\&quot;:\&quot;The\&quot;,\&quot;last_name\&quot;:\&quot;Joker\&quot;}&quot;))</span>
+<span class="nc" id="L158">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L159">            .andReturn();</span>
+<span class="nc" id="L160">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L161">        verify(actorRepository, times(1)).findByFirstName(&quot;THE&quot;, &quot;JOKER&quot;);</span>
+<span class="nc" id="L162">        verify(filmActorRepo, times(1)).DeleteByActorID((short) 1);</span>
+<span class="nc" id="L163">        verify(actorRepository, times(1)).delete(any(Actor.class));</span>
+<span class="nc" id="L164">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Deleted\&quot;&quot;));</span>
+<span class="nc" id="L165">    }</span>
     @Test
     @DisplayName(&quot;Delete Actor -- Failed&quot;)
      void testDeleteActorNotFound() throws Exception {
-<span class="nc" id="L171">        when(actorRepository.findByFirstName(&quot;The&quot;, &quot;Joker&quot;)).thenReturn(null);</span>
-<span class="nc" id="L172">        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete(&quot;/actor/delete&quot;)</span>
-<span class="nc" id="L173">            .contentType(MediaType.APPLICATION_JSON)</span>
-<span class="nc" id="L174">            .content(&quot;{\&quot;first_name\&quot;:\&quot;The\&quot;,\&quot;last_name\&quot;:\&quot;Joker\&quot;}&quot;))</span>
-<span class="nc" id="L175">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L176">            .andReturn();</span>
-<span class="nc" id="L177">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L178">        verify(actorRepository, times(1)).findByFirstName(&quot;THE&quot;, &quot;JOKER&quot;);</span>
-<span class="nc" id="L179">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor doesn't exist\&quot;&quot;));</span>
-<span class="nc" id="L180">    }</span>
+<span class="nc" id="L169">        when(actorRepository.findByFirstName(&quot;The&quot;, &quot;Joker&quot;)).thenReturn(null);</span>
+<span class="nc" id="L170">        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete(&quot;/actor/delete&quot;)</span>
+<span class="nc" id="L171">            .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L172">            .content(&quot;{\&quot;first_name\&quot;:\&quot;The\&quot;,\&quot;last_name\&quot;:\&quot;Joker\&quot;}&quot;))</span>
+<span class="nc" id="L173">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L174">            .andReturn();</span>
+<span class="nc" id="L175">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L176">        verify(actorRepository, times(1)).findByFirstName(&quot;THE&quot;, &quot;JOKER&quot;);</span>
+<span class="nc" id="L177">        assertTrue(responseJSON.contains(&quot;\&quot;output\&quot;:\&quot;Actor doesn't exist\&quot;&quot;));</span>
+<span class="nc" id="L178">    }</span>
     private Actor createActor(String firstName, String lastName) {
-<span class="nc" id="L182">        Actor user = new Actor();</span>
-<span class="nc" id="L183">        user.setFirst_name(firstName);</span>
-<span class="nc" id="L184">        user.setLast_name(lastName);</span>
-<span class="nc" id="L185">        return user;</span>
+<span class="nc" id="L180">        Actor user = new Actor();</span>
+<span class="nc" id="L181">        user.setFirst_name(firstName);</span>
+<span class="nc" id="L182">        user.setLast_name(lastName);</span>
+<span class="nc" id="L183">        return user;</span>
     }
     @Test
     @DisplayName(&quot;Get All Actors&quot;)
      void testGetAllActors() throws Exception {
-<span class="nc" id="L190">        List&lt;Actor&gt; users = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L191">        users.add(createActor(&quot;Bob&quot;, &quot;The&quot;));</span>
-<span class="nc" id="L192">        users.add(createActor(&quot;Builder&quot;, &quot;Can&quot;));</span>
-<span class="nc" id="L193">        users.add(createActor(&quot;We&quot;, &quot;Fix&quot;));</span>
-<span class="nc" id="L194">        users.add(createActor(&quot;It&quot;, &quot;No&quot;));</span>
-<span class="nc" id="L195">        when(actorRepository.findAll()).thenReturn(users);</span>
-<span class="nc" id="L196">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/actor/all&quot;)</span>
-<span class="nc" id="L197">            .contentType(MediaType.APPLICATION_JSON))</span>
-<span class="nc" id="L198">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
-<span class="nc" id="L199">            .andReturn();</span>
-<span class="nc" id="L200">        String responseJSON = result.getResponse().getContentAsString();</span>
-<span class="nc" id="L201">        verify(actorRepository, times(1)).findAll();</span>
-<span class="nc" id="L202">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;Bob\&quot;&quot;));</span>
-<span class="nc" id="L203">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;The\&quot;&quot;));</span>
-<span class="nc" id="L204">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;Builder\&quot;&quot;));</span>
-<span class="nc" id="L205">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;Can\&quot;&quot;));</span>
-<span class="nc" id="L206">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;We\&quot;&quot;));</span>
-<span class="nc" id="L207">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;Fix\&quot;&quot;));</span>
-<span class="nc" id="L208">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;It\&quot;&quot;));</span>
-<span class="nc" id="L209">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;No\&quot;&quot;));</span>
-<span class="nc" id="L210">    }</span>
+<span class="nc" id="L188">        List&lt;Actor&gt; users = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L189">        users.add(createActor(&quot;Bob&quot;, &quot;The&quot;));</span>
+<span class="nc" id="L190">        users.add(createActor(&quot;Builder&quot;, &quot;Can&quot;));</span>
+<span class="nc" id="L191">        users.add(createActor(&quot;We&quot;, &quot;Fix&quot;));</span>
+<span class="nc" id="L192">        users.add(createActor(&quot;It&quot;, &quot;No&quot;));</span>
+<span class="nc" id="L193">        when(actorRepository.findAll()).thenReturn(users);</span>
+<span class="nc" id="L194">        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(&quot;/actor/all&quot;)</span>
+<span class="nc" id="L195">            .contentType(MediaType.APPLICATION_JSON))</span>
+<span class="nc" id="L196">            .andExpect(MockMvcResultMatchers.status().isOk())</span>
+<span class="nc" id="L197">            .andReturn();</span>
+<span class="nc" id="L198">        String responseJSON = result.getResponse().getContentAsString();</span>
+<span class="nc" id="L199">        verify(actorRepository, times(1)).findAll();</span>
+<span class="nc" id="L200">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;Bob\&quot;&quot;));</span>
+<span class="nc" id="L201">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;The\&quot;&quot;));</span>
+<span class="nc" id="L202">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;Builder\&quot;&quot;));</span>
+<span class="nc" id="L203">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;Can\&quot;&quot;));</span>
+<span class="nc" id="L204">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;We\&quot;&quot;));</span>
+<span class="nc" id="L205">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;Fix\&quot;&quot;));</span>
+<span class="nc" id="L206">        assertTrue(responseJSON.contains(&quot;\&quot;first_name\&quot;:\&quot;It\&quot;&quot;));</span>
+<span class="nc" id="L207">        assertTrue(responseJSON.contains(&quot;\&quot;last_name\&quot;:\&quot;No\&quot;&quot;));</span>
+<span class="nc" id="L208">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

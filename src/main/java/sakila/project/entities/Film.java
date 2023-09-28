@@ -7,8 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 import java.sql.Timestamp;
 import java.time.Year;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

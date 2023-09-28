@@ -3,7 +3,7 @@ import Form from "../Form";
 import "./css/MainAddress.css";
 
 export default function AddressMain(props) {
-    const url = props.mainUrl+"/actor";
+    const url = props.mainUrl+"/address";
     const [address, setAddress] = useState('');
     const [addressTwo, setAddressTwo] = useState('');
     const [district, setDistrict] = useState('');
@@ -373,7 +373,6 @@ export default function AddressMain(props) {
                     <li id="AddressSearchAll" onClick={() => setCurrentPage("SearchAll")}>Search All</li>
                     <li id="AddressAdd" onClick={() => setCurrentPage("Add")}>Add Address</li>
                     <li id="AddressUpdate" onClick={() => setCurrentPage("Update")}>Update Address</li>
-                    <li id="AddressDelete" onClick={() => setCurrentPage("Delete")}>Delete Address</li>
                 </ul>
             </nav>
             {renderPage()}

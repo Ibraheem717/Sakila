@@ -27,8 +27,6 @@ class actorControllerTest {
     private FilmActorRepository filmActorRepo;
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    private ObjectMapper objectMapper;
     private final String JSON = "{" +
             "\"first_name\":\"Bob\"," +
             "\"last_name\":\"Builder\"" +

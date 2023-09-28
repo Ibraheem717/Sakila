@@ -3,7 +3,7 @@ import Form from "../Form";
 import "./css/MainCategory.css";
 
 export default function CategoryMain(props) {
-    const url = props.mainUrl+"/actor";
+    const url = props.mainUrl+"/catagory";
     const [name, setName] = useState('');
     const [newName, setNewName] = useState('');
     const [searched, setSearched] = useState('Output will be here');    

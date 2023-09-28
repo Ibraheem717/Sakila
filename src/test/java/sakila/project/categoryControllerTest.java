@@ -1,6 +1,5 @@
 package sakila.project;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +33,6 @@ class categoryControllerTest {
     private FilmCatagoryRepository filmCategoryRepo;
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    private ObjectMapper objectMapper;
     private final String JSON = "{" +
             "\"name\":\"Bob\"" +
             "}";
