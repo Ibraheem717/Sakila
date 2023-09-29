@@ -2,19 +2,14 @@ package sakila.project.controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import sakila.project.repository.ActorRepository;
 import sakila.project.repository.FilmActorRepository;
 import sakila.project.repository.FilmRepository;
 import sakila.project.entities.Actor;
-import sakila.project.entities.Film;
-
 import static sakila.project.ProjectApplication.*;
 
 @RestController 
@@ -87,7 +82,7 @@ public class ActorController {
         return act;
     }
     @GetMapping(path = "/films")
-    private @ResponseBody List<Map<String, Object>> getFilms(String firstName, String lastName) {
+    public @ResponseBody List<Map<String, Object>> getFilms(String firstName, String lastName) {
         Iterable<Short> films = filmActorRepo.getByActorId(actorRepository.findByFirstName(firstName, lastName).getActor_id());
         List<Map<String, Object>> allFilms = new ArrayList<>();
         for (Short filmId : films) {

@@ -195,7 +195,7 @@ export default function ActorMenu(props) {
                   <li>{film.description}</li>
                   <li>{film.release_year}</li>
                   <li>{film.rating}</li>
-                  <li>{film.length}</li>
+                  <li>{film.length} Minutes</li>
                   <hr></hr>
                 </ul>
               ))
