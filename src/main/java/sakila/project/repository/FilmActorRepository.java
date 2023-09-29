@@ -12,4 +12,7 @@ public interface FilmActorRepository extends CrudRepository<FilmActor, Short> {
     @Modifying
     @Query(value = "DELETE FROM film_actor fa WHERE fa.actor_id = :actor_id", nativeQuery = true)
     void DeleteByActorID(Short actor_id);
+
+    @Query(value = "SELECT film_id FROM film_actor WHERE actor_id = ?", nativeQuery = true)
+    Iterable<Short> getByActorId(Short actor_id);
 }

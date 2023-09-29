@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import java.sql.Timestamp;
 import java.time.Year;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -47,6 +49,7 @@ public class Film {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Short film_id;
+    private String title;
     private String description;
     private Year release_year;
     private Byte language_id;
@@ -58,4 +61,14 @@ public class Film {
     private String rating;
     private String special_features;
     private Timestamp last_update;
+
+    public Map<String, Object> getReleventInformation() {
+        Map<String, Object> info = new HashMap<>();
+        info.put("title", this.title);
+        info.put("description", this.description);
+        info.put("release_year", this.release_year);
+        info.put("rating", this.rating);
+        info.put("length", this.length);
+        return info;
+    } 
 }

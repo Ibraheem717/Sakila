@@ -1,7 +1,9 @@
 package sakila.project.controllers;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Optional;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,13 +11,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sakila.project.repository.ActorRepository;
 import sakila.project.repository.FilmActorRepository;
+import sakila.project.repository.FilmRepository;
 import sakila.project.entities.Actor;
+import sakila.project.entities.Film;
 
 import static sakila.project.ProjectApplication.*;
 
 @RestController 
 @RequestMapping(path="/actor") 
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3000"})
+@CrossOrigin(origins = {"https://main.d21mmybmnqen80.amplifyapp.com", "http://localhost:3000"})
 public class ActorController {
     @Autowired 
     private ActorRepository actorRepository;
@@ -23,6 +27,8 @@ public class ActorController {
     private ObjectMapper objectMapper;
     @Autowired
     private FilmActorRepository filmActorRepo;
+    @Autowired
+    private FilmRepository filmRepo;
     private String returnString(String extra) {
         return "Actor " + extra;
     }
@@ -80,4 +86,13 @@ public class ActorController {
             act = returnValue(returnString(NONEXIST));
         return act;
     }
+    @GetMapping(path = "/films")
+    private @ResponseBody List<Map<String, Object>> getFilms(String firstName, String lastName) {
+        Iterable<Short> films = filmActorRepo.getByActorId(actorRepository.findByFirstName(firstName, lastName).getActor_id());
+        List<Map<String, Object>> allFilms = new ArrayList<>();
+        for (Short filmId : films) {
+            allFilms.add(filmRepo.findByFilmId(filmId).getReleventInformation()) ;
+        }
+        return allFilms;
+    } 
 }

@@ -15,6 +15,8 @@ import sakila.project.controllers.ActorController;
 import sakila.project.repository.FilmActorRepository;
 import sakila.project.repository.ActorRepository;
 import sakila.project.entities.Actor;
+import sakila.project.repository.FilmRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,6 +27,8 @@ class actorControllerTest {
     private ActorRepository actorRepository;
     @MockBean
     private FilmActorRepository filmActorRepo;
+    @MockBean
+    private FilmRepository filmRepo;
     @Autowired
     private MockMvc mvc;
     private final String JSON = "{" +

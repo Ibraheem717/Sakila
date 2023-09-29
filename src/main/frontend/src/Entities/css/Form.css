@@ -1,45 +1,46 @@
-/* Form.css */
 
-/* Form container */
 .main-container {
-  padding-top: 30px; /* Add padding to the top */
-
-}
-
-#FormContainer {
-  margin: 20px;
-  padding: 20px;
-  padding-top: 30px; /* Add padding to the top */
+  max-width: 400px;
+  margin: 20px auto; /* Add margin from top and center horizontally */
+  padding: 30px;
+  padding-right: 50px;
+  background-color: #f0f0f0;
   border: 1px solid #ccc;
-  background-color: #f7f7f7;
+  border-radius: 5px;
+  text-align: center;
 }
 
-/* Label styles */
+
+/* Style for labels */
 label {
   display: block;
   margin-bottom: 5px;
-  font-weight: bold;
 }
 
-/* Input styles */
+/* Style for input fields */
 input[type="text"] {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
-/* Submit button styles */
+/* Style for the submit button */
 #submit {
+  padding: 10px 20px;
   background-color: #007bff;
   color: white;
-  padding: 10px 20px;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Add margin to create space between input fields and button */
+  display: block; /* Make the button a block-level element to center it */
+  margin: 0 auto; /* Center the button horizontally */
 }
 
 #submit:hover {
   background-color: #0056b3;
 }
+
+/* Add more styles as needed for your specific design */

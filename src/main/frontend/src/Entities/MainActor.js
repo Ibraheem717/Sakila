@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "../Form";
 import "./css/MainActor.css"
 
@@ -166,26 +166,77 @@ export default function ActorMenu(props) {
         }
     }
 
-    async function getIndividual() {
-        try 
-        {
-            const request = await fetch(`${url}/get?forename=${firstName}&surname=${lastName}`);
+    const ActorInfo = ({firstName, lastName}) => {
+        const [films, setFilms] = useState([]);
+      
+        useEffect(() => {
+          }, [films]);
+      
+        const getFilms = async () => {
+          try {
+            const request = await fetch(`${url}/films?firstName=${firstName}&lastName=${lastName}`);
             if (request.ok) {
+              const response = await request.json();
+              setFilms(response); 
+            } else {
+              console.error("Failed to fetch individual response");
+            }
+          } catch (error) {
+            console.error("An error occurred while fetching individual response:", error);
+          }
+        };
+      
+        const handleFilms = () => {
+          if (films.length > 0) {
+            return (
+              films.map((film) => (
+                <ul key={film.title}>
+                  <li>{film.title}</li>
+                  <li>{film.description}</li>
+                  <li>{film.release_year}</li>
+                  <li>{film.rating}</li>
+                  <li>{film.length}</li>
+                  <hr></hr>
+                </ul>
+              ))
+            );
+          }
+        };
+      
+        return (
+          <>
+            <div id="ActorName">{firstName} {lastName}</div>
+            <button onClick={getFilms}>Get Films</button>
+            <hr></hr>
+            {handleFilms()}
+          </>
+        );
+      };
+    
+      async function getIndividual() {
+        try {
+          const request = await fetch(`${url}/get?forename=${firstName}&surname=${lastName}`);
+          if (request.ok) {
             const response = await request.json();
             console.log(response['outcome']);
-            if(response['outcome']===undefined){
-                setSearched(`${response['first_name']} ${response['last_name']} `);}
-            else {
-                setSearched("User doesn't exist");
-            }
+            if (response['output'] === undefined) {
+              setSearched(
+                <ActorInfo
+                  firstName={response['first_name']}
+                  lastName={response['last_name']}
+                />
+              );
             } else {
-            console.error("Failed to fetch individual response");
+              setSearched("Actor doesn't exist");
             }
-        } 
-        catch (error) {
-            console.error("An error occurred while fetching individual response:", error);
+          } else {
+            console.error("Failed to fetch individual response");
+          }
+        } catch (error) {
+          console.error("An error occurred while fetching individual response:", error);
         }
-    }
+      }
+      
 
     async function AddIndivisual() {
         const request = await fetch(`${url}/add`, {

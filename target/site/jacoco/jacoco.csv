@@ -1,10 +1,10 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 project,sakila.project.controllers,CategoryController,0,145,0,12,0,32,0,13,0,7
-project,sakila.project.controllers,ActorController,0,174,0,10,0,35,0,12,0,7
-project,sakila.project.controllers,AddressController,4,417,1,29,1,82,1,27,0,13
+project,sakila.project.controllers,ActorController,35,174,2,10,6,35,2,12,1,7
+project,sakila.project.controllers,AddressController,4,422,1,29,1,82,1,27,0,13
 project,sakila.project.entities,Rental,80,0,0,0,10,0,15,0,15,0
-project,sakila.project.entities,Film,176,0,0,0,18,0,31,0,31,0
-project,sakila.project.entities,Address,52,57,0,0,3,11,4,16,4,16
+project,sakila.project.entities,Film,224,0,0,0,26,0,34,0,34,0
+project,sakila.project.entities,Address,25,84,0,0,2,12,3,17,3,17
 project,sakila.project.entities,Inventory,56,0,0,0,8,0,11,0,11,0
 project,sakila.project.entities,Staff,140,0,0,0,15,0,25,0,25,0
 project,sakila.project.entities,Store,56,0,0,0,8,0,11,0,11,0

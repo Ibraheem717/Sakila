@@ -6,9 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import sakila.project.repository.AddressRepository;
 import sakila.project.repository.CityRepository;
 import sakila.project.entities.Address;
@@ -18,7 +16,7 @@ import static sakila.project.ProjectApplication.*;
 
 @RestController 
 @RequestMapping(path="/address") 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://main.d21mmybmnqen80.amplifyapp.com"})
 public class AddressController {
     @Autowired 
     private AddressRepository addressRepo;
@@ -51,7 +49,7 @@ public class AddressController {
             return returnValue(returnStringCity());
         if ( this.getAddressAll(address, address2, district, cityId, postCode, phone) !=null )
             return returnValue(returnStringAddress(EXIST));
-        Address newAddress = objectMapper.convertValue(information, Address.class);
+        Address newAddress = new Address(null, address, address2, district, cityId, postCode, phone, null);
         newAddress.setLast_update();
         addressRepo.save(newAddress);
         return returnValue(SAVED);

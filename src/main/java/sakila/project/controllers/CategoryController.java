@@ -12,8 +12,8 @@ import sakila.project.entities.Category;
 import static sakila.project.ProjectApplication.*;
 
 @RestController 
-@RequestMapping(path="/catagory") 
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping(path="/catagory")
+@CrossOrigin(origins = {"http://localhost:3000", "https://main.d21mmybmnqen80.amplifyapp.com"})
 public class CategoryController {
     @Autowired 
     private CatagoryRepository catagoryRepo;

@@ -7,16 +7,18 @@ import "./App.css";
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const webURL = "https://ibraheem.fergcb.uk";
-  const localURL = "http://localhost:8080/"
+  const localURL = "http://localhost:8080";
+  const HOSTS = [webURL, localURL];
+  const SELECT = 1;
 
   const renderPage = () => {
     switch (currentPage) {
       case "Actor":
-        return <ActorMenu mainUrl={webURL} />;
+        return <ActorMenu mainUrl={HOSTS[SELECT]} />;
       case "Address":
-        return <AddressMain mainUrl={webURL}/>;
+        return <AddressMain mainUrl={HOSTS[SELECT]}/>;
       case "Category":
-        return <CategoryMain mainUrl={webURL}/>;
+        return <CategoryMain mainUrl={HOSTS[SELECT]}/>;
       default:
         return null;
     }
