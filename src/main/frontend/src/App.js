@@ -9,7 +9,7 @@ export default function App() {
   const webURL = "https://ibraheem.fergcb.uk";
   const localURL = "http://localhost:8080";
   const HOSTS = [webURL, localURL];
-  const SELECT = 1;
+  const SELECT = 0;
 
   const renderPage = () => {
     switch (currentPage) {
