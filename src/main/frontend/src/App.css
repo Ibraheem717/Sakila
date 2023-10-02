@@ -1,33 +1,33 @@
-/* App.css */
-
-/* Style for the container */
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  text-align: center;
 }
 
-/* Style for the navigation menu */
+nav {
+  display: flex;
+  justify-content: center; /* Center the items horizontally */
+  align-items: center; /* Center the items vertically */
+  height: 50px; /* Set a fixed height for the navbar */
+}
+
 nav ul {
   list-style: none;
   padding: 0;
-  margin: 0;
-  display: flex;
-  background-color: #333;
+  display: flex; /* Display the list items as flex items */
 }
 
 nav li {
-  padding: 10px 20px;
-  color: white;
+  margin-right: 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.5s ease;
+}
+
+nav li:last-child {
+  margin-right: 0; /* Remove right margin for the last item */
 }
 
 nav li:hover {
-  background-color: #555;
+  transform: scale(1.1);
 }
-
-/* Add more styles as needed for your specific design */

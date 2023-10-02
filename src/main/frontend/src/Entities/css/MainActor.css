@@ -73,3 +73,38 @@ button:hover {
 }
 
 /* Add more styles as needed for your specific design */
+
+/* MainActor.css */
+
+/* Animation for the ActorName */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animation for the Get Films button */
+@keyframes scale-up {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Animation for the individual film items */
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+

@@ -190,7 +190,7 @@ export default function ActorMenu(props) {
           if (films.length > 0) {
             return (
               films.map((film) => (
-                <ul key={film.title}>
+                <ul key={film.title} className="slide-up">
                   <li>{film.title}</li>
                   <li>{film.description}</li>
                   <li>{film.release_year}</li>
@@ -296,9 +296,7 @@ export default function ActorMenu(props) {
   }
 
   useEffect(() => {
-    // This effect will run whenever firstName or lastName changes.
-    // It's a good place to call getIndividual() after the names are updated.
-    getIndividual(); // Call getIndividual() here
+    getIndividual(); 
   }, [firstName, lastName]);
 
   function selectIndividual(first, last) {

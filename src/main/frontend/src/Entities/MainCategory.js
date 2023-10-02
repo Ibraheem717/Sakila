@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "../Form";
 import "./css/MainCategory.css";
 
@@ -201,12 +201,21 @@ export default function CategoryMain(props) {
 
   }
 
+  useEffect(() => {
+    getIndividual(); 
+  }, [name]);
+
+  function selectIndividual(first) {
+    setCurrentPage("GetIndivisual");
+    setName(first);
+  }
+
     function displayValues() {
         if (responses !== undefined && responses.length > 0) {
             return (
             <ul id="AllCategoryResponses">
                 {responses.map((category) => (
-                <li key={category.id}>
+                <li key={category.id} onClick={() => selectIndividual(category.name)}>
                     <div className="btn">{category.name}</div>
                 </li>
                 ))}
