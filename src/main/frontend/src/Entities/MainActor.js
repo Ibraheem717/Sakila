@@ -218,7 +218,6 @@ export default function ActorMenu(props) {
           const request = await fetch(`${url}/get?forename=${firstName}&surname=${lastName}`);
           if (request.ok) {
             const response = await request.json();
-            console.log(response['outcome']);
             if (response['output'] === undefined) {
               setSearched(
                 <ActorInfo
@@ -294,7 +293,18 @@ export default function ActorMenu(props) {
           {searched}
         </div>
       );
+  }
 
+  useEffect(() => {
+    // This effect will run whenever firstName or lastName changes.
+    // It's a good place to call getIndividual() after the names are updated.
+    getIndividual(); // Call getIndividual() here
+  }, [firstName, lastName]);
+
+  function selectIndividual(first, last) {
+    setCurrentPage("GetIndivisual");
+    setFirstName(first);
+    setLastName(last);
   }
 
     function displayValues() {
@@ -302,7 +312,7 @@ export default function ActorMenu(props) {
             return (
             <ul id="AllActorResponses">
                 {responses.map((actor) => (
-                <li key={actor.id}>
+                <li key={actor.id} onClick={() => selectIndividual(actor.first_name, actor.last_name)}>
                     <div>First Name: {actor.first_name}</div>
                     <div>Last Name: {actor.last_name}</div>
                 </li>

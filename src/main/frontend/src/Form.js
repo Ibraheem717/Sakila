@@ -3,7 +3,6 @@ import "./Entities/css/Form.css";
 export default function Form(props) {
 
     const handleInputChange = (setFunction, value) => {
-      console.log(setFunction);
       setFunction(value);
     };
 
